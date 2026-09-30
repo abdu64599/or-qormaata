@@ -506,7 +506,7 @@ app.post(
       }
 
       if (
-        !answers ||
+        !answers ||i
         typeof answers !== "object"
       ) {
         return res.status(400).json({
@@ -541,22 +541,34 @@ app.post(
           Number(q.points) || 1;
 
         totalPoints += points;
+let studentAnswer =
+  answers[q.id] === undefined
+    ? ""
+    : String(answers[q.id]).trim();
 
-        const studentAnswer =
-          answers[q.id] === undefined
-            ? ""
-            : String(
-                answers[q.id]
-              ).trim();
+const correctAnswer =
+  String(q.answer || "").trim();
 
-        const correctAnswer =
-          String(
-            q.answer || ""
-          ).trim();
+// A/B/C/D yoo frontend irraa dhufe,
+// gara barruu filannoo isaatti jijjiiri.
+if (
+  q.type === "multiple" &&
+  /^[A-Da-d]$/.test(studentAnswer) &&
+  Array.isArray(q.options)
+) {
+  const index =
+    studentAnswer.toUpperCase().charCodeAt(0) -
+    "A".charCodeAt(0);
 
-        const correct =
-          studentAnswer.toLowerCase() ===
-          correctAnswer.toLowerCase();
+  if (q.options[index] !== undefined) {
+    studentAnswer =
+      String(q.options[index]).trim();
+  }
+}
+
+const correct =
+  studentAnswer.toLowerCase() ===
+  correctAnswer.toLowerCase();
 
         if (correct) {
           score += points;
