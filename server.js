@@ -1470,3 +1470,7 @@ app.get(
       );
 
       res
+  }
+}
+
+start();
