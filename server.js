@@ -12,7 +12,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // =====================================
-// RENDER POSTGRESQL
+// DATABASE
 // =====================================
 
 if (!process.env.DATABASE_URL) {
@@ -28,7 +28,7 @@ const pool = new Pool({
 });
 
 // =====================================
-// DATABASE
+// DATABASE INITIALIZATION
 // =====================================
 
 async function initDatabase() {
@@ -37,7 +37,6 @@ async function initDatabase() {
   try {
     await client.query("BEGIN");
 
-    // EXAMS
     await client.query(`
       CREATE TABLE IF NOT EXISTS exams (
         id UUID PRIMARY KEY,
@@ -52,24 +51,34 @@ async function initDatabase() {
       );
     `);
 
-    // RESULTS
     await client.query(`
       CREATE TABLE IF NOT EXISTS results (
         id UUID PRIMARY KEY,
-        exam_id UUID NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+        exam_id UUID NOT NULL
+          REFERENCES exams(id)
+          ON DELETE CASCADE,
+
         student_name VARCHAR(150) NOT NULL,
-        answers JSONB NOT NULL DEFAULT '{}'::jsonb,
-        details JSONB NOT NULL DEFAULT '[]'::jsonb,
+
+        answers JSONB NOT NULL
+          DEFAULT '{}'::jsonb,
+
+        details JSONB NOT NULL
+          DEFAULT '[]'::jsonb,
+
         score INTEGER NOT NULL DEFAULT 0,
+
         total_points INTEGER NOT NULL DEFAULT 0,
+
         correct_answers INTEGER NOT NULL DEFAULT 0,
+
         wrong_answers INTEGER NOT NULL DEFAULT 0,
-        submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+        submitted_at TIMESTAMP
+          DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
-    // Yoo results table duraan ture ta'e,
-    // details column ni dabala.
     await client.query(`
       ALTER TABLE results
       ADD COLUMN IF NOT EXISTS details JSONB
@@ -89,11 +98,17 @@ async function initDatabase() {
     await client.query("COMMIT");
 
     console.log("Database migrations completed.");
+
   } catch (error) {
+
     await client.query("ROLLBACK");
+
     throw error;
+
   } finally {
+
     client.release();
+
   }
 }
 
@@ -102,7 +117,11 @@ async function initDatabase() {
 // =====================================
 
 function text(value, max = 500) {
-  if (value === undefined || value === null) {
+
+  if (
+    value === undefined ||
+    value === null
+  ) {
     return "";
   }
 
@@ -111,32 +130,46 @@ function text(value, max = 500) {
     .slice(0, max);
 }
 
-async function createUniqueCode() {
-  for (let i = 0; i < 20; i++) {
-    const code = crypto
-      .randomBytes(4)
-      .toString("hex")
-      .toUpperCase();
 
-    const check = await pool.query(
-      "SELECT id FROM exams WHERE code = $1",
-      [code]
-    );
+// =====================================
+// EXAM CODE
+// =====================================
+
+async function createUniqueCode() {
+
+  for (let i = 0; i < 30; i++) {
+
+    const code =
+      crypto
+        .randomBytes(4)
+        .toString("hex")
+        .toUpperCase();
+
+    const check =
+      await pool.query(
+        "SELECT id FROM exams WHERE code = $1",
+        [code]
+      );
 
     if (check.rows.length === 0) {
       return code;
     }
   }
 
-  throw new Error("Exam code uumuu hin dandeenye.");
+  throw new Error(
+    "Exam code uumuu hin dandeenye."
+  );
 }
+
 
 // =====================================
 // STATUS
 // =====================================
 
 app.get("/api/status", async (req, res) => {
+
   try {
+
     await pool.query("SELECT 1");
 
     res.json({
@@ -145,22 +178,33 @@ app.get("/api/status", async (req, res) => {
       database: "Render PostgreSQL",
       status: "online"
     });
+
   } catch (error) {
-    console.error("STATUS:", error);
+
+    console.error(
+      "STATUS ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
+      app: "OR",
+      database: "Render PostgreSQL",
       status: "offline"
     });
   }
+
 });
+
 
 // =====================================
 // CREATE EXAM
 // =====================================
 
 app.post("/api/exams", async (req, res) => {
+
   try {
+
     const {
       teacherName,
       title,
@@ -170,157 +214,339 @@ app.post("/api/exams", async (req, res) => {
       questions
     } = req.body;
 
+
     if (!text(teacherName)) {
+
       return res.status(400).json({
         success: false,
-        message: "Maqaa barsiisaa galchi."
+        error:
+          "Maqaa barsiisaa galchi."
       });
+
     }
 
+
     if (!text(title)) {
+
       return res.status(400).json({
         success: false,
-        message: "Mata duree qormaataa galchi."
+        error:
+          "Mata duree qormaataa galchi."
       });
+
     }
+
 
     if (
       !Array.isArray(questions) ||
       questions.length === 0
     ) {
+
       return res.status(400).json({
         success: false,
-        message: "Yoo xiqqaate gaaffii tokko galchi."
+        error:
+          "Yoo xiqqaate gaaffii tokko kuusi."
       });
+
     }
 
-    const cleanQuestions = questions.map((q, index) => {
-      const type =
-        q.type === "truefalse"
-          ? "truefalse"
-          : "multiple";
 
-      let options;
+    // =================================
+    // QUESTIONS CLEAN
+    // =================================
 
-      if (type === "truefalse") {
-        options = ["Dhugaa", "Soba"];
-      } else {
-        options = Array.isArray(q.options)
-          ? q.options
-              .map(x => text(x, 500))
-              .filter(Boolean)
-              .slice(0, 4)
-          : [];
-      }
+    const cleanQuestions =
+      questions.map(
+        (q, index) => {
 
-      let answer = text(q.answer, 500);
+          const type =
+            q.type === "truefalse"
+              ? "truefalse"
+              : "multiple";
 
-      // True / False sirreessi
-      if (type === "truefalse") {
-        const lower = answer.toLowerCase();
 
-        if (
-          lower === "dhugaa" ||
-          lower === "true"
-        ) {
-          answer = "Dhugaa";
-        } else if (
-          lower === "soba" ||
-          lower === "false"
-        ) {
-          answer = "Soba";
+          const question =
+            text(
+              q.question,
+              2000
+            );
+
+
+          const points =
+            Number(q.points) > 0
+              ? Number(q.points)
+              : 1;
+
+
+          let options = [];
+
+          let answer = "";
+
+
+          // =================================
+          // MULTIPLE CHOICE
+          // =================================
+
+          if (type === "multiple") {
+
+            if (
+              Array.isArray(q.options)
+            ) {
+
+              options =
+                q.options
+                  .map(
+                    item =>
+                      text(item, 500)
+                  )
+                  .filter(Boolean)
+                  .slice(0, 4);
+
+            } else if (
+              q.options &&
+              typeof q.options === "object"
+            ) {
+
+              options =
+                [
+                  q.options.A,
+                  q.options.B,
+                  q.options.C,
+                  q.options.D
+                ]
+                  .map(
+                    item =>
+                      text(item, 500)
+                  )
+                  .filter(Boolean)
+                  .slice(0, 4);
+
+            }
+
+
+            // Frontend answer
+            // A/B/C/D taanaan
+            // text option ta'uu danda'a.
+
+            let rawAnswer =
+              text(
+                q.correctAnswer ||
+                q.answer,
+                500
+              );
+
+
+            // Yoo A/B/C/D ta'e
+            // option barruu isaa godha.
+
+            const letters =
+              ["A", "B", "C", "D"];
+
+
+            const answerIndex =
+              letters.indexOf(
+                rawAnswer.toUpperCase()
+              );
+
+
+            if (
+              answerIndex >= 0 &&
+              options[answerIndex]
+            ) {
+
+              answer =
+                options[answerIndex];
+
+            } else {
+
+              answer =
+                rawAnswer;
+
+            }
+
+          }
+
+
+          // =================================
+          // TRUE / FALSE
+          // =================================
+
+          if (type === "truefalse") {
+
+            options = [
+              "Dhugaa",
+              "Soba"
+            ];
+
+
+            let rawAnswer =
+              text(
+                q.correctAnswer ||
+                q.answer,
+                100
+              );
+
+
+            const lower =
+              rawAnswer.toLowerCase();
+
+
+            if (
+              lower === "dhugaa" ||
+              lower === "true"
+            ) {
+
+              answer = "Dhugaa";
+
+            } else if (
+              lower === "soba" ||
+              lower === "false"
+            ) {
+
+              answer = "Soba";
+
+            } else {
+
+              answer = rawAnswer;
+
+            }
+
+          }
+
+
+          return {
+
+            id:
+              q.id ||
+              crypto.randomUUID(),
+
+            number:
+              index + 1,
+
+            type,
+
+            question,
+
+            options,
+
+            answer,
+
+            points
+
+          };
+
         }
-      }
+      );
 
-      return {
-        id: q.id || crypto.randomUUID(),
-
-        number: index + 1,
-
-        type,
-
-        question: text(
-          q.question,
-          2000
-        ),
-
-        options,
-
-        answer,
-
-        points:
-          Number(q.points) > 0
-            ? Number(q.points)
-            : 1
-      };
-    });
 
     // =================================
-    // VALIDATION
+    // VALIDATE QUESTIONS
     // =================================
 
-    for (const q of cleanQuestions) {
+    for (
+      const q of cleanQuestions
+    ) {
+
       if (!q.question) {
+
         return res.status(400).json({
           success: false,
-          message:
+          error:
             `Gaaffii ${q.number} guuti.`
         });
+
       }
 
+
       if (!q.answer) {
+
         return res.status(400).json({
           success: false,
-          message:
+          error:
             `Deebii sirrii gaaffii ${q.number} galchi.`
         });
+
       }
+
 
       if (
         q.type === "multiple" &&
         q.options.length < 2
       ) {
+
         return res.status(400).json({
           success: false,
-          message:
-            `Gaaffii ${q.number} filannoo qabaachuu qaba.`
+          error:
+            `Gaaffii ${q.number} yoo xiqqaate filannoo lama qabaachuu qaba.`
         });
+
       }
 
-      // Multiple choice keessatti
-      // answer filannoo keessaa ta'uu qaba.
+
       if (
-        q.type === "multiple" &&
-        !q.options.some(
-          option =>
-            option.trim().toLowerCase() ===
-            q.answer.trim().toLowerCase()
-        )
+        q.type === "multiple"
       ) {
-        return res.status(400).json({
-          success: false,
-          message:
-            `Deebiin sirrii gaaffii ${q.number} filannoo keessaa ta'uu qaba.`
-        });
+
+        const found =
+          q.options.some(
+            option =>
+              option
+                .trim()
+                .toLowerCase() ===
+              q.answer
+                .trim()
+                .toLowerCase()
+          );
+
+
+        if (!found) {
+
+          return res.status(400).json({
+            success: false,
+            error:
+              `Deebiin sirrii gaaffii ${q.number} filannoo keessaa ta'uu qaba.`
+          });
+
+        }
+
       }
 
-      // True/False validation
+
       if (
         q.type === "truefalse" &&
-        !["Dhugaa", "Soba"].includes(q.answer)
+        ![
+          "Dhugaa",
+          "Soba"
+        ].includes(q.answer)
       ) {
+
         return res.status(400).json({
           success: false,
-          message:
+          error:
             `Gaaffii ${q.number}: Dhugaa ykn Soba filadhu.`
         });
+
       }
+
     }
 
-    const id = crypto.randomUUID();
+
+    // =================================
+    // CREATE
+    // =================================
+
+    const id =
+      crypto.randomUUID();
 
     const code =
       await createUniqueCode();
+
+
+    const finalDuration =
+      Number(duration) > 0
+        ? Number(duration)
+        : 30;
+
 
     const result =
       await pool.query(
@@ -337,12 +563,21 @@ app.post("/api/exams", async (req, res) => {
           questions
         )
         VALUES
-        ($1,$2,$3,$4,$5,$6,$7,$8)
+        (
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          $6,
+          $7,
+          $8
+        )
         RETURNING
           id,
           code,
-          title,
           teacher_name,
+          title,
           subject,
           grade,
           duration,
@@ -350,47 +585,80 @@ app.post("/api/exams", async (req, res) => {
         `,
         [
           id,
+
           code,
-          text(title, 250),
-          text(teacherName, 150),
-          text(subject, 150),
-          text(grade, 100),
-          Number(duration) > 0
-            ? Number(duration)
-            : 30,
-          JSON.stringify(cleanQuestions)
+
+          text(
+            teacherName,
+            150
+          ),
+
+          text(
+            title,
+            250
+          ),
+
+          text(
+            subject,
+            150
+          ),
+
+          text(
+            grade,
+            100
+          ),
+
+          finalDuration,
+
+          JSON.stringify(
+            cleanQuestions
+          )
         ]
       );
+
 
     const baseUrl =
       `${req.protocol}://${req.get("host")}`;
 
+
+    const link =
+      `${baseUrl}/?exam=${code}`;
+
+
     res.status(201).json({
+
       success: true,
 
       message:
         "Qormaanni uumameera.",
 
-      exam:
-        result.rows[0],
+      code,
 
-      link:
-        `${baseUrl}/?exam=${code}`
+      link,
+
+      exam:
+        result.rows[0]
+
     });
 
+
   } catch (error) {
+
     console.error(
-      "CREATE EXAM:",
+      "CREATE EXAM ERROR:",
       error
     );
 
     res.status(500).json({
       success: false,
-      message:
+      error:
         "Qormaata uumuu irratti rakkoon uumame."
     });
+
   }
+
 });
+
 
 // =====================================
 // GET EXAM
@@ -399,12 +667,15 @@ app.post("/api/exams", async (req, res) => {
 app.get(
   "/api/exams/:code",
   async (req, res) => {
+
     try {
+
       const code =
         text(
           req.params.code,
           20
         ).toUpperCase();
+
 
       const result =
         await pool.query(
@@ -425,58 +696,101 @@ app.get(
           [code]
         );
 
-      if (!result.rows.length) {
+
+      if (
+        result.rows.length === 0
+      ) {
+
         return res.status(404).json({
           success: false,
-          message:
+          error:
             "Qormaanni kun hin argamne."
         });
+
       }
+
 
       const exam =
         result.rows[0];
 
+
       // Studentf answer hin erginu.
+
       const questions =
-        exam.questions.map(q => ({
-          id: q.id,
-          number: q.number,
-          type: q.type,
-          question: q.question,
-          options: q.options,
-          points: q.points
-        }));
+        Array.isArray(exam.questions)
+          ? exam.questions.map(
+              q => ({
+
+                id:
+                  q.id,
+
+                number:
+                  q.number,
+
+                type:
+                  q.type,
+
+                question:
+                  q.question,
+
+                options:
+                  q.options,
+
+                points:
+                  q.points
+
+              })
+            )
+          : [];
+
 
       res.json({
+
         success: true,
 
-        exam: {
-          id: exam.id,
-          code: exam.code,
-          teacherName:
-            exam.teacher_name,
-          title: exam.title,
-          subject: exam.subject,
-          grade: exam.grade,
-          duration: exam.duration,
-          questions
-        }
+        id:
+          exam.id,
+
+        code:
+          exam.code,
+
+        teacherName:
+          exam.teacher_name,
+
+        title:
+          exam.title,
+
+        subject:
+          exam.subject,
+
+        grade:
+          exam.grade,
+
+        duration:
+          exam.duration,
+
+        questions
+
       });
 
     } catch (error) {
+
       console.error(
-        "GET EXAM:",
+        "GET EXAM ERROR:",
         error
       );
 
       res.status(500).json({
         success: false,
-        message:
+        error:
           "Qormaata furuun hin danda'amne."
       });
+
     }
+
   }
 );
+
 
 // =====================================
 // SUBMIT EXAM
@@ -485,12 +799,15 @@ app.get(
 app.post(
   "/api/exams/:code/submit",
   async (req, res) => {
+
     try {
+
       const code =
         text(
           req.params.code,
           20
         ).toUpperCase();
+
 
       const studentName =
         text(
@@ -498,27 +815,35 @@ app.post(
           150
         );
 
+
       const answers =
         req.body.answers;
 
+
       if (!studentName) {
+
         return res.status(400).json({
           success: false,
-          message:
+          error:
             "Maqaa barataa galchi."
         });
+
       }
+
 
       if (
         !answers ||
         typeof answers !== "object"
       ) {
+
         return res.status(400).json({
           success: false,
-          message:
+          error:
             "Deebiin qormaataa hin argamne."
         });
+
       }
+
 
       const examResult =
         await pool.query(
@@ -530,35 +855,50 @@ app.post(
           [code]
         );
 
-      if (!examResult.rows.length) {
+
+      if (
+        examResult.rows.length === 0
+      ) {
+
         return res.status(404).json({
           success: false,
-          message:
+          error:
             "Qormaanni hin argamne."
         });
+
       }
+
 
       const exam =
         examResult.rows[0];
 
+
       let score = 0;
+
       let totalPoints = 0;
+
       let correctAnswers = 0;
+
       let wrongAnswers = 0;
+
 
       const details = [];
 
+
       // =================================
-      // GAaffii GAaffiidhaan QORII
+      // CHECK EACH QUESTION
       // =================================
 
       for (
         const q of exam.questions
       ) {
+
         const points =
           Number(q.points) || 1;
 
+
         totalPoints += points;
+
 
         const studentAnswer =
           answers[q.id] === undefined
@@ -567,10 +907,12 @@ app.post(
                 answers[q.id]
               ).trim();
 
+
         const correctAnswer =
           String(
             q.answer || ""
           ).trim();
+
 
         const correct =
           studentAnswer
@@ -578,17 +920,27 @@ app.post(
           correctAnswer
             .toLowerCase();
 
+
         if (correct) {
+
           score += points;
+
           correctAnswers++;
+
         } else {
+
           wrongAnswers++;
+
         }
 
-        details.push({
-          questionId: q.id,
 
-          number: q.number,
+        details.push({
+
+          questionId:
+            q.id,
+
+          questionNumber:
+            q.number,
 
           question:
             q.question,
@@ -606,18 +958,24 @@ app.post(
           correct,
 
           earnedPoints:
-            correct ? points : 0,
+            correct
+              ? points
+              : 0,
 
           maxPoints:
             points
+
         });
+
       }
+
 
       const resultId =
         crypto.randomUUID();
 
+
       // =================================
-      // RESULT + DETAILS KUUSI
+      // SAVE RESULT
       // =================================
 
       await pool.query(
@@ -635,38 +993,71 @@ app.post(
           wrong_answers
         )
         VALUES
-        ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        (
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          $6,
+          $7,
+          $8,
+          $9
+        )
         `,
         [
+
           resultId,
+
           exam.id,
+
           studentName,
-          JSON.stringify(answers),
-          JSON.stringify(details),
+
+          JSON.stringify(
+            answers
+          ),
+
+          JSON.stringify(
+            details
+          ),
+
           score,
+
           totalPoints,
+
           correctAnswers,
+
           wrongAnswers
+
         ]
       );
+
 
       const percentage =
         totalPoints > 0
           ? Math.round(
-              (score /
-                totalPoints) *
-              100
+              (
+                score /
+                totalPoints
+              ) * 100
             )
           : 0;
 
+
       res.json({
+
         success: true,
 
         message:
           "Qormaanni xumurameera.",
 
+        id:
+          resultId,
+
         result: {
-          id: resultId,
+
+          id:
+            resultId,
 
           examCode:
             exam.code,
@@ -689,39 +1080,48 @@ app.post(
           totalQuestions:
             exam.questions.length,
 
-          // ⭐ GAaffii hundaa
           details
+
         }
+
       });
 
+
     } catch (error) {
+
       console.error(
-        "SUBMIT:",
+        "SUBMIT EXAM ERROR:",
         error
       );
 
       res.status(500).json({
         success: false,
-        message:
+        error:
           "Qormaata erguu irratti rakkoon uumame."
       });
+
     }
+
   }
 );
 
+
 // =====================================
-// TEACHER RESULTS
+// ALL RESULTS FOR TEACHER
 // =====================================
 
 app.get(
   "/api/exams/:code/results",
   async (req, res) => {
+
     try {
+
       const code =
         text(
           req.params.code,
           20
         ).toUpperCase();
+
 
       const examResult =
         await pool.query(
@@ -739,19 +1139,25 @@ app.get(
           [code]
         );
 
-      if (!examResult.rows.length) {
+
+      if (
+        examResult.rows.length === 0
+      ) {
+
         return res.status(404).json({
           success: false,
-          message:
+          error:
             "Qormaanni hin argamne."
         });
+
       }
+
 
       const exam =
         examResult.rows[0];
 
-      // ⭐ DETAILS Dabalatee fida
-      const results =
+
+      const result =
         await pool.query(
           `
           SELECT
@@ -771,343 +1177,296 @@ app.get(
           [exam.id]
         );
 
-      const data =
-        results.rows.map(r => ({
-          id: r.id,
 
-          studentName:
-            r.student_name,
+      const results =
+        result.rows.map(
+          r => ({
 
-          score:
-            r.score,
+            id:
+              r.id,
 
-          totalPoints:
-            r.total_points,
+            studentName:
+              r.student_name,
 
-          percentage:
-            r.total_points > 0
-              ? Math.round(
-                  (r.score /
-                    r.total_points) *
-                  100
-                )
-              : 0,
+            score:
+              r.score,
 
-          correctAnswers:
-            r.correct_answers,
+            totalPoints:
+              r.total_points,
 
-          wrongAnswers:
-            r.wrong_answers,
+            percentage:
+              r.total_points > 0
+                ? Math.round(
+                    (
+                      r.score /
+                      r.total_points
+                    ) * 100
+                  )
+                : 0,
 
-          submittedAt:
-            r.submitted_at,
+            correctAnswers:
+              r.correct_answers,
 
-          // ⭐ Kun baay'ee barbaachisaa dha
-          details:
-            Array.isArray(r.details)
-              ? r.details
-              : []
-        }));
+            wrongAnswers:
+              r.wrong_answers,
+
+            submittedAt:
+              r.submitted_at,
+
+            details:
+              Array.isArray(
+                r.details
+              )
+                ? r.details
+                : []
+
+          })
+        );
+
 
       res.json({
+
         success: true,
 
-        exam,
+        exam: {
+
+          id:
+            exam.id,
+
+          code:
+            exam.code,
+
+          title:
+            exam.title,
+
+          teacherName:
+            exam.teacher_name,
+
+          subject:
+            exam.subject,
+
+          grade:
+            exam.grade
+
+        },
 
         totalStudents:
-          data.length,
+          results.length,
 
-        results:
-          data
+        results
+
       });
 
+
     } catch (error) {
+
       console.error(
-        "RESULTS:",
+        "RESULTS ERROR:",
         error
       );
 
       res.status(500).json({
         success: false,
-        message:
+        error:
           "Bu'aa argachuu hin dandeenye."
       });
+
     }
+
   }
 );
 
+
 // =====================================
-// ONE RESULT
+// ONE STUDENT RESULT
 // =====================================
 
 app.get(
   "/api/results/:id",
   async (req, res) => {
+
     try {
+
       const result =
         await pool.query(
           `
           SELECT
             r.*,
+
             e.code,
             e.title,
             e.subject,
             e.grade,
             e.teacher_name,
             e.questions
+
           FROM results r
+
           JOIN exams e
             ON e.id = r.exam_id
+
           WHERE r.id = $1
           `,
           [req.params.id]
         );
 
-      if (!result.rows.length) {
+
+      if (
+        result.rows.length === 0
+      ) {
+
         return res.status(404).json({
           success: false,
-          message:
+          error:
             "Bu'aan hin argamne."
         });
+
       }
+
 
       const r =
         result.rows[0];
 
-      // Details duraan kuufame fayyadami.
-      // Yoo hin jirre, deebisanii shallagi.
+
       let details =
         Array.isArray(r.details)
           ? r.details
           : [];
 
-      if (details.length === 0) {
+
+      // Yoo details hin jirre,
+      // deebisanii uumi.
+
+      if (
+        details.length === 0 &&
+        Array.isArray(r.questions)
+      ) {
+
         details =
-          r.questions.map(q => {
-            const studentAnswer =
-              r.answers?.[q.id] || "";
+          r.questions.map(
+            q => {
 
-            const correct =
-              String(
+              const studentAnswer =
+                r.answers &&
+                r.answers[q.id]
+                  ? String(
+                      r.answers[q.id]
+                    ).trim()
+                  : "";
+
+
+              const correctAnswer =
+                String(
+                  q.answer || ""
+                ).trim();
+
+
+              const correct =
                 studentAnswer
-              )
-                .trim()
-                .toLowerCase() ===
-              String(
-                q.answer
-              )
-                .trim()
-                .toLowerCase();
+                  .toLowerCase() ===
+                correctAnswer
+                  .toLowerCase();
 
-            return {
-              questionId: q.id,
 
-              number: q.number,
+              return {
 
-              question:
-                q.question,
+                questionId:
+                  q.id,
 
-              type:
-                q.type,
+                questionNumber:
+                  q.number,
 
-              options:
-                q.options,
+                question:
+                  q.question,
 
-              studentAnswer,
+                type:
+                  q.type,
 
-              correctAnswer:
-                q.answer,
+                options:
+                  q.options,
 
-              correct,
+                studentAnswer,
 
-              earnedPoints:
-                correct
-                  ? q.points
-                  : 0,
+                correctAnswer,
 
-              maxPoints:
-                q.points
-            };
-          });
+                correct,
+
+                earnedPoints:
+                  correct
+                    ? q.points
+                    : 0,
+
+                maxPoints:
+                  q.points
+
+              };
+
+            }
+          );
+
       }
 
+
       res.json({
+
         success: true,
 
-        result: {
-          id: r.id,
+        id:
+          r.id,
 
-          examCode:
-            r.code,
+        examCode:
+          r.code,
 
-          examTitle:
-            r.title,
+        examTitle:
+          r.title,
 
-          subject:
-            r.subject,
+        subject:
+          r.subject,
 
-          grade:
-            r.grade,
+        grade:
+          r.grade,
 
-          teacherName:
-            r.teacher_name,
+        teacherName:
+          r.teacher_name,
 
-          studentName:
-            r.student_name,
+        studentName:
+          r.student_name,
 
-          score:
-            r.score,
+        score:
+          r.score,
 
-          totalPoints:
-            r.total_points,
+        totalPoints:
+          r.total_points,
 
-          percentage:
-            r.total_points > 0
-              ? Math.round(
-                  (r.score /
-                    r.total_points) *
-                  100
-                )
-              : 0,
+        percentage:
+          r.total_points > 0
+            ? Math.round(
+                (
+                  r.score /
+                  r.total_points
+                ) * 100
+              )
+            : 0,
 
-          correctAnswers:
-            r.correct_answers,
+        correctAnswers:
+          r.correct_answers,
 
-          wrongAnswers:
-            r.wrong_answers,
+        wrongAnswers:
+          r.wrong_answers,
 
-          submittedAt:
-            r.submitted_at,
+        submittedAt:
+          r.submitted_at,
 
-          details
-        }
+        details
+
       });
 
+
     } catch (error) {
+
       console.error(
-        "ONE RESULT:",
+        "ONE RESULT ERROR:",
         error
       );
 
-      res.status(500).json({
-        success: false,
-        message:
-          "Bu'aa argachuu hin dandeenye."
-      });
-    }
-  }
-);
-
-// =====================================
-// DELETE EXAM
-// =====================================
-
-app.delete(
-  "/api/exams/:code",
-  async (req, res) => {
-    try {
-      const code =
-        text(
-          req.params.code,
-          20
-        ).toUpperCase();
-
-      const result =
-        await pool.query(
-          `
-          DELETE FROM exams
-          WHERE code = $1
-          RETURNING id
-          `,
-          [code]
-        );
-
-      if (!result.rows.length) {
-        return res.status(404).json({
-          success: false,
-          message:
-            "Qormaanni hin argamne."
-        });
-      }
-
-      res.json({
-        success: true,
-        message:
-          "Qormaanni haqameera."
-      });
-
-    } catch (error) {
-      console.error(
-        "DELETE:",
-        error
-      );
-
-      res.status(500).json({
-        success: false,
-        message:
-          "Qormaata haquu hin dandeenye."
-      });
-    }
-  }
-);
-
-// =====================================
-// FRONTEND
-// =====================================
-
-app.use(
-  express.static(
-    path.join(
-      __dirname,
-      "public"
-    )
-  )
-);
-
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "public",
-      "index.html"
-    )
-  );
-});
-
-// =====================================
-// START SERVER
-// =====================================
-
-async function start() {
-  try {
-    console.log(
-      "Database initialization started..."
-    );
-
-    await initDatabase();
-
-    app.listen(
-      PORT,
-      "0.0.0.0",
-      () => {
-        console.log(
-          `OR server running on port ${PORT}`
-        );
-
-        console.log(
-          "Render PostgreSQL connected."
-        );
-      }
-    );
-
-  } catch (error) {
-    console.error(
-      "Server startup failed:",
-      error
-    );
-
-    process.exit(1);
-  }
-}
-
-start();
+      res
