@@ -8,12 +8,14 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta name="theme-color" content="#176b45">
+
   <meta
-    name="theme-color"
-    content="#176b45"
+    name="description"
+    content="OR - Sirna Qormaataa Barattootaa"
   >
 
-  <title>OR - Qormaata</title>
+  <title>OR - Sirna Qormaataa</title>
 
   <style>
     * {
@@ -22,58 +24,74 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f7f5;
-      color: #17221d;
+      font-family:
+        Arial,
+        "Noto Sans",
+        sans-serif;
+      background: #f4f7f5;
+      color: #17221c;
     }
 
     header {
       background: #176b45;
       color: white;
-      padding: 18px 15px;
+      padding: 16px;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,.12);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
     }
 
     header h1 {
       margin: 0;
-      font-size: 27px;
+      font-size: 25px;
     }
 
     header p {
-      margin: 6px 0 0;
-      opacity: .9;
+      margin: 5px 0 0;
+      font-size: 14px;
+      opacity: .95;
     }
 
     main {
-      max-width: 950px;
+      max-width: 850px;
       margin: auto;
-      padding: 18px;
+      padding: 15px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
     }
 
     .card {
       background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 16px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.07);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
     }
 
-    .menu {
+    .home-buttons {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
+      margin-top: 20px;
     }
 
     button {
       border: none;
-      border-radius: 11px;
-      padding: 13px 15px;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 15px;
+      cursor: pointer;
       background: #176b45;
       color: white;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 4px 2px;
+      font-weight: bold;
     }
 
     button:hover {
@@ -86,16 +104,18 @@
     }
 
     button.danger {
-      background: #b42318;
+      background: #c62828;
     }
 
     button.warning {
-      background: #a66b00;
+      background: #b77900;
     }
 
-    button.small-btn {
-      font-size: 13px;
-      padding: 9px 11px;
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: bold;
     }
 
     input,
@@ -103,142 +123,185 @@
     textarea {
       width: 100%;
       padding: 12px;
-      margin-top: 6px;
-      margin-bottom: 14px;
-      border: 1px solid #ccd8d2;
+      border: 1px solid #ccd7d1;
       border-radius: 9px;
       font-size: 15px;
+      outline: none;
       background: white;
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 100px;
       resize: vertical;
     }
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 8px;
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #176b45;
+      box-shadow: 0 0 0 2px rgba(23,107,69,.08);
     }
 
-    .question {
-      border: 1px solid #d9e3de;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 15px 0;
-      background: #fbfdfc;
-      scroll-margin-top: 20px;
-    }
-
-    .question-header {
+    .top-actions {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .question-area {
+      min-height: 120px;
+    }
+
+    .saved-list {
+      margin-bottom: 18px;
+    }
+
+    .saved-question {
+      border: 1px solid #b9d7c8;
+      background: #f0f8f3;
+      border-radius: 12px;
+      padding: 14px;
       margin-bottom: 10px;
     }
 
-    .question-header h3 {
-      margin: 0;
+    .saved-question-title {
+      color: #176b45;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .saved-answer {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .question-editor {
+      border: 2px solid #176b45;
+      border-radius: 14px;
+      padding: 16px;
+      background: white;
+    }
+
+    .question-editor h3 {
+      margin-top: 0;
       color: #176b45;
     }
 
-    .question-actions {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-
-    .option {
+    .option-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin: 8px 0;
-      padding: 10px;
-      background: #f0f5f2;
+      margin-top: 8px;
+    }
+
+    .option-letter {
+      width: 35px;
+      height: 35px;
+      min-width: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #176b45;
+      color: white;
       border-radius: 8px;
-    }
-
-    .option input {
-      width: auto;
-      margin: 0;
-    }
-
-    .answer-box {
-      background: #edf7f1;
-      border: 1px solid #c8e3d3;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .success {
-      background: #e5f7ec;
-      color: #12623e;
-      padding: 14px;
-      border-radius: 10px;
-      margin: 12px 0;
-    }
-
-    .error {
-      background: #fdecec;
-      color: #9d1c1c;
-      padding: 14px;
-      border-radius: 10px;
-      margin: 12px 0;
-    }
-
-    .info {
-      background: #edf5ff;
-      color: #174c78;
-      padding: 14px;
-      border-radius: 10px;
-      margin: 12px 0;
-    }
-
-    .result-number {
-      font-size: 40px;
       font-weight: bold;
-      color: #176b45;
-      text-align: center;
+    }
+
+    .question-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .next-question {
+      background: #176b45;
+      flex: 1;
+    }
+
+    .exam-info {
+      background: #eef7f1;
+      border-left: 4px solid #176b45;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .student-question {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .student-option {
+      display: block;
+      padding: 11px;
+      margin-top: 8px;
+      border: 1px solid #d4ddd8;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .student-option:hover {
+      background: #f0f8f3;
+    }
+
+    .student-option input {
+      width: auto;
+      margin-right: 8px;
     }
 
     .timer {
       position: sticky;
-      top: 5px;
-      z-index: 10;
-      background: #176b45;
-      color: white;
-      padding: 12px;
-      border-radius: 10px;
+      top: 78px;
+      z-index: 50;
+      background: #fff3cd;
+      color: #664d03;
+      border: 1px solid #ffe69c;
+      padding: 10px;
+      border-radius: 9px;
       text-align: center;
-      font-size: 19px;
+      font-weight: bold;
       margin-bottom: 15px;
     }
 
-    .timer.warning {
-      background: #a66b00;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 15px 0;
     }
 
-    .timer.danger {
-      background: #b42318;
+    .stat {
+      background: #f2f6f4;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 21px;
+      color: #176b45;
+    }
+
+    .result-table-wrap {
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
+      min-width: 650px;
     }
 
     th,
     td {
-      border: 1px solid #d5dfda;
-      padding: 9px;
+      padding: 10px;
+      border-bottom: 1px solid #dde5e0;
       text-align: left;
     }
 
@@ -247,172 +310,112 @@
       color: white;
     }
 
-    .small {
-      font-size: 13px;
-      color: #65756d;
-    }
-
-    .link-box {
-      word-break: break-all;
-      background: #f1f5f3;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
-
     .correct {
-      border-left: 5px solid #176b45;
-      background: #e8f7ee;
+      border-left: 5px solid #198754;
+      background: #effaf3;
     }
 
     .wrong {
-      border-left: 5px solid #b42318;
-      background: #fff0f0;
+      border-left: 5px solid #dc3545;
+      background: #fff1f2;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 15px 0;
-    }
-
-    .stat {
-      background: #f1f5f3;
-      padding: 15px;
+    .detail-item {
+      padding: 14px;
       border-radius: 10px;
-      text-align: center;
+      margin-bottom: 10px;
     }
 
-    .stat strong {
-      display: block;
-      font-size: 24px;
-      color: #176b45;
+    .detail-label {
+      font-weight: bold;
+      margin-top: 7px;
     }
 
-    .result-card {
-      border-radius: 12px;
-      padding: 15px;
-      margin: 12px 0;
-      border: 1px solid #d5dfda;
-      background: #fff;
-    }
-
-    .result-card.correct {
-      border-left: 6px solid #176b45;
-    }
-
-    .result-card.wrong {
-      border-left: 6px solid #b42318;
-    }
-
-    .result-status {
+    .badge {
       display: inline-block;
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 20px;
+      font-size: 12px;
       font-weight: bold;
-      margin-bottom: 8px;
     }
 
-    .result-status.correct-status {
-      background: #dff4e7;
-      color: #12623e;
+    .badge.correct-badge {
+      background: #d1e7dd;
+      color: #0f5132;
     }
 
-    .result-status.wrong-status {
-      background: #fde0e0;
-      color: #9d1c1c;
-    }
-
-    .student-result {
-      border: 1px solid #d5dfda;
-      border-radius: 13px;
-      padding: 15px;
-      margin: 15px 0;
-      background: white;
-    }
-
-    .student-result-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .student-result-header h3 {
-      margin: 0;
-      color: #176b45;
-    }
-
-    .score-badge {
-      background: #edf7f1;
-      color: #176b45;
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 20px;
-    }
-
-    .detail-panel {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #d5dfda;
+    .badge.wrong-badge {
+      background: #f8d7da;
+      color: #842029;
     }
 
     .filter-buttons {
       display: flex;
       gap: 7px;
       flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .filter-buttons button {
+      padding: 9px 12px;
+      font-size: 13px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 9px;
+      margin: 10px 0;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .message.error {
+      display: block;
+      background: #f8d7da;
+      color: #842029;
+    }
+
+    .link-box {
+      background: #f2f6f4;
+      padding: 12px;
+      border-radius: 9px;
+      word-break: break-all;
       margin: 10px 0;
     }
 
-    .filter-buttons button.active {
-      outline: 3px solid rgba(23,107,69,.18);
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #176b45;
+      font-weight: bold;
     }
 
     .empty {
       text-align: center;
       padding: 25px;
-      color: #65756d;
+      color: #68736d;
     }
 
-    .new-question-note {
-      text-align: center;
-      color: #176b45;
-      font-weight: bold;
-      margin: 8px 0;
-    }
-
-    @media(max-width:700px) {
-      .menu {
+    @media (max-width: 650px) {
+      .home-buttons {
         grid-template-columns: 1fr;
       }
 
       .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
       }
 
-      main {
-        padding: 10px;
-      }
-
-      .card {
-        padding: 15px;
-      }
-
-      table {
-        font-size: 13px;
-      }
-
-      .question-header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-    }
-
-    @media(max-width:450px) {
-      .stats {
-        grid-template-columns: 1fr;
+      header h1 {
+        font-size: 21px;
       }
     }
   </style>
@@ -428,402 +431,503 @@
 <main>
 
   <!-- HOME -->
+  <section id="homePage" class="page active">
 
-  <section id="home" class="card">
+    <div class="card">
+      <h2>👋 Baga Nagaan Dhuftan</h2>
 
-    <h2>👋 Baga Nagaan Dhufte</h2>
+      <p>
+        OR sirna qormaataa barsiisotaa fi barattootaati.
+        Barsiisaan qormaata uuma, barataan immoo koodii
+        qormaataa fayyadamuun qormaata fudhata.
+      </p>
 
-    <p>
-      OR keessatti qormaata uumi,
-      qormaata fudhadhu, bu'aa ilaali.
-    </p>
+      <div class="home-buttons">
+        <button onclick="showPage('createPage')">
+          ➕ Qormaata Uumi
+        </button>
 
-    <div class="menu">
+        <button onclick="showPage('takePage')">
+          📝 Qormaata Fudhadhu
+        </button>
 
-      <button onclick="showCreate()">
-        ➕ Qormaata Uumi
+        <button onclick="showPage('teacherPage')">
+          📊 Qormaata Koo
+        </button>
+
+        <button onclick="showPage('statusPage')">
+          ⚙️ Sirna Ilaali
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CREATE EXAM -->
+  <section id="createPage" class="page">
+
+    <div class="card">
+
+      <div class="top-actions">
+        <button
+          class="secondary"
+          onclick="showPage('homePage')"
+        >
+          ← Deebi'i
+        </button>
+      </div>
+
+      <h2>➕ Qormaata Uumi</h2>
+
+      <label>Maqaa Barsiisaa</label>
+      <input
+        id="teacherName"
+        placeholder="Maqaa barsiisaa"
+      >
+
+      <label>Mata Duree Qormaataa</label>
+      <input
+        id="examTitle"
+        placeholder="Fakkeenya: Qormaata Herregaa"
+      >
+
+      <label>Barnoota</label>
+      <input
+        id="subject"
+        placeholder="Fakkeenya: Herrega"
+      >
+
+      <label>Sadarkaa / Kutaa</label>
+      <input
+        id="grade"
+        placeholder="Fakkeenya: Kutaa 8"
+      >
+
+      <label>Yeroo Qormaataa (daqiiqaa)</label>
+      <input
+        id="duration"
+        type="number"
+        min="1"
+        value="30"
+      >
+
+    </div>
+
+    <!-- SAVED QUESTIONS -->
+    <div class="card">
+
+      <h2>📚 Gaaffiiwwan Kuufaman</h2>
+
+      <div id="savedQuestions">
+        <div class="empty">
+          Ammaaf gaaffiin hin kuufamne.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CURRENT QUESTION -->
+    <div class="card">
+
+      <div id="questionEditorArea"></div>
+
+    </div>
+
+    <!-- CREATE -->
+    <div class="card">
+
+      <button
+        id="createExamBtn"
+        onclick="createExam()"
+        style="width:100%;"
+      >
+        🚀 Qormaata Uumi
       </button>
 
-      <button onclick="showJoin()">
-        📝 Qormaata Fudhadhu
+      <div id="createMessage" class="message"></div>
+
+    </div>
+
+    <!-- CREATED EXAM -->
+    <div
+      id="createdExamCard"
+      class="card hidden"
+    >
+
+      <h2>✅ Qormaanni Uumameera</h2>
+
+      <p>
+        Koodii qormaataa:
+      </p>
+
+      <div
+        id="createdExamCode"
+        class="link-box"
+      ></div>
+
+      <p>
+        Liinkii qormaataa:
+      </p>
+
+      <div
+        id="createdExamLink"
+        class="link-box"
+      ></div>
+
+      <button onclick="copyExamLink()">
+        📋 Liinkii Kooppii Godhi
       </button>
 
-      <button onclick="showTeacherResults()">
-        📊 Qormaata Koo
+    </div>
+
+  </section>
+
+  <!-- TAKE EXAM -->
+  <section id="takePage" class="page">
+
+    <div class="card">
+
+      <div class="top-actions">
+        <button
+          class="secondary"
+          onclick="showPage('homePage')"
+        >
+          ← Deebi'i
+        </button>
+      </div>
+
+      <h2>📝 Qormaata Fudhadhu</h2>
+
+      <label>Koodii Qormaataa</label>
+
+      <input
+        id="joinCode"
+        placeholder="Fakkeenya: A1B2C3D4"
+        style="text-transform:uppercase;"
+      >
+
+      <label>Maqaa Barataa</label>
+
+      <input
+        id="studentName"
+        placeholder="Maqaa kee"
+      >
+
+      <button
+        onclick="loadExam()"
+        style="width:100%;margin-top:15px;"
+      >
+        🔍 Qormaata Bani
       </button>
+
+      <div id="takeMessage" class="message"></div>
+
+    </div>
+
+  </section>
+
+  <!-- EXAM -->
+  <section id="examPage" class="page">
+
+    <div class="card">
+
+      <div id="timer" class="timer">
+        ⏱️ 00:00
+      </div>
+
+      <div id="examInfo" class="exam-info"></div>
+
+      <div id="studentQuestions"></div>
+
+      <button
+        onclick="submitExam()"
+        style="width:100%;"
+      >
+        ✅ Qormaata Xumuri
+      </button>
+
+      <div id="submitMessage" class="message"></div>
+
+    </div>
+
+  </section>
+
+  <!-- STUDENT RESULT -->
+  <section id="studentResultPage" class="page">
+
+    <div class="card">
+
+      <h2>📊 Bu'aa Qormaataa</h2>
+
+      <div id="studentResult"></div>
+
+      <button
+        onclick="showPage('homePage')"
+        style="width:100%;margin-top:15px;"
+      >
+        🏠 Gara Jalqabaatti
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- TEACHER RESULTS -->
+  <section id="teacherPage" class="page">
+
+    <div class="card">
+
+      <div class="top-actions">
+        <button
+          class="secondary"
+          onclick="showPage('homePage')"
+        >
+          ← Deebi'i
+        </button>
+      </div>
+
+      <h2>📊 Qormaata Koo</h2>
+
+      <label>Koodii Qormaataa</label>
+
+      <input
+        id="teacherExamCode"
+        placeholder="Koodii qormaataa"
+        style="text-transform:uppercase;"
+      >
+
+      <button
+        onclick="loadTeacherResults()"
+        style="width:100%;margin-top:15px;"
+      >
+        🔍 Bu'aa Ilaali
+      </button>
+
+      <div id="teacherMessage" class="message"></div>
+
+    </div>
+
+    <div
+      id="teacherResultsCard"
+      class="card hidden"
+    >
+
+      <div id="teacherExamInfo"></div>
+
+      <div id="teacherResultsTable"></div>
+
+    </div>
+
+    <!-- ONE STUDENT DETAILS -->
+    <div
+      id="teacherDetailCard"
+      class="card hidden"
+    >
 
       <button
         class="secondary"
-        onclick="checkServer()"
+        onclick="closeTeacherDetail()"
       >
-        ⚙️ Sirna Ilaali
+        ← Gara Tarree Deebi'i
       </button>
 
+      <div id="teacherDetail"></div>
+
     </div>
 
   </section>
-
-
-  <!-- CREATE -->
-
-  <section id="create" class="card hidden">
-
-    <h2>➕ Qormaata Uumi</h2>
-
-    <label>Maqaa Barsiisaa</label>
-
-    <input
-      id="teacherName"
-      placeholder="Maqaa barsiisaa"
-    >
-
-    <label>Mata Duree Qormaataa</label>
-
-    <input
-      id="examTitle"
-      placeholder="Fakkeenya: Qormaata Herrega"
-    >
-
-    <label>Barnoota</label>
-
-    <input
-      id="subject"
-      placeholder="Herrega"
-    >
-
-    <label>Sadarkaa / Kutaa</label>
-
-    <input
-      id="grade"
-      placeholder="Kutaa 8"
-    >
-
-    <label>Yeroo Qormaataa (daqiiqaa)</label>
-
-    <input
-      id="duration"
-      type="number"
-      value="30"
-      min="1"
-    >
-
-    <hr>
-
-    <h3>📚 Gaaffilee Qormaataa</h3>
-
-    <div id="questions"></div>
-
-    <div class="new-question-note">
-      ↓ Gaaffiin haaraan asitti itti aana ↓
-    </div>
-
-    <button
-      class="secondary"
-      onclick="addQuestion(true)"
-    >
-      ➕ Gaaffii Itti Aanuu Dabal
-    </button>
-
-    <br><br>
-
-    <button onclick="createExam()">
-      ✅ Qormaata Uumi
-    </button>
-
-    <button
-      class="secondary"
-      onclick="goHome()"
-    >
-      ← Deebi'i
-    </button>
-
-    <div id="createMessage"></div>
-
-  </section>
-
-
-  <!-- JOIN -->
-
-  <section id="join" class="card hidden">
-
-    <h2>📝 Qormaata Fudhadhu</h2>
-
-    <label>Maqaa Barataa</label>
-
-    <input
-      id="studentName"
-      placeholder="Maqaa kee"
-    >
-
-    <label>Exam Code</label>
-
-    <input
-      id="examCode"
-      placeholder="Fakkeenya: A1B2C3D4"
-      style="text-transform:uppercase"
-    >
-
-    <button onclick="loadExam()">
-      🔍 Qormaata Bani
-    </button>
-
-    <button
-      class="secondary"
-      onclick="goHome()"
-    >
-      ← Deebi'i
-    </button>
-
-    <div id="joinMessage"></div>
-
-  </section>
-
-
-  <!-- EXAM -->
-
-  <section id="exam" class="card hidden">
-
-    <div id="examInfo"></div>
-
-    <div
-      id="timer"
-      class="timer"
-    >
-      ⏱️ 00:00
-    </div>
-
-    <div id="examQuestions"></div>
-
-    <button onclick="submitExam()">
-      📤 Qormaata Xumuri
-    </button>
-
-  </section>
-
-
-  <!-- RESULT -->
-
-  <section id="result" class="card hidden">
-
-    <h2>🎉 Bu'aa Qormaataa</h2>
-
-    <div id="resultContent"></div>
-
-    <button onclick="goHome()">
-      🏠 Gara Manaa
-    </button>
-
-  </section>
-
-
-  <!-- TEACHER RESULTS -->
-
-  <section id="teacherResults" class="card hidden">
-
-    <h2>📊 Qormaata Koo</h2>
-
-    <p class="small">
-      Exam Code galchi. Sana booda barataa tokko
-      filachuun bu'aa isaa gaaffii-gaaffiidhaan ilaali.
-    </p>
-
-    <label>Exam Code</label>
-
-    <input
-      id="teacherCode"
-      placeholder="Exam Code"
-      style="text-transform:uppercase"
-    >
-
-    <button onclick="loadTeacherResults()">
-      🔍 Bu'aa Ilaali
-    </button>
-
-    <button
-      class="secondary"
-      onclick="goHome()"
-    >
-      ← Deebi'i
-    </button>
-
-    <div id="teacherResultContent"></div>
-
-  </section>
-
 
   <!-- STATUS -->
+  <section id="statusPage" class="page">
 
-  <section id="status" class="card hidden">
+    <div class="card">
 
-    <h2>⚙️ Haala Sirnaa</h2>
+      <button
+        class="secondary"
+        onclick="showPage('homePage')"
+      >
+        ← Deebi'i
+      </button>
 
-    <div id="statusContent"></div>
+      <h2>⚙️ Haala Sirnaa</h2>
 
-    <button onclick="goHome()">
-      ← Deebi'i
-    </button>
+      <button
+        onclick="checkStatus()"
+        style="width:100%;"
+      >
+        🔄 Sirna Sakatta'i
+      </button>
+
+      <div
+        id="statusResult"
+        style="margin-top:15px;"
+      ></div>
+
+    </div>
 
   </section>
 
 </main>
 
-
 <script>
 
+  const API = "";
+
   let currentExam = null;
-  let timerInterval = null;
+  let examTimer = null;
   let remainingSeconds = 0;
-  let submitting = false;
 
+  let savedQuestions = [];
 
-  /* =========================
-     PAGE NAVIGATION
-  ========================= */
+  let teacherResultsData = [];
+  let currentTeacherFilter = "all";
 
-  function hideAll() {
+  /*
+  =========================================
+  PAGE NAVIGATION
+  =========================================
+  */
 
-    [
-      "home",
-      "create",
-      "join",
-      "exam",
-      "result",
-      "teacherResults",
-      "status"
-    ].forEach(id => {
+  function showPage(id) {
 
-      document
-        .getElementById(id)
-        .classList.add("hidden");
+    document
+      .querySelectorAll(".page")
+      .forEach(page => {
+        page.classList.remove("active");
+      });
 
+    const page = document.getElementById(id);
+
+    if (page) {
+      page.classList.add("active");
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
     });
-
   }
 
 
-  function goHome() {
+  /*
+  =========================================
+  MESSAGE
+  =========================================
+  */
 
-    hideAll();
+  function showMessage(
+    elementId,
+    message,
+    type = "success"
+  ) {
 
-    document
-      .getElementById("home")
-      .classList.remove("hidden");
+    const el =
+      document.getElementById(elementId);
 
-    if (timerInterval) {
+    if (!el) return;
 
-      clearInterval(timerInterval);
-      timerInterval = null;
+    el.textContent = message;
 
+    el.className =
+      "message " + type;
+  }
+
+
+  /*
+  =========================================
+  ESCAPE HTML
+  =========================================
+  */
+
+  function escapeHtml(value) {
+
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /*
+  =========================================
+  QUESTION ID
+  =========================================
+  */
+
+  function makeQuestionId() {
+
+    if (
+      window.crypto &&
+      crypto.randomUUID
+    ) {
+      return crypto.randomUUID();
     }
 
-    submitting = false;
+    return (
+      "q-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .slice(2)
+    );
   }
 
 
-  function showCreate() {
+  /*
+  =========================================
+  FIRST QUESTION
+  =========================================
+  */
 
-    hideAll();
+  function initQuestionEditor() {
 
-    document
-      .getElementById("create")
-      .classList.remove("hidden");
-
-    const container =
-      document.getElementById("questions");
-
-    if (container.children.length === 0) {
-      addQuestion(false);
+    if (savedQuestions.length === 0) {
+      createNewQuestionEditor();
     }
 
+    renderSavedQuestions();
   }
 
 
-  function showJoin() {
+  /*
+  =========================================
+  CREATE ONE QUESTION EDITOR
+  =========================================
+  */
 
-    hideAll();
+  function createNewQuestionEditor() {
 
-    document
-      .getElementById("join")
-      .classList.remove("hidden");
-
-    const params =
-      new URLSearchParams(
-        window.location.search
+    const area =
+      document.getElementById(
+        "questionEditorArea"
       );
 
-    const code = params.get("exam");
+    area.innerHTML = "";
 
-    if (code) {
-
-      document.getElementById(
-        "examCode"
-      ).value = code.toUpperCase();
-
-    }
-
-  }
-
-
-  function showTeacherResults() {
-
-    hideAll();
-
-    document
-      .getElementById("teacherResults")
-      .classList.remove("hidden");
-
-  }
-
-
-  /* =========================
-     ADD QUESTION
-  ========================= */
-
-  function addQuestion(scrollToNew = true) {
-
-    const container =
-      document.getElementById("questions");
-
-    const number =
-      container.children.length + 1;
-
-    const div =
+    const editor =
       document.createElement("div");
 
-    div.className = "question";
+    editor.className =
+      "question-editor";
 
-    div.dataset.questionNumber = number;
+    editor.dataset.id =
+      makeQuestionId();
 
-    div.innerHTML = `
+    editor.innerHTML = `
 
-      <div class="question-header">
+      <h3>
+        📝 Gaaffii ${savedQuestions.length + 1}
+      </h3>
 
-        <h3>
-          📌 Gaaffii ${number}
-        </h3>
+      <label>Gaaffii</label>
 
-        <div class="question-actions">
-
-          <button
-            type="button"
-            class="secondary small-btn"
-            onclick="addQuestion(true)"
-          >
-            ➕ Itti Aanuu
-          </button>
-
-          <button
-            type="button"
-            class="danger small-btn"
-            onclick="removeQuestion(this)"
-          >
-            🗑️ Haqi
-          </button>
-
-        </div>
-
-      </div>
-
+      <textarea
+        class="q-text"
+        placeholder="Gaaffii kee as irratti barreessi..."
+      ></textarea>
 
       <label>Gosa Gaaffii</label>
 
@@ -831,7 +935,6 @@
         class="q-type"
         onchange="changeQuestionType(this)"
       >
-
         <option value="multiple">
           Multiple Choice
         </option>
@@ -839,656 +942,617 @@
         <option value="truefalse">
           Dhugaa / Soba
         </option>
-
       </select>
 
+      <div class="multiple-area">
 
-      <label>Gaaffii</label>
+        <label>Filannoo A</label>
 
-      <textarea
-        class="q-text"
-        placeholder="Gaaffii kee barreessi..."
-      ></textarea>
+        <div class="option-row">
+          <span class="option-letter">A</span>
+          <input
+            class="q-option"
+            data-letter="A"
+            placeholder="Filannoo A"
+            oninput="syncAnswerChoices(this)"
+          >
+        </div>
 
+        <div class="option-row">
+          <span class="option-letter">B</span>
+          <input
+            class="q-option"
+            data-letter="B"
+            placeholder="Filannoo B"
+            oninput="syncAnswerChoices(this)"
+          >
+        </div>
 
-      <div class="options">
+        <div class="option-row">
+          <span class="option-letter">C</span>
+          <input
+            class="q-option"
+            data-letter="C"
+            placeholder="Filannoo C"
+            oninput="syncAnswerChoices(this)"
+          >
+        </div>
 
-        ${multipleOptionsHtml()}
+        <div class="option-row">
+          <span class="option-letter">D</span>
+          <input
+            class="q-option"
+            data-letter="D"
+            placeholder="Filannoo D"
+            oninput="syncAnswerChoices(this)"
+          >
+        </div>
+
+        <label>Deebii Sirrii</label>
+
+        <select class="q-answer">
+          <option value="">
+            -- Filadhu --
+          </option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
 
       </div>
 
+      <div class="truefalse-area hidden">
 
-      <div class="answer-box">
+        <label>Deebii Sirrii</label>
 
-        ${multipleAnswerHtml()}
+        <select class="q-truefalse-answer">
+          <option value="">
+            -- Filadhu --
+          </option>
+
+          <option value="Dhugaa">
+            Dhugaa
+          </option>
+
+          <option value="Soba">
+            Soba
+          </option>
+        </select>
 
       </div>
 
-
-      <label>
-        💯 Qabxii
-      </label>
+      <label>Qabxii</label>
 
       <input
         class="q-points"
         type="number"
-        value="1"
         min="1"
-        step="1"
+        value="1"
       >
+
+      <div class="question-buttons">
+
+        <button
+          class="next-question"
+          onclick="saveCurrentQuestion()"
+        >
+          💾 Kuusi Gaaffii
+        </button>
+
+      </div>
 
     `;
 
-    // Gaaffii haaraa yeroo hunda
-    // gaaffiiwwan jiran booda irratti dabala.
-    container.appendChild(div);
+    area.appendChild(editor);
 
-    updateQuestionNumbers();
-
-    if (scrollToNew) {
-
-      setTimeout(() => {
-
-        div.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-        const textarea =
-          div.querySelector(".q-text");
-
-        if (textarea) {
-          textarea.focus();
-        }
-
-      }, 50);
-
-    }
-
+    setTimeout(() => {
+      editor
+        .querySelector(".q-text")
+        ?.focus();
+    }, 100);
   }
 
 
-  function multipleOptionsHtml() {
-
-    return `
-
-      <label>Filannoo A</label>
-
-      <input
-        class="option-a"
-        placeholder="Filannoo A"
-      >
-
-
-      <label>Filannoo B</label>
-
-      <input
-        class="option-b"
-        placeholder="Filannoo B"
-      >
-
-
-      <label>Filannoo C</label>
-
-      <input
-        class="option-c"
-        placeholder="Filannoo C"
-      >
-
-
-      <label>Filannoo D</label>
-
-      <input
-        class="option-d"
-        placeholder="Filannoo D"
-      >
-
-    `;
-
-  }
-
-
-  function multipleAnswerHtml() {
-
-    return `
-
-      <label>
-        ✅ Deebii Sirrii
-      </label>
-
-      <select class="q-answer-select">
-
-        <option value="">
-          -- Deebii sirrii filadhu --
-        </option>
-
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-
-      </select>
-
-    `;
-
-  }
-
-
-  function trueFalseAnswerHtml() {
-
-    return `
-
-      <label>
-        ✅ Deebii Sirrii
-      </label>
-
-      <select class="q-answer-select">
-
-        <option value="">
-          -- Deebii sirrii filadhu --
-        </option>
-
-        <option value="Dhugaa">
-          Dhugaa
-        </option>
-
-        <option value="Soba">
-          Soba
-        </option>
-
-      </select>
-
-    `;
-
-  }
-
-
-  function removeQuestion(button) {
-
-    const question =
-      button.closest(".question");
-
-    if (!question) return;
-
-    const container =
-      document.getElementById("questions");
-
-    if (container.children.length <= 1) {
-
-      alert(
-        "Qormaanni yoo xiqqaate gaaffii tokko qabaachuu qaba."
-      );
-
-      return;
-    }
-
-    question.remove();
-
-    updateQuestionNumbers();
-
-  }
-
-
-  function updateQuestionNumbers() {
-
-    const questions =
-      document.querySelectorAll(
-        "#questions .question"
-      );
-
-    questions.forEach(
-      (question, index) => {
-
-        const title =
-          question.querySelector(
-            ".question-header h3"
-          );
-
-        if (title) {
-
-          title.textContent =
-            `📌 Gaaffii ${index + 1}`;
-
-        }
-
-        question.dataset.questionNumber =
-          index + 1;
-
-      }
-    );
-
-  }
-
-
-  /* =========================
-     QUESTION TYPE
-  ========================= */
+  /*
+  =========================================
+  CHANGE QUESTION TYPE
+  =========================================
+  */
 
   function changeQuestionType(select) {
 
-    const question =
-      select.closest(".question");
+    const editor =
+      select.closest(
+        ".question-editor"
+      );
 
-    if (!question) return;
+    const multiple =
+      editor.querySelector(
+        ".multiple-area"
+      );
 
-    const options =
-      question.querySelector(".options");
-
-    const answerBox =
-      question.querySelector(".answer-box");
-
+    const truefalse =
+      editor.querySelector(
+        ".truefalse-area"
+      );
 
     if (select.value === "truefalse") {
 
-      options.innerHTML = `
+      multiple.classList.add(
+        "hidden"
+      );
 
-        <div class="info">
-
-          Filannoo qormaataa:
-
-          <b>Dhugaa</b>
-          ykn
-          <b>Soba</b>
-
-        </div>
-
-      `;
-
-      answerBox.innerHTML =
-        trueFalseAnswerHtml();
+      truefalse.classList.remove(
+        "hidden"
+      );
 
     } else {
 
-      options.innerHTML =
-        multipleOptionsHtml();
+      truefalse.classList.add(
+        "hidden"
+      );
 
-      answerBox.innerHTML =
-        multipleAnswerHtml();
-
+      multiple.classList.remove(
+        "hidden"
+      );
     }
-
   }
 
 
-  /* =========================
-     CREATE EXAM
-  ========================= */
+  /*
+  =========================================
+  SYNC ANSWER CHOICES
+  =========================================
+  */
+
+  function syncAnswerChoices(input) {
+
+    const editor =
+      input.closest(
+        ".question-editor"
+      );
+
+    if (!editor) return;
+
+    const answer =
+      editor.querySelector(
+        ".q-answer"
+      );
+
+    const options =
+      editor.querySelectorAll(
+        ".q-option"
+      );
+
+    options.forEach(option => {
+
+      const letter =
+        option.dataset.letter;
+
+      const choice =
+        [...answer.options]
+          .find(
+            x => x.value === letter
+          );
+
+      if (choice) {
+        choice.disabled =
+          !option.value.trim();
+      }
+
+    });
+
+    if (
+      answer.value &&
+      ![
+        ...options
+      ].some(
+        option =>
+          option.dataset.letter ===
+            answer.value &&
+          option.value.trim()
+      )
+    ) {
+      answer.value = "";
+    }
+  }
+
+
+  /*
+  =========================================
+  SAVE CURRENT QUESTION
+  =========================================
+  */
+
+  function saveCurrentQuestion() {
+
+    const editor =
+      document.querySelector(
+        ".question-editor"
+      );
+
+    if (!editor) return;
+
+    const question =
+      editor.querySelector(
+        ".q-text"
+      ).value.trim();
+
+    const type =
+      editor.querySelector(
+        ".q-type"
+      ).value;
+
+    const points =
+      Number(
+        editor.querySelector(
+          ".q-points"
+        ).value
+      ) || 1;
+
+    if (!question) {
+
+      alert(
+        "Mee gaaffii barreessi."
+      );
+
+      editor
+        .querySelector(".q-text")
+        .focus();
+
+      return;
+    }
+
+    let answer = "";
+    let options = [];
+
+    if (type === "truefalse") {
+
+      answer =
+        editor.querySelector(
+          ".q-truefalse-answer"
+        ).value;
+
+      options = [
+        "Dhugaa",
+        "Soba"
+      ];
+
+      if (!answer) {
+
+        alert(
+          "Mee deebii sirrii filadhu."
+        );
+
+        return;
+      }
+
+    } else {
+
+      const optionInputs =
+        [
+          ...editor.querySelectorAll(
+            ".q-option"
+          )
+        ];
+
+      const values =
+        optionInputs.map(
+          x => x.value.trim()
+        );
+
+      /*
+       * Filannoo gidduu duwwaa
+       * akka hin jiraanne mirkaneessa.
+       */
+
+      let gap = false;
+
+      for (
+        let i = 0;
+        i < values.length;
+        i++
+      ) {
+
+        if (
+          !values[i] &&
+          values
+            .slice(i + 1)
+            .some(Boolean)
+        ) {
+          gap = true;
+          break;
+        }
+      }
+
+      if (gap) {
+
+        alert(
+          "Filannoowwan A hanga D tartiibaan guuti. Filannoo gidduu duwwaa hin dhiisin."
+        );
+
+        return;
+      }
+
+      options =
+        values.filter(Boolean);
+
+      if (options.length < 2) {
+
+        alert(
+          "Yoo xiqqaate filannoo lama galchi."
+        );
+
+        return;
+      }
+
+      const selected =
+        editor.querySelector(
+          ".q-answer"
+        ).value;
+
+      if (!selected) {
+
+        alert(
+          "Mee deebii sirrii filadhu."
+        );
+
+        return;
+      }
+
+      const selectedIndex =
+        "ABCD".indexOf(selected);
+
+      if (
+        selectedIndex < 0 ||
+        !values[selectedIndex]
+      ) {
+
+        alert(
+          "Deebiin sirrii filannoo guutame keessaa ta'uu qaba."
+        );
+
+        return;
+      }
+
+      answer =
+        values[selectedIndex];
+    }
+
+    const saved = {
+
+      id:
+        editor.dataset.id ||
+        makeQuestionId(),
+
+      type,
+
+      question,
+
+      options,
+
+      answer,
+
+      points
+
+    };
+
+    savedQuestions.push(saved);
+
+    /*
+     * Gaaffii duraanii kuufame.
+     * Amma editor haaraa qofa bana.
+     */
+
+    renderSavedQuestions();
+
+    createNewQuestionEditor();
+
+    /*
+     * Battalumatti bakka gaaffii
+     * itti aanu irratti geessa.
+     */
+
+    setTimeout(() => {
+
+      document
+        .querySelector(
+          ".question-editor"
+        )
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+    }, 100);
+  }
+
+
+  /*
+  =========================================
+  RENDER SAVED QUESTIONS
+  =========================================
+  */
+
+  function renderSavedQuestions() {
+
+    const container =
+      document.getElementById(
+        "savedQuestions"
+      );
+
+    if (
+      savedQuestions.length === 0
+    ) {
+
+      container.innerHTML = `
+        <div class="empty">
+          Ammaaf gaaffiin hin kuufamne.
+        </div>
+      `;
+
+      return;
+    }
+
+    container.innerHTML =
+      savedQuestions
+        .map(
+          (q, index) => {
+
+            const answerText =
+              q.type === "multiple"
+                ? `Deebii sirrii: ${escapeHtml(q.answer)}`
+                : `Deebii sirrii: ${escapeHtml(q.answer)}`;
+
+            return `
+
+              <div class="saved-question">
+
+                <div
+                  class="saved-question-title"
+                >
+                  Gaaffii ${index + 1}
+                  ✅ Kuufame
+                </div>
+
+                <div>
+                  ${escapeHtml(
+                    q.question
+                  )}
+                </div>
+
+                ${
+                  q.type === "multiple"
+                    ? `
+                      <div class="saved-answer">
+                        A. ${escapeHtml(q.options[0] || "")}
+                        <br>
+                        B. ${escapeHtml(q.options[1] || "")}
+                        ${
+                          q.options[2]
+                            ? `<br>C. ${escapeHtml(q.options[2])}`
+                            : ""
+                        }
+                        ${
+                          q.options[3]
+                            ? `<br>D. ${escapeHtml(q.options[3])}`
+                            : ""
+                        }
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="saved-answer">
+                  ${answerText}
+                  · Qabxii: ${q.points}
+                </div>
+
+              </div>
+
+            `;
+          }
+        )
+        .join("");
+  }
+
+
+  /*
+  =========================================
+  CREATE EXAM
+  =========================================
+  */
 
   async function createExam() {
 
-    const message =
-      document.getElementById(
-        "createMessage"
+    if (
+      savedQuestions.length === 0
+    ) {
+
+      showMessage(
+        "createMessage",
+        "Duraan dursee gaaffii tokko kuusi.",
+        "error"
       );
 
-    message.innerHTML = "";
-
+      return;
+    }
 
     const teacherName =
-      document.getElementById(
-        "teacherName"
-      ).value.trim();
-
+      document
+        .getElementById(
+          "teacherName"
+        )
+        .value.trim();
 
     const title =
-      document.getElementById(
-        "examTitle"
-      ).value.trim();
-
+      document
+        .getElementById(
+          "examTitle"
+        )
+        .value.trim();
 
     const subject =
-      document.getElementById(
-        "subject"
-      ).value.trim();
-
+      document
+        .getElementById(
+          "subject"
+        )
+        .value.trim();
 
     const grade =
-      document.getElementById(
-        "grade"
-      ).value.trim();
-
+      document
+        .getElementById(
+          "grade"
+        )
+        .value.trim();
 
     const duration =
       Number(
-        document.getElementById(
-          "duration"
-        ).value
+        document
+          .getElementById(
+            "duration"
+          )
+          .value
+      ) || 30;
+
+    if (!teacherName) {
+
+      showMessage(
+        "createMessage",
+        "Maqaa barsiisaa galchi.",
+        "error"
       );
 
+      return;
+    }
 
-    if (!teacherName || !title) {
+    if (!title) {
 
-      message.innerHTML = `
-        <div class="error">
-          ❌ Maqaa barsiisaa fi mata duree guuti.
-        </div>
-      `;
+      showMessage(
+        "createMessage",
+        "Mata duree qormaataa galchi.",
+        "error"
+      );
 
       return;
     }
 
-
-    if (!duration || duration < 1) {
-
-      message.innerHTML = `
-        <div class="error">
-          ❌ Yeroo qormaataa sirriitti galchi.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    const blocks =
-      [
-        ...document.querySelectorAll(
-          "#questions .question"
-        )
-      ];
-
-
-    if (!blocks.length) {
-
-      message.innerHTML = `
-        <div class="error">
-          ❌ Yoo xiqqaate gaaffii tokko dabali.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    const questions = [];
-
-
-    for (
-      let i = 0;
-      i < blocks.length;
-      i++
-    ) {
-
-      const block = blocks[i];
-
-
-      const type =
-        block.querySelector(
-          ".q-type"
-        ).value;
-
-
-      const question =
-        block.querySelector(
-          ".q-text"
-        ).value.trim();
-
-
-      const points =
-        Number(
-          block.querySelector(
-            ".q-points"
-          ).value
-        );
-
-
-      const answerSelect =
-        block.querySelector(
-          ".q-answer-select"
-        );
-
-
-      const selectedAnswer =
-        answerSelect.value;
-
-
-      if (!question) {
-
-        message.innerHTML = `
-          <div class="error">
-            ❌ Gaaffii ${i + 1}
-            hin guutamne.
-          </div>
-        `;
-
-        block.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-        return;
-      }
-
-
-      if (!points || points < 1) {
-
-        message.innerHTML = `
-          <div class="error">
-            ❌ Qabxii gaaffii ${i + 1}
-            sirreessi.
-          </div>
-        `;
-
-        block.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-        return;
-      }
-
-
-      let options = [];
-      let answer = "";
-
-
-      /* =====================
-         MULTIPLE CHOICE
-      ===================== */
-
-      if (type === "multiple") {
-
-        const optionInputs = [
-          block.querySelector(".option-a"),
-          block.querySelector(".option-b"),
-          block.querySelector(".option-c"),
-          block.querySelector(".option-d")
-        ];
-
-
-        const values =
-          optionInputs.map(
-            input =>
-              input
-                ? input.value.trim()
-                : ""
-          );
-
-
-        // Filannoon gidduutti duwwaa
-        // akka hin hafne mirkaneessi.
-        let gapFound = false;
-
-        for (
-          let j = 0;
-          j < values.length;
-          j++
-        ) {
-
-          if (!values[j]) {
-
-            for (
-              let k = j + 1;
-              k < values.length;
-              k++
-            ) {
-
-              if (values[k]) {
-                gapFound = true;
-              }
-
-            }
-
-          }
-
-        }
-
-
-        if (gapFound) {
-
-          message.innerHTML = `
-            <div class="error">
-              ❌ Gaaffii ${i + 1} keessatti
-              filannoo A, B, C, D walitti aansee
-              guuti. Filannoo gidduutti duwwaa hin dhiisin.
-            </div>
-          `;
-
-          block.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-          return;
-        }
-
-
-        options =
-          values.filter(Boolean);
-
-
-        if (options.length < 2) {
-
-          message.innerHTML = `
-            <div class="error">
-              ❌ Gaaffii ${i + 1}
-              irratti yoo xiqqaate
-              filannoo 2 galchi.
-            </div>
-          `;
-
-          block.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-          return;
-        }
-
-
-        if (!selectedAnswer) {
-
-          message.innerHTML = `
-            <div class="error">
-              ❌ Gaaffii ${i + 1}
-              irratti deebii sirrii filadhu.
-            </div>
-          `;
-
-          block.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-          return;
-        }
-
-
-        const answerIndex =
-          selectedAnswer.charCodeAt(0) - 65;
-
-
-        if (
-          answerIndex < 0 ||
-          answerIndex >= options.length
-        ) {
-
-          message.innerHTML = `
-            <div class="error">
-              ❌ Deebii sirrii
-              filatame hin jiru.
-            </div>
-          `;
-
-          return;
-        }
-
-
-        answer =
-          options[answerIndex];
-
-      }
-
-
-      /* =====================
-         TRUE / FALSE
-      ===================== */
-
-      else {
-
-        options = [
-          "Dhugaa",
-          "Soba"
-        ];
-
-
-        if (
-          selectedAnswer !== "Dhugaa" &&
-          selectedAnswer !== "Soba"
-        ) {
-
-          message.innerHTML = `
-            <div class="error">
-              ❌ Gaaffii ${i + 1}
-              irratti Dhugaa ykn Soba
-              filadhu.
-            </div>
-          `;
-
-          block.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-          return;
-        }
-
-
-        answer =
-          selectedAnswer;
-
-      }
-
-
-      questions.push({
-
-        type,
-
-        question,
-
-        options,
-
-        answer,
-
-        points
-
-      });
-
-    }
-
+    const button =
+      document.getElementById(
+        "createExamBtn"
+      );
+
+    button.disabled = true;
+
+    button.textContent =
+      "⏳ Qormaata uumaa...";
 
     try {
 
-      message.innerHTML = `
-        <div class="info">
-          ⏳ Qormaata uumaa jira...
-        </div>
-      `;
-
-
       const response =
         await fetch(
-          "/api/exams",
+          API + "/api/exams",
           {
             method: "POST",
 
@@ -1498,581 +1562,458 @@
             },
 
             body: JSON.stringify({
-
               teacherName,
               title,
               subject,
               grade,
               duration,
-              questions
-
+              questions:
+                savedQuestions
             })
-
           }
         );
-
 
       const data =
         await response.json();
 
-
       if (!response.ok) {
-
         throw new Error(
           data.message ||
           "Qormaata uumuu hin dandeenye."
         );
-
       }
 
+      document
+        .getElementById(
+          "createdExamCard"
+        )
+        .classList.remove(
+          "hidden"
+        );
 
-      message.innerHTML = `
+      document
+        .getElementById(
+          "createdExamCode"
+        )
+        .textContent =
+        data.exam.code;
 
-        <div class="success">
+      document
+        .getElementById(
+          "createdExamLink"
+        )
+        .textContent =
+        data.link;
 
-          <h3>
-            ✅ Qormaanni uumameera!
-          </h3>
+      showMessage(
+        "createMessage",
+        "Qormaanni milkaa'inaan uumameera.",
+        "success"
+      );
 
-          <p>
-            <b>Exam Code:</b>
-            ${escapeHtml(data.exam.code)}
-          </p>
-
-          <p>
-            <b>Linkii Qormaataa:</b>
-          </p>
-
-          <div class="link-box">
-            ${escapeHtml(data.link)}
-          </div>
-
-          <button
-            onclick="copyText(${JSON.stringify(data.link)})"
-          >
-            📋 Linkii Garagalchi
-          </button>
-
-          <button
-            onclick="copyText(${JSON.stringify(data.exam.code)})"
-          >
-            📋 Code Garagalchi
-          </button>
-
-          <button
-            class="secondary"
-            onclick="showJoinWithCode(${JSON.stringify(data.exam.code)})"
-          >
-            📝 Qormaata Ilaali
-          </button>
-
-        </div>
-
-      `;
-
+      document
+        .getElementById(
+          "createdExamCard"
+        )
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
     } catch (error) {
 
-      message.innerHTML = `
-        <div class="error">
-          ❌ ${escapeHtml(error.message)}
-        </div>
-      `;
+      console.error(error);
 
+      showMessage(
+        "createMessage",
+        error.message,
+        "error"
+      );
+
+    } finally {
+
+      button.disabled = false;
+
+      button.textContent =
+        "🚀 Qormaata Uumi";
     }
-
   }
 
 
-  function showJoinWithCode(code) {
+  /*
+  =========================================
+  COPY LINK
+  =========================================
+  */
 
-    showJoin();
+  async function copyExamLink() {
 
-    document.getElementById(
-      "examCode"
-    ).value =
-      code.toUpperCase();
+    const link =
+      document
+        .getElementById(
+          "createdExamLink"
+        )
+        .textContent;
 
+    try {
+
+      await navigator.clipboard.writeText(
+        link
+      );
+
+      alert(
+        "Liinkiin kooppii godhameera."
+      );
+
+    } catch {
+
+      alert(
+        "Liinkii kana harkaan kooppii godhi."
+      );
+    }
   }
 
 
-  /* =========================
-     LOAD EXAM
-  ========================= */
+  /*
+  =========================================
+  LOAD EXAM
+  =========================================
+  */
 
   async function loadExam() {
 
     const code =
-      document.getElementById(
-        "examCode"
-      ).value.trim().toUpperCase();
-
+      document
+        .getElementById(
+          "joinCode"
+        )
+        .value
+        .trim()
+        .toUpperCase();
 
     const studentName =
-      document.getElementById(
-        "studentName"
-      ).value.trim();
-
-
-    const message =
-      document.getElementById(
-        "joinMessage"
-      );
-
-
-    message.innerHTML = "";
-
-
-    if (!studentName) {
-
-      message.innerHTML = `
-        <div class="error">
-          ❌ Maqaa barataa galchi.
-        </div>
-      `;
-
-      return;
-    }
-
+      document
+        .getElementById(
+          "studentName"
+        )
+        .value.trim();
 
     if (!code) {
 
-      message.innerHTML = `
-        <div class="error">
-          ❌ Exam Code galchi.
-        </div>
-      `;
+      showMessage(
+        "takeMessage",
+        "Koodii qormaataa galchi.",
+        "error"
+      );
 
       return;
     }
 
+    if (!studentName) {
+
+      showMessage(
+        "takeMessage",
+        "Maqaa barataa galchi.",
+        "error"
+      );
+
+      return;
+    }
 
     try {
 
-      message.innerHTML = `
-        <div class="info">
-          ⏳ Qormaata barbaadaa jira...
-        </div>
-      `;
-
-
       const response =
         await fetch(
-          `/api/exams/${encodeURIComponent(code)}`
+          API +
+            "/api/exams/" +
+            encodeURIComponent(code)
         );
-
 
       const data =
         await response.json();
 
-
       if (!response.ok) {
-
         throw new Error(
           data.message ||
-          "Qormaata argachuu hin dandeenye."
+          "Qormaanni hin argamne."
         );
-
       }
-
 
       currentExam =
         data.exam;
 
+      renderStudentExam(
+        studentName
+      );
 
-      showExam();
-
+      showPage(
+        "examPage"
+      );
 
     } catch (error) {
 
-      message.innerHTML = `
-        <div class="error">
-          ❌ ${escapeHtml(error.message)}
-        </div>
-      `;
-
+      showMessage(
+        "takeMessage",
+        error.message,
+        "error"
+      );
     }
-
   }
 
 
-  /* =========================
-     SHOW EXAM
-  ========================= */
+  /*
+  =========================================
+  RENDER STUDENT EXAM
+  =========================================
+  */
 
-  function showExam() {
+  function renderStudentExam(
+    studentName
+  ) {
 
-    hideAll();
+    const examInfo =
+      document.getElementById(
+        "examInfo"
+      );
 
+    examInfo.innerHTML = `
 
-    document
-      .getElementById("exam")
-      .classList.remove("hidden");
+      <strong>
+        ${escapeHtml(
+          currentExam.title
+        )}
+      </strong>
 
+      <br>
 
-    document.getElementById(
-      "examInfo"
-    ).innerHTML = `
+      Barsiisaa:
+      ${escapeHtml(
+        currentExam.teacherName
+      )}
 
-      <h2>
-        ${escapeHtml(currentExam.title)}
-      </h2>
+      <br>
 
-      <p>
-        <b>Barnoota:</b>
-        ${escapeHtml(currentExam.subject || "-")}
-      </p>
+      Barnoota:
+      ${escapeHtml(
+        currentExam.subject || "-"
+      )}
 
-      <p>
-        <b>Kutaa:</b>
-        ${escapeHtml(currentExam.grade || "-")}
-      </p>
+      <br>
 
-      <p>
-        <b>Barsiisaa:</b>
-        ${escapeHtml(currentExam.teacherName || "-")}
-      </p>
+      Barataa:
+      ${escapeHtml(
+        studentName
+      )}
 
-      <p>
-        <b>Gaaffilee:</b>
-        ${currentExam.questions.length}
-      </p>
+      <br>
+
+      Gaaffii:
+      ${currentExam.questions.length}
 
     `;
 
-
     const container =
       document.getElementById(
-        "examQuestions"
+        "studentQuestions"
       );
 
+    container.innerHTML =
+      currentExam.questions
+        .map(
+          (q, index) => {
 
-    container.innerHTML = "";
+            let optionsHtml = "";
 
+            if (
+              q.type ===
+              "truefalse"
+            ) {
 
-    currentExam.questions.forEach(
-      (q, index) => {
+              optionsHtml = [
+                "Dhugaa",
+                "Soba"
+              ]
+                .map(
+                  option => `
+                    <label class="student-option">
 
-        const div =
-          document.createElement(
-            "div"
-          );
+                      <input
+                        type="radio"
+                        name="q-${q.id}"
+                        value="${escapeHtml(option)}"
+                      >
 
+                      ${escapeHtml(option)}
 
-        div.className =
-          "question";
+                    </label>
+                  `
+                )
+                .join("");
 
+            } else {
 
-        let options = "";
+              optionsHtml =
+                q.options
+                  .map(
+                    option => `
+                      <label class="student-option">
 
+                        <input
+                          type="radio"
+                          name="q-${q.id}"
+                          value="${escapeHtml(option)}"
+                        >
 
-        if (
-          q.type === "truefalse"
-        ) {
+                        ${escapeHtml(option)}
 
-          const trueFalse =
-            q.options &&
-            q.options.length
-              ? q.options
-              : [
-                  "Dhugaa",
-                  "Soba"
-                ];
-
-
-          trueFalse.forEach(
-            option => {
-
-              options += `
-
-                <label class="option">
-
-                  <input
-                    type="radio"
-                    name="q_${escapeHtml(q.id)}"
-                    value="${escapeHtml(option)}"
-                  >
-
-                  <span>
-                    ${escapeHtml(option)}
-                  </span>
-
-                </label>
-
-              `;
-
+                      </label>
+                    `
+                  )
+                  .join("");
             }
-          );
 
-        } else {
+            return `
 
-          (q.options || []).forEach(
-            (option, i) => {
+              <div class="student-question">
 
-              const letter =
-                String.fromCharCode(
-                  65 + i
-                );
+                <h3>
+                  Gaaffii ${index + 1}
+                </h3>
 
+                <p>
+                  ${escapeHtml(
+                    q.question
+                  )}
+                </p>
 
-              options += `
+                ${optionsHtml}
 
-                <label class="option">
+              </div>
 
-                  <input
-                    type="radio"
-                    name="q_${escapeHtml(q.id)}"
-                    value="${escapeHtml(option)}"
-                  >
-
-                  <span>
-                    <b>${letter}.</b>
-                    ${escapeHtml(option)}
-                  </span>
-
-                </label>
-
-              `;
-
-            }
-          );
-
-        }
-
-
-        div.innerHTML = `
-
-          <h3>
-            ${index + 1}.
-            ${escapeHtml(q.question)}
-          </h3>
-
-          ${options}
-
-          <div class="small">
-            💯 Qabxii: ${q.points}
-          </div>
-
-        `;
-
-
-        container.appendChild(div);
-
-      }
-    );
-
+            `;
+          }
+        )
+        .join("");
 
     startTimer(
-      currentExam.duration
+      Number(
+        currentExam.duration
+      ) || 30
     );
-
   }
 
 
-  /* =========================
-     TIMER
-  ========================= */
+  /*
+  =========================================
+  TIMER
+  =========================================
+  */
 
   function startTimer(minutes) {
 
-    if (timerInterval) {
-
-      clearInterval(timerInterval);
-
-    }
-
+    clearInterval(
+      examTimer
+    );
 
     remainingSeconds =
-      Number(minutes) * 60;
-
+      minutes * 60;
 
     updateTimer();
 
-
-    timerInterval =
+    examTimer =
       setInterval(() => {
 
         remainingSeconds--;
 
         updateTimer();
 
-
-        if (remainingSeconds <= 0) {
+        if (
+          remainingSeconds <= 0
+        ) {
 
           clearInterval(
-            timerInterval
+            examTimer
           );
-
-          timerInterval = null;
-
 
           alert(
-            "⏰ Yeroon qormaataa xumurameera."
+            "Yeroon qormaataa xumurameera."
           );
 
-
-          submitExam(true);
-
+          submitExam();
         }
 
       }, 1000);
-
   }
 
 
   function updateTimer() {
-
-    const min =
-      Math.floor(
-        remainingSeconds / 60
-      );
-
-
-    const sec =
-      remainingSeconds % 60;
-
 
     const timer =
       document.getElementById(
         "timer"
       );
 
+    if (!timer) return;
+
+    const minutes =
+      Math.floor(
+        remainingSeconds / 60
+      );
+
+    const seconds =
+      remainingSeconds % 60;
 
     timer.textContent =
-      `⏱️ ${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
-
-
-    timer.classList.remove(
-      "warning",
-      "danger"
-    );
-
-
-    if (
-      remainingSeconds <= 60
-    ) {
-
-      timer.classList.add(
-        "danger"
-      );
-
-    } else if (
-      remainingSeconds <= 300
-    ) {
-
-      timer.classList.add(
-        "warning"
-      );
-
-    }
-
+      `⏱️ ${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
   }
 
 
-  /* =========================
-     SUBMIT EXAM
-  ========================= */
+  /*
+  =========================================
+  SUBMIT EXAM
+  =========================================
+  */
 
-  async function submitExam(
-    automatic = false
-  ) {
+  async function submitExam() {
 
     if (!currentExam) return;
 
-    if (submitting) return;
+    clearInterval(
+      examTimer
+    );
 
-
-    if (!automatic) {
-
-      const ok =
-        confirm(
-          "Qormaata xumuruuf mirkaneeffattaa?"
-        );
-
-
-      if (!ok) return;
-
-    }
-
-
-    submitting = true;
-
+    const studentName =
+      document
+        .getElementById(
+          "studentName"
+        )
+        .value.trim();
 
     const answers = {};
 
-
-    currentExam.questions.forEach(
-      q => {
+    currentExam.questions
+      .forEach(q => {
 
         const selected =
           document.querySelector(
-            `input[name="q_${q.id}"]:checked`
+            `input[name="q-${q.id}"]:checked`
           );
 
-
-        if (selected) {
-
-          answers[q.id] =
-            selected.value;
-
-        }
-
-      }
-    );
-
-
-    const studentName =
-      document.getElementById(
-        "studentName"
-      ).value.trim();
-
-
-    if (!studentName) {
-
-      submitting = false;
-
-      alert(
-        "Maqaa barataa hin argamne."
-      );
-
-      return;
-
-    }
-
-
-    const unanswered =
-      currentExam.questions.filter(
-        q => !answers[q.id]
-      ).length;
-
-
-    if (
-      unanswered > 0 &&
-      !automatic
-    ) {
-
-      const confirmSubmit =
-        confirm(
-          `Gaaffii ${unanswered} hin deebifne. Qormaata erguu barbaaddaa?`
-        );
-
-
-      if (!confirmSubmit) {
-
-        submitting = false;
-
-        return;
-
-      }
-
-    }
-
+        answers[q.id] =
+          selected
+            ? selected.value
+            : "";
+      });
 
     try {
 
       const response =
         await fetch(
-          `/api/exams/${encodeURIComponent(currentExam.code)}/submit`,
+          API +
+            "/api/exams/" +
+            encodeURIComponent(
+              currentExam.code
+            ) +
+            "/submit",
           {
             method: "POST",
 
@@ -2082,1040 +2023,1032 @@
             },
 
             body: JSON.stringify({
-
               studentName,
               answers
-
             })
-
           }
         );
-
 
       const data =
         await response.json();
 
-
       if (!response.ok) {
-
         throw new Error(
           data.message ||
           "Qormaata erguu hin dandeenye."
         );
-
       }
 
-
-      if (timerInterval) {
-
-        clearInterval(
-          timerInterval
-        );
-
-        timerInterval = null;
-
-      }
-
-
-      submitting = false;
-
-
-      showResult(
+      renderStudentResult(
         data.result
       );
 
+      showPage(
+        "studentResultPage"
+      );
 
     } catch (error) {
 
-      submitting = false;
-
-      alert(
-        error.message
+      showMessage(
+        "submitMessage",
+        error.message,
+        "error"
       );
-
     }
-
   }
 
 
-  /* =========================
-     SHOW RESULT
-  ========================= */
+  /*
+  =========================================
+  STUDENT RESULT
+  =========================================
+  */
 
-  function showResult(result) {
+  function renderStudentResult(
+    result
+  ) {
 
-    hideAll();
+    const container =
+      document.getElementById(
+        "studentResult"
+      );
 
-
-    document
-      .getElementById("result")
-      .classList.remove("hidden");
-
-
-    let details = "";
-
-
-    (result.details || []).forEach(
-      (d, index) => {
-
-        const correctClass =
-          d.correct
-            ? "correct"
-            : "wrong";
-
-
-        details += `
-
-          <div
-            class="result-card ${correctClass}"
-          >
-
-            <div
-              class="result-status ${
-                d.correct
-                  ? "correct-status"
-                  : "wrong-status"
-              }"
-            >
-              ${
-                d.correct
-                  ? "✅ Sirrii"
-                  : "❌ Dogoggora"
-              }
-            </div>
-
-
-            <h3>
-              ${index + 1}.
-              ${escapeHtml(d.question)}
-            </h3>
-
-
-            <p>
-              <b>Deebii kee:</b>
-              ${escapeHtml(
-                d.studentAnswer ||
-                "Hin deebifne"
-              )}
-            </p>
-
-
-            <p>
-              <b>Deebii sirrii:</b>
-              ${escapeHtml(
-                d.correctAnswer || "-"
-              )}
-            </p>
-
-
-            <p>
-              <b>Qabxii:</b>
-              ${d.earnedPoints || 0}
-              / ${d.maxPoints || 0}
-            </p>
-
-          </div>
-
-        `;
-
-      }
-    );
-
-
-    document.getElementById(
-      "resultContent"
-    ).innerHTML = `
-
-      <p>
-        <b>Barataa:</b>
-        ${escapeHtml(
-          result.studentName
-        )}
-      </p>
-
-
-      <p>
-        <b>Qormaata:</b>
-        ${escapeHtml(
-          result.examTitle
-        )}
-      </p>
-
-
-      <div class="result-number">
-        ${result.percentage}%
-      </div>
-
-
-      <p style="text-align:center">
-
-        <b>
-          ${result.score}
-          /
-          ${result.totalPoints}
-        </b>
-
-      </p>
-
+    container.innerHTML = `
 
       <div class="stats">
 
         <div class="stat">
+          <strong>
+            ${result.score}
+          </strong>
+          Qabxii
+        </div>
 
+        <div class="stat">
+          <strong>
+            ${result.percentage}%
+          </strong>
+          Dhibbantaa
+        </div>
+
+        <div class="stat">
           <strong>
             ${result.correctAnswers}
           </strong>
-
           Sirrii
-
         </div>
 
-
         <div class="stat">
-
           <strong>
             ${result.wrongAnswers}
           </strong>
-
           Dogoggora
-
-        </div>
-
-
-        <div class="stat">
-
-          <strong>
-            ${result.totalQuestions}
-          </strong>
-
-          Gaaffii
-
-        </div>
-
-
-        <div class="stat">
-
-          <strong>
-            ${result.totalPoints}
-          </strong>
-
-          Qabxii
-
         </div>
 
       </div>
 
-
       <h3>
-        📋 Deebii Gaaffiiwwanii
+        Bu'aa Gaaffiiwwanii
       </h3>
 
+      ${
+        result.details
+          .map(
+            (d, index) => `
 
-      ${details}
+              <div
+                class="detail-item ${
+                  d.correct
+                    ? "correct"
+                    : "wrong"
+                }"
+              >
+
+                <strong>
+                  Gaaffii ${
+                    d.number ||
+                    index + 1
+                  }
+                </strong>
+
+                <p>
+                  ${escapeHtml(
+                    d.question
+                  )}
+                </p>
+
+                <div class="detail-label">
+                  Deebii kee:
+                </div>
+
+                <div>
+                  ${
+                    d.studentAnswer
+                      ? escapeHtml(
+                          d.studentAnswer
+                        )
+                      : "Hin deebifne"
+                  }
+                </div>
+
+                <div class="detail-label">
+                  Deebii sirrii:
+                </div>
+
+                <div>
+                  ${escapeHtml(
+                    d.correctAnswer
+                  )}
+                </div>
+
+                <br>
+
+                ${
+                  d.correct
+                    ? `
+                      <span
+                        class="badge correct-badge"
+                      >
+                        ✅ SIRRII
+                      </span>
+                    `
+                    : `
+                      <span
+                        class="badge wrong-badge"
+                      >
+                        ❌ DOGOGGORA
+                      </span>
+                    `
+                }
+
+              </div>
+
+            `
+          )
+          .join("")
+      }
 
     `;
-
   }
 
 
-  /* =========================
-     TEACHER RESULTS
-  ========================= */
+  /*
+  =========================================
+  TEACHER RESULTS
+  =========================================
+  */
 
   async function loadTeacherResults() {
 
     const code =
-      document.getElementById(
-        "teacherCode"
-      ).value.trim().toUpperCase();
-
-
-    const container =
-      document.getElementById(
-        "teacherResultContent"
-      );
-
-
-    container.innerHTML = "";
-
+      document
+        .getElementById(
+          "teacherExamCode"
+        )
+        .value
+        .trim()
+        .toUpperCase();
 
     if (!code) {
 
-      container.innerHTML = `
-        <div class="error">
-          ❌ Exam Code galchi.
-        </div>
-      `;
+      showMessage(
+        "teacherMessage",
+        "Koodii qormaataa galchi.",
+        "error"
+      );
 
       return;
-
     }
-
 
     try {
 
-      container.innerHTML = `
-        <div class="info">
-          ⏳ Bu'aa barbaadaa jira...
-        </div>
-      `;
-
-
       const response =
         await fetch(
-          `/api/exams/${encodeURIComponent(code)}/results`
+          API +
+            "/api/exams/" +
+            encodeURIComponent(
+              code
+            ) +
+            "/results"
         );
-
 
       const data =
         await response.json();
 
-
       if (!response.ok) {
-
         throw new Error(
           data.message ||
           "Bu'aa argachuu hin dandeenye."
         );
-
       }
 
+      teacherResultsData =
+        data.results || [];
 
-      let studentsHtml = "";
+      currentTeacherFilter =
+        "all";
 
+      const card =
+        document.getElementById(
+          "teacherResultsCard"
+        );
 
-      (data.results || []).forEach(
-        (r, index) => {
-
-          studentsHtml += `
-
-            <div
-              class="student-result"
-              id="student_result_${escapeHtml(r.id)}"
-            >
-
-              <div class="student-result-header">
-
-                <div>
-
-                  <h3>
-                    ${index + 1}.
-                    ${escapeHtml(r.studentName)}
-                  </h3>
-
-                  <div class="small">
-                    Qormaata xumure:
-                    ${formatDate(r.submittedAt)}
-                  </div>
-
-                </div>
-
-
-                <div class="score-badge">
-                  ${r.score}/${r.totalPoints}
-                  — ${r.percentage}%
-                </div>
-
-              </div>
-
-
-              <div class="stats">
-
-                <div class="stat">
-
-                  <strong>
-                    ${r.correctAnswers}
-                  </strong>
-
-                  Sirrii
-
-                </div>
-
-
-                <div class="stat">
-
-                  <strong>
-                    ${r.wrongAnswers}
-                  </strong>
-
-                  Dogoggora
-
-                </div>
-
-
-                <div class="stat">
-
-                  <strong>
-                    ${r.percentage}%
-                  </strong>
-
-                  %
-
-                </div>
-
-
-                <div class="stat">
-
-                  <strong>
-                    ${r.totalPoints}
-                  </strong>
-
-                  Qabxii
-
-                </div>
-
-              </div>
-
-
-              <button
-                class="small-btn"
-                onclick="toggleStudentDetails('${escapeHtml(r.id)}')"
-              >
-                🔎 Bal'inaan Ilaali
-              </button>
-
-
-              <div
-                id="details_${escapeHtml(r.id)}"
-                class="detail-panel hidden"
-              >
-
-                <h3>
-                  📋 Deebii ${escapeHtml(r.studentName)}
-                </h3>
-
-
-                <div class="filter-buttons">
-
-                  <button
-                    class="small-btn active"
-                    onclick="filterStudentDetails('${escapeHtml(r.id)}','all',this)"
-                  >
-                    📋 Hunda
-                  </button>
-
-                  <button
-                    class="small-btn secondary"
-                    onclick="filterStudentDetails('${escapeHtml(r.id)}','correct',this)"
-                  >
-                    ✅ Sirrii
-                  </button>
-
-                  <button
-                    class="small-btn secondary"
-                    onclick="filterStudentDetails('${escapeHtml(r.id)}','wrong',this)"
-                  >
-                    ❌ Dogoggora
-                  </button>
-
-                </div>
-
-
-                <div
-                  id="detail_list_${escapeHtml(r.id)}"
-                >
-                  ${renderDetails(
-                    r.details || [],
-                    "all"
-                  )}
-                </div>
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
+      card.classList.remove(
+        "hidden"
       );
 
+      document
+        .getElementById(
+          "teacherDetailCard"
+        )
+        .classList.add(
+          "hidden"
+        );
 
-      container.innerHTML = `
-
-        <div class="success">
+      document
+        .getElementById(
+          "teacherExamInfo"
+        )
+        .innerHTML = `
 
           <h3>
-            📚 ${escapeHtml(
+            ${escapeHtml(
               data.exam.title
             )}
           </h3>
 
           <p>
-            <b>Barsiisaa:</b>
+            Barsiisaa:
             ${escapeHtml(
-              data.exam.teacher_name || "-"
+              data.exam.teacher_name
             )}
           </p>
 
           <p>
-            <b>Barnoota:</b>
-            ${escapeHtml(
-              data.exam.subject || "-"
-            )}
+            Barattoota:
+            <strong>
+              ${data.totalStudents}
+            </strong>
           </p>
-
-          <p>
-            <b>Kutaa:</b>
-            ${escapeHtml(
-              data.exam.grade || "-"
-            )}
-          </p>
-
-          <p>
-            <b>Barattoota qormaata fudhatan:</b>
-            ${data.totalStudents}
-          </p>
-
-        </div>
-
-
-        ${
-          data.results &&
-          data.results.length
-
-          ? studentsHtml
-
-          : `
-
-            <div class="info empty">
-
-              📭 Ammaaf barataan
-              qormaata hin fudhanne.
-
-            </div>
-
-          `
-        }
-
-      `;
-
-
-    } catch (error) {
-
-      container.innerHTML = `
-
-        <div class="error">
-
-          ❌ ${escapeHtml(
-            error.message
-          )}
-
-        </div>
-
-      `;
-
-    }
-
-  }
-
-
-  /* =========================
-     TEACHER DETAIL VIEW
-  ========================= */
-
-  function toggleStudentDetails(id) {
-
-    const panel =
-      document.getElementById(
-        `details_${id}`
-      );
-
-    if (!panel) return;
-
-    panel.classList.toggle("hidden");
-
-  }
-
-
-  function filterStudentDetails(
-    id,
-    filter,
-    button
-  ) {
-
-    const list =
-      document.getElementById(
-        `detail_list_${id}`
-      );
-
-    if (!list) return;
-
-
-    const buttons =
-      button
-        .parentElement
-        .querySelectorAll("button");
-
-
-    buttons.forEach(btn => {
-
-      btn.classList.remove("active");
-
-    });
-
-
-    button.classList.add("active");
-
-
-    // Bu'aa duraan API irraa dhufe
-    // student card keessaa barbaadi.
-    const card =
-      document.getElementById(
-        `student_result_${id}`
-      );
-
-    if (!card) return;
-
-
-    const detailCards =
-      card.querySelectorAll(
-        ".result-card"
-      );
-
-
-    if (filter === "all") {
-
-      detailCards.forEach(
-        item => {
-          item.style.display = "";
-        }
-      );
-
-    } else {
-
-      detailCards.forEach(
-        item => {
-
-          const isCorrect =
-            item.classList.contains(
-              "correct"
-            );
-
-          const show =
-            filter === "correct"
-              ? isCorrect
-              : !isCorrect;
-
-          item.style.display =
-            show ? "" : "none";
-
-        }
-      );
-
-    }
-
-  }
-
-
-  function renderDetails(
-    details,
-    filter = "all"
-  ) {
-
-    if (
-      !Array.isArray(details) ||
-      details.length === 0
-    ) {
-
-      return `
-        <div class="info">
-          Deebiin gaaffiiwwanii hin argamne.
-        </div>
-      `;
-
-    }
-
-
-    let html = "";
-
-
-    details.forEach(
-      (d, index) => {
-
-        if (
-          filter === "correct" &&
-          !d.correct
-        ) {
-          return;
-        }
-
-
-        if (
-          filter === "wrong" &&
-          d.correct
-        ) {
-          return;
-        }
-
-
-        html += `
-
-          <div
-            class="result-card ${
-              d.correct
-                ? "correct"
-                : "wrong"
-            }"
-          >
-
-            <div
-              class="result-status ${
-                d.correct
-                  ? "correct-status"
-                  : "wrong-status"
-              }"
-            >
-
-              ${
-                d.correct
-                  ? "✅ SIRRII"
-                  : "❌ DOGOGGORA"
-              }
-
-            </div>
-
-
-            <h4>
-
-              ${d.number || index + 1}.
-              ${escapeHtml(
-                d.question || "-"
-              )}
-
-            </h4>
-
-
-            <p>
-
-              <b>
-                Deebii barataa:
-              </b>
-
-              <span>
-                ${
-                  d.studentAnswer
-                    ? escapeHtml(
-                        d.studentAnswer
-                      )
-                    : "Hin deebifne"
-                }
-              </span>
-
-            </p>
-
-
-            <p>
-
-              <b>
-                Deebii sirrii:
-              </b>
-
-              <span>
-                ${escapeHtml(
-                  d.correctAnswer || "-"
-                )}
-              </span>
-
-            </p>
-
-
-            <p>
-
-              <b>
-                Qabxii:
-              </b>
-
-              ${d.earnedPoints || 0}
-              /
-              ${d.maxPoints || 0}
-
-            </p>
-
-          </div>
 
         `;
 
-      }
-    );
+      renderTeacherResults();
 
+    } catch (error) {
 
-    if (!html) {
-
-      return `
-        <div class="info">
-          Filannoo kana keessatti
-          bu'aan hin jiru.
-        </div>
-      `;
-
+      showMessage(
+        "teacherMessage",
+        error.message,
+        "error"
+      );
     }
-
-
-    return html;
-
   }
 
 
-  /* =========================
-     SERVER STATUS
-  ========================= */
+  /*
+  =========================================
+  TEACHER RESULTS TABLE
+  =========================================
+  */
 
-  async function checkServer() {
-
-    hideAll();
-
-
-    document
-      .getElementById("status")
-      .classList.remove("hidden");
-
+  function renderTeacherResults() {
 
     const container =
       document.getElementById(
-        "statusContent"
+        "teacherResultsTable"
       );
 
+    if (
+      teacherResultsData.length === 0
+    ) {
+
+      container.innerHTML = `
+        <div class="empty">
+          Barataan qormaata kana
+          ammallee hin fudhanne.
+        </div>
+      `;
+
+      return;
+    }
 
     container.innerHTML = `
 
-      <div class="info">
+      <div class="result-table-wrap">
 
-        ⏳ Sirna ilaalamaa jira...
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>#</th>
+              <th>Barataa</th>
+              <th>Qabxii</th>
+              <th>%</th>
+              <th>Sirrii</th>
+              <th>Dogoggora</th>
+              <th>Bal'inaan</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              teacherResultsData
+                .map(
+                  (r, index) => `
+
+                    <tr>
+
+                      <td>
+                        ${index + 1}
+                      </td>
+
+                      <td>
+                        ${escapeHtml(
+                          r.studentName
+                        )}
+                      </td>
+
+                      <td>
+                        ${r.score}/
+                        ${r.totalPoints}
+                      </td>
+
+                      <td>
+                        ${r.percentage}%
+                      </td>
+
+                      <td>
+                        ✅ ${r.correctAnswers}
+                      </td>
+
+                      <td>
+                        ❌ ${r.wrongAnswers}
+                      </td>
+
+                      <td>
+
+                        <button
+                          onclick="viewTeacherResult('${r.id}')"
+                        >
+                          🔎 Ilaali
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  `
+                )
+                .join("")
+            }
+
+          </tbody>
+
+        </table>
 
       </div>
 
     `;
+  }
 
+
+  /*
+  =========================================
+  VIEW ONE STUDENT
+  =========================================
+  */
+
+  async function viewTeacherResult(
+    resultId
+  ) {
+
+    let result =
+      teacherResultsData.find(
+        r => r.id === resultId
+      );
+
+    if (!result) return;
+
+    /*
+     * Yoo details hin jirre,
+     * server irraa guuti.
+     */
+
+    if (
+      !Array.isArray(
+        result.details
+      )
+    ) {
+
+      try {
+
+        const response =
+          await fetch(
+            API +
+              "/api/results/" +
+              encodeURIComponent(
+                resultId
+              )
+          );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.message
+          );
+        }
+
+        result =
+          data.result;
+
+      } catch (error) {
+
+        alert(
+          error.message ||
+          "Bu'aa bal'inaan argachuu hin dandeenye."
+        );
+
+        return;
+      }
+    }
+
+    currentTeacherFilter =
+      "all";
+
+    renderTeacherDetail(
+      result
+    );
+
+    document
+      .getElementById(
+        "teacherResultsCard"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+    document
+      .getElementById(
+        "teacherDetailCard"
+      )
+      .classList.remove(
+        "hidden"
+      );
+
+    document
+      .getElementById(
+        "teacherDetailCard"
+      )
+      .scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+  }
+
+
+  /*
+  =========================================
+  TEACHER DETAIL
+  =========================================
+  */
+
+  function renderTeacherDetail(
+    result
+  ) {
+
+    const container =
+      document.getElementById(
+        "teacherDetail"
+      );
+
+    const details =
+      Array.isArray(result.details)
+        ? result.details
+        : [];
+
+    const filtered =
+      details.filter(d => {
+
+        if (
+          currentTeacherFilter ===
+          "correct"
+        ) {
+          return d.correct;
+        }
+
+        if (
+          currentTeacherFilter ===
+          "wrong"
+        ) {
+          return !d.correct;
+        }
+
+        return true;
+      });
+
+    container.innerHTML = `
+
+      <h2>
+        👤 ${escapeHtml(
+          result.studentName
+        )}
+      </h2>
+
+      <div class="stats">
+
+        <div class="stat">
+          <strong>
+            ${result.score}
+          </strong>
+          Qabxii
+        </div>
+
+        <div class="stat">
+          <strong>
+            ${result.percentage}%
+          </strong>
+          Dhibbeentaa
+        </div>
+
+        <div class="stat">
+          <strong>
+            ${result.correctAnswers}
+          </strong>
+          Sirrii
+        </div>
+
+        <div class="stat">
+          <strong>
+            ${result.wrongAnswers}
+          </strong>
+          Dogoggora
+        </div>
+
+      </div>
+
+      <div class="filter-buttons">
+
+        <button
+          onclick="setTeacherFilter('all')"
+        >
+          📋 Hunda
+        </button>
+
+        <button
+          onclick="setTeacherFilter('correct')"
+        >
+          ✅ Sirrii Qofa
+        </button>
+
+        <button
+          class="danger"
+          onclick="setTeacherFilter('wrong')"
+        >
+          ❌ Dogoggora Qofa
+        </button>
+
+      </div>
+
+      <div>
+
+        ${
+          filtered.length === 0
+            ? `
+              <div class="empty">
+                Bu'aan filatame hin jiru.
+              </div>
+            `
+            : filtered
+                .map(
+                  (d, index) => `
+
+                    <div
+                      class="detail-item ${
+                        d.correct
+                          ? "correct"
+                          : "wrong"
+                      }"
+                    >
+
+                      <div>
+                        <strong>
+                          Gaaffii ${
+                            d.number ||
+                            index + 1
+                          }
+                        </strong>
+
+                        ${
+                          d.correct
+                            ? `
+                              <span
+                                class="badge correct-badge"
+                              >
+                                ✅ SIRRII
+                              </span>
+                            `
+                            : `
+                              <span
+                                class="badge wrong-badge"
+                              >
+                                ❌ DOGOGGORA
+                              </span>
+                            `
+                        }
+
+                      </div>
+
+                      <p>
+                        ${escapeHtml(
+                          d.question
+                        )}
+                      </p>
+
+                      <div class="detail-label">
+                        Deebii barataa:
+                      </div>
+
+                      <div>
+                        ${
+                          d.studentAnswer
+                            ? escapeHtml(
+                                d.studentAnswer
+                              )
+                            : "Hin deebifne"
+                        }
+                      </div>
+
+                      <div class="detail-label">
+                        Deebii sirrii:
+                      </div>
+
+                      <div>
+                        ${escapeHtml(
+                          d.correctAnswer
+                        )}
+                      </div>
+
+                      <div class="detail-label">
+                        Qabxii:
+                      </div>
+
+                      <div>
+                        ${d.points}
+                        /
+                        ${d.maxPoints}
+                      </div>
+
+                    </div>
+
+                  `
+                )
+                .join("")
+        }
+
+      </div>
+
+    `;
+  }
+
+
+  /*
+  =========================================
+  TEACHER FILTER
+  =========================================
+  */
+
+  function setTeacherFilter(
+    filter
+  ) {
+
+    currentTeacherFilter =
+      filter;
+
+    const detail =
+      document.getElementById(
+        "teacherDetail"
+      );
+
+    /*
+     * Student currently mul'ataa jiru
+     */
+
+    const result =
+      teacherResultsData.find(
+        r =>
+          r.id ===
+          document
+            .querySelector(
+              "#teacherDetailCard"
+            )
+            ?.dataset
+            ?.resultId
+      );
+
+    if (result) {
+      renderTeacherDetail(
+        result
+      );
+    }
+  }
+
+
+  /*
+  =========================================
+  CLOSE DETAIL
+  =========================================
+  */
+
+  function closeTeacherDetail() {
+
+    document
+      .getElementById(
+        "teacherDetailCard"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+    document
+      .getElementById(
+        "teacherResultsCard"
+      )
+      .classList.remove(
+        "hidden"
+      );
+  }
+
+
+  /*
+  =========================================
+  STATUS
+  =========================================
+  */
+
+  async function checkStatus() {
+
+    const box =
+      document.getElementById(
+        "statusResult"
+      );
+
+    box.innerHTML =
+      `<div class="loading">
+        ⏳ Sakatta'aa jira...
+      </div>`;
 
     try {
 
       const response =
         await fetch(
-          "/api/status"
+          API + "/api/status"
         );
-
 
       const data =
         await response.json();
 
-
-      if (data.success) {
-
-        container.innerHTML = `
-
-          <div class="success">
-
-            <h3>
-              🟢 Sirni online dha
-            </h3>
-
-
-            <p>
-              App:
-              <b>
-                ${escapeHtml(
-                  data.app
-                )}
-              </b>
-            </p>
-
-
-            <p>
-              Database:
-              <b>
-                ${escapeHtml(
-                  data.database
-                )}
-              </b>
-            </p>
-
-
-            <p>
-              Status:
-              <b>
-                ${escapeHtml(
-                  data.status
-                )}
-              </b>
-            </p>
-
-          </div>
-
-        `;
-
-      } else {
-
+      if (!response.ok) {
         throw new Error(
-          "Serveriin rakkoo qaba."
+          "Server rakkoo qaba."
         );
-
       }
 
+      box.innerHTML = `
 
-    } catch (error) {
+        <div class="message success">
 
-      container.innerHTML = `
+          ✅ Sirni hojjachaa jira.
 
-        <div class="error">
+          <br><br>
 
-          🔴 Serveriin database waliin
-          wal hin qunnamin.
+          App:
+          <strong>
+            ${escapeHtml(
+              data.app
+            )}
+          </strong>
+
+          <br>
+
+          Database:
+          <strong>
+            ${escapeHtml(
+              data.database
+            )}
+          </strong>
+
+          <br>
+
+          Haala:
+          <strong>
+            ${escapeHtml(
+              data.status
+            )}
+          </strong>
 
         </div>
 
       `;
 
-    }
+    } catch (error) {
 
+      box.innerHTML = `
+
+        <div class="message error">
+
+          ❌ Server/database rakkoo qaba.
+
+        </div>
+
+      `;
+    }
   }
 
 
-  /* =========================
-     COPY
-  ========================= */
+  /*
+  =========================================
+  FIX DETAIL FILTER STATE
+  =========================================
+  */
 
-  function copyText(value) {
+  const originalViewTeacherResult =
+    viewTeacherResult;
 
-    if (
-      navigator.clipboard &&
-      window.isSecureContext
-    ) {
+  viewTeacherResult =
+    async function(resultId) {
 
-      navigator.clipboard
-        .writeText(value)
-        .then(() => {
+      let result =
+        teacherResultsData.find(
+          r => r.id === resultId
+        );
+
+      if (!result) return;
+
+      if (
+        !Array.isArray(
+          result.details
+        )
+      ) {
+
+        try {
+
+          const response =
+            await fetch(
+              API +
+                "/api/results/" +
+                encodeURIComponent(
+                  resultId
+                )
+            );
+
+          const data =
+            await response.json();
+
+          if (!response.ok) {
+            throw new Error(
+              data.message
+            );
+          }
+
+          result =
+            data.result;
+
+          const index =
+            teacherResultsData.findIndex(
+              r =>
+                r.id === resultId
+            );
+
+          if (index >= 0) {
+            teacherResultsData[index] =
+              result;
+          }
+
+        } catch (error) {
 
           alert(
-            "✅ Garagalfameera."
+            error.message ||
+            "Bu'aa bal'inaan argachuu hin dandeenye."
           );
 
-        })
-        .catch(() => {
+          return;
+        }
+      }
 
-          fallbackCopy(value);
+      currentTeacherFilter =
+        "all";
 
-        });
+      const detailCard =
+        document.getElementById(
+          "teacherDetailCard"
+        );
 
-    } else {
+      detailCard.dataset.resultId =
+        resultId;
 
-      fallbackCopy(value);
-
-    }
-
-  }
-
-
-  function fallbackCopy(value) {
-
-    const textarea =
-      document.createElement(
-        "textarea"
+      renderTeacherDetail(
+        result
       );
 
-    textarea.value = value;
+      document
+        .getElementById(
+          "teacherResultsCard"
+        )
+        .classList.add(
+          "hidden"
+        );
 
-    document.body.appendChild(
-      textarea
-    );
-
-    textarea.select();
-
-    document.execCommand(
-      "copy"
-    );
-
-    textarea.remove();
-
-    alert(
-      "✅ Garagalfameera."
-    );
-
-  }
-
-
-  /* =========================
-     HTML SECURITY
-  ========================= */
-
-  function escapeHtml(value) {
-
-    return String(value)
-      .replaceAll(
-        "&",
-        "&amp;"
-      )
-      .replaceAll(
-        "<",
-        "&lt;"
-      )
-      .replaceAll(
-        ">",
-        "&gt;"
-      )
-      .replaceAll(
-        '"',
-        "&quot;"
-      )
-      .replaceAll(
-        "'",
-        "&#039;"
+      detailCard.classList.remove(
+        "hidden"
       );
 
+      detailCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    };
+
+
+  /*
+  =========================================
+  FILTER AGAIN
+  =========================================
+  */
+
+  function setTeacherFilter(
+    filter
+  ) {
+
+    currentTeacherFilter =
+      filter;
+
+    const detailCard =
+      document.getElementById(
+        "teacherDetailCard"
+      );
+
+    const resultId =
+      detailCard.dataset.resultId;
+
+    const result =
+      teacherResultsData.find(
+        r => r.id === resultId
+      );
+
+    if (result) {
+      renderTeacherDetail(
+        result
+      );
+    }
   }
 
 
-  /* =========================
-     DATE
-  ========================= */
+  /*
+  =========================================
+  INITIALIZE
+  =========================================
+  */
 
-  function formatDate(value) {
-
-    if (!value) {
-      return "-";
-    }
-
-    try {
-
-      return new Date(value)
-        .toLocaleString();
-
-    } catch {
-
-      return String(value);
-
-    }
-
-  }
-
-
-  /* =========================
-     URL EXAM CODE
-  ========================= */
-
-  window.addEventListener(
-    "load",
+  document.addEventListener(
+    "DOMContentLoaded",
     () => {
+
+      initQuestionEditor();
+
+      /*
+       * Yoo URL keessatti exam code jiraate
+       * fakkeenya:
+       * ?exam=A1B2C3D4
+       */
 
       const params =
         new URLSearchParams(
           window.location.search
         );
 
-
-      const code =
+      const examCode =
         params.get("exam");
 
+      if (examCode) {
 
-      if (code) {
+        document
+          .getElementById(
+            "joinCode"
+          )
+          .value =
+          examCode.toUpperCase();
 
-        showJoin();
-
-
-        document.getElementById(
-          "examCode"
-        ).value =
-          code.toUpperCase();
-
+        showPage(
+          "takePage"
+        );
       }
 
     }
@@ -3124,4 +3057,4 @@
 </script>
 
 </body>
-    </html>
+  </html>
