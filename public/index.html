@@ -10,7 +10,14 @@
 
   <meta name="theme-color" content="#176b45">
 
-  <title>OR – Sirna Qormaataa Barattootaa</title>
+  <meta
+    name="description"
+    content="OR - Sirna Qormaataa Barattootaa"
+  >
+
+  <link rel="manifest" href="/manifest.json">
+
+  <title>OR - Sirna Qormaataa</title>
 
   <style>
     * {
@@ -20,21 +27,21 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f2f7f4;
-      color: #173b2b;
+      background: #f3f7f5;
+      color: #17352a;
     }
 
     header {
       background: #176b45;
       color: white;
-      padding: 18px 15px;
+      padding: 18px;
       text-align: center;
       box-shadow: 0 2px 8px rgba(0,0,0,.15);
     }
 
     header h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 25px;
     }
 
     header p {
@@ -43,6 +50,7 @@
     }
 
     main {
+      width: 100%;
       max-width: 900px;
       margin: auto;
       padding: 18px;
@@ -61,72 +69,7 @@
       border-radius: 14px;
       padding: 18px;
       margin-bottom: 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-    }
-
-    h2 {
-      color: #176b45;
-      margin-top: 0;
-    }
-
-    h3 {
-      color: #176b45;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-      margin-bottom: 6px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd8d1;
-      border-radius: 9px;
-      font-size: 15px;
-      background: white;
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    button {
-      border: none;
-      border-radius: 9px;
-      padding: 12px 16px;
-      margin-top: 10px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #176b45;
-      color: white;
-    }
-
-    button:hover {
-      opacity: .9;
-    }
-
-    button.secondary {
-      background: #52635b;
-    }
-
-    button.danger {
-      background: #b42318;
-    }
-
-    button.light {
-      background: #e5eee9;
-      color: #176b45;
-    }
-
-    button.full {
-      width: 100%;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
     }
 
     .home-grid {
@@ -135,102 +78,74 @@
       gap: 12px;
     }
 
-    .home-grid button {
-      min-height: 70px;
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #176b45;
+      color: white;
+      font-weight: bold;
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    button:hover {
+      opacity: .92;
+    }
+
+    button.secondary {
+      background: #e8f1ed;
+      color: #176b45;
+    }
+
+    button.danger {
+      background: #b42318;
+    }
+
+    button.blue {
+      background: #176b8a;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      margin-bottom: 13px;
+      border: 1px solid #cfd9d4;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #176b45;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 8px;
+    }
+
+    h2,
+    h3 {
+      color: #176b45;
     }
 
     .question-box {
-      background: #f5faf7;
-      border: 1px solid #d5e5dc;
+      background: #f8fbf9;
+      border: 1px solid #dce9e2;
       border-radius: 12px;
       padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .option {
-      border: 1px solid #d4ded9;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 8px;
-      background: white;
-    }
-
-    .option input {
-      width: auto;
-      margin-right: 8px;
-    }
-
-    .counter {
-      background: #e8f4ed;
-      color: #176b45;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .message {
-      padding: 12px;
-      border-radius: 9px;
-      margin-top: 12px;
-      display: none;
-      white-space: pre-wrap;
-    }
-
-    .message.success {
-      display: block;
-      background: #e5f6eb;
-      color: #176b45;
-      border: 1px solid #b8dfc6;
-    }
-
-    .message.error {
-      display: block;
-      background: #fff0f0;
-      color: #a61b1b;
-      border: 1px solid #efb8b8;
-    }
-
-    .result-card {
-      border: 1px solid #d7e2dc;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 12px;
-      background: white;
-    }
-
-    .correct {
-      background: #e7f7ec;
-      border-left: 5px solid #176b45;
-    }
-
-    .wrong {
-      background: #fff0f0;
-      border-left: 5px solid #b42318;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #60746a;
-    }
-
-    .score {
-      font-size: 22px;
-      font-weight: bold;
-      color: #176b45;
-    }
-
-    .exam-info {
-      background: #eef7f2;
-      border-radius: 10px;
-      padding: 12px;
       margin-bottom: 15px;
     }
 
@@ -240,36 +155,159 @@
       margin-bottom: 8px;
     }
 
-    .back {
-      background: #52635b;
-      margin-bottom: 15px;
+    .option {
+      display: block;
+      padding: 10px;
+      margin: 7px 0;
+      background: white;
+      border: 1px solid #d9e3de;
+      border-radius: 8px;
+      font-weight: normal;
+      cursor: pointer;
     }
 
-    .link-box {
-      background: #f0f5f2;
+    .option input {
+      width: auto;
+      margin: 0 7px 0 0;
+    }
+
+    .message {
+      white-space: pre-line;
+      padding: 13px;
+      border-radius: 9px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #e7f7ee;
+      color: #12613e;
+      border: 1px solid #a8ddc0;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff0ef;
+      color: #9d2118;
+      border: 1px solid #efb4ae;
+    }
+
+    .message.info {
+      display: block;
+      background: #eef6ff;
+      color: #15598b;
+      border: 1px solid #b7d6ef;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .exam-link-box {
+      background: #f1f8f4;
+      border: 2px solid #176b45;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .exam-link {
+      word-break: break-all;
+      background: white;
       padding: 10px;
       border-radius: 8px;
-      word-break: break-all;
+      border: 1px solid #d5e4dc;
+      margin: 10px 0;
+    }
+
+    .counter {
+      background: #e7f4ed;
+      color: #176b45;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .result-item {
+      background: #f8fbf9;
+      border: 1px solid #dce9e2;
+      border-radius: 10px;
+      padding: 13px;
+      margin: 9px 0;
+      cursor: pointer;
+    }
+
+    .result-item:hover {
+      background: #edf7f1;
+    }
+
+    .correct {
+      color: #16803c;
+      font-weight: bold;
+    }
+
+    .wrong {
+      color: #c62828;
+      font-weight: bold;
+    }
+
+    .answer-box {
+      padding: 12px;
+      border-radius: 9px;
       margin-top: 8px;
+    }
+
+    .answer-correct {
+      background: #e8f7ed;
+      border-left: 5px solid #16803c;
+    }
+
+    .answer-wrong {
+      background: #fff0ef;
+      border-left: 5px solid #c62828;
     }
 
     .loading {
       text-align: center;
       padding: 20px;
       color: #176b45;
+      font-weight: bold;
     }
 
-    @media(max-width: 650px) {
+    .small {
+      font-size: 13px;
+      color: #64756d;
+    }
+
+    .code {
+      font-size: 24px;
+      letter-spacing: 3px;
+      font-weight: bold;
+      color: #176b45;
+      text-align: center;
+      padding: 10px;
+    }
+
+    @media (max-width: 600px) {
       .home-grid {
         grid-template-columns: 1fr;
       }
 
-      .row {
-        grid-template-columns: 1fr;
+      main {
+        padding: 10px;
       }
 
-      main {
-        padding: 12px;
+      header h1 {
+        font-size: 21px;
+      }
+
+      .button-row button {
+        width: 100%;
       }
     }
   </style>
@@ -278,8 +316,8 @@
 <body>
 
 <header>
-  <h1>📝 OR – Sirna Qormaataa Barattootaa</h1>
-  <p>Qormaata uumi, qoodii, fudhu, bu'aa ilaali</p>
+  <h1>🎯 OR – Sirna Qormaataa</h1>
+  <p>Sirna Qormaataa Barattootaa</p>
 </header>
 
 <main>
@@ -288,23 +326,27 @@
   <section id="homePage" class="page active">
 
     <div class="card">
-      <h2>🏠 Baga Nagaan Dhuftan</h2>
+      <h2>🏠 Baga Nagaan Dhufte</h2>
+      <p>
+        OR keessatti qormaata uumuu, qormaata fudhachuu
+        fi bu'aa qormaataa ilaalu dandeessa.
+      </p>
 
       <div class="home-grid">
 
-        <button id="btnCreatePage">
+        <button id="btnCreate">
           📝 Qormaata Uumi
         </button>
 
-        <button id="btnTakePage">
+        <button id="btnTake">
           📖 Qormaata Fudhadhu
         </button>
 
-        <button id="btnResultsPage">
+        <button id="btnResults">
           📊 Qormaata Koo
         </button>
 
-        <button id="btnSystemPage">
+        <button id="btnSystem">
           ⚙️ Sirna Ilaali
         </button>
 
@@ -317,11 +359,11 @@
   <!-- CREATE EXAM -->
   <section id="createPage" class="page">
 
-    <button class="back" id="backFromCreate">
-      ← Gara Duubatti
-    </button>
-
     <div class="card">
+
+      <button class="secondary" id="btnBackCreate">
+        ← Duubatti
+      </button>
 
       <h2>📝 Qormaata Uumi</h2>
 
@@ -336,54 +378,49 @@
       <input
         id="examTitle"
         type="text"
-        placeholder="Fakkeenya: Qormaata Ji'a 1ffaa"
+        placeholder="Fakkeenya: Qormaata Herregaa"
       >
 
-      <div class="row">
+      <label>Barnoota</label>
+      <input
+        id="subject"
+        type="text"
+        placeholder="Fakkeenya: Herrega"
+      >
 
-        <div>
-          <label>Barnoota</label>
-          <input
-            id="subject"
-            type="text"
-            placeholder="Fakkeenya: Herrega"
-          >
-        </div>
+      <label>Kutaa</label>
+      <input
+        id="grade"
+        type="text"
+        placeholder="Fakkeenya: Kutaa 8"
+      >
 
-        <div>
-          <label>Sadarkaa/Kutaa</label>
-          <input
-            id="grade"
-            type="text"
-            placeholder="Fakkeenya: Kutaa 8"
-          >
-        </div>
-
-      </div>
-
-      <label>Yeroo Qormaataa (daqiiqaa)</label>
+      <label>Yeroo (daqiiqaa)</label>
       <input
         id="duration"
         type="number"
-        min="1"
         value="30"
+        min="1"
       >
 
     </div>
 
 
-    <!-- QUESTION FORM -->
     <div class="card">
 
       <h2>➕ Gaaffii Qopheessi</h2>
+
+      <div class="counter" id="questionCounter">
+        Gaaffii kuufame: 0
+      </div>
 
       <label>Gaaffii</label>
 
       <textarea
         id="questionText"
-        placeholder="Gaaffii kee asitti barreessi..."
+        rows="3"
+        placeholder="Gaaffii kee barreessi..."
       ></textarea>
-
 
       <label>Gosa Gaaffii</label>
 
@@ -400,7 +437,9 @@
       </select>
 
 
-      <div id="multipleOptions">
+      <!-- MULTIPLE CHOICE -->
+
+      <div id="multipleFields">
 
         <label>Filannoo A</label>
         <input
@@ -434,7 +473,9 @@
 
         <select id="correctAnswerMultiple">
 
-          <option value="">-- Filadhu --</option>
+          <option value="">
+            -- Deebii sirrii filadhu --
+          </option>
 
           <option value="A">A</option>
           <option value="B">B</option>
@@ -446,17 +487,25 @@
       </div>
 
 
-      <div id="trueFalseOptions" style="display:none;">
+      <!-- TRUE FALSE -->
+
+      <div id="trueFalseFields" style="display:none">
 
         <label>Deebii Sirrii</label>
 
         <select id="correctAnswerTF">
 
-          <option value="">-- Filadhu --</option>
+          <option value="">
+            -- Deebii sirrii filadhu --
+          </option>
 
-          <option value="Dhugaa">Dhugaa</option>
+          <option value="Dhugaa">
+            Dhugaa
+          </option>
 
-          <option value="Soba">Soba</option>
+          <option value="Soba">
+            Soba
+          </option>
 
         </select>
 
@@ -468,129 +517,99 @@
       <input
         id="points"
         type="number"
-        min="1"
         value="1"
+        min="1"
       >
 
 
-      <button
-        id="btnSaveQuestion"
-        class="full"
-      >
-        💾 Kuusi
-      </button>
+      <div class="button-row">
 
+        <button id="btnSaveQuestion">
+          💾 Kuusi
+        </button>
+
+        <button
+          class="secondary"
+          id="btnResetQuestion"
+        >
+          🔄 Haqi
+        </button>
+
+      </div>
 
       <div
         id="questionMessage"
         class="message"
       ></div>
 
-
-      <div
-        id="questionCounter"
-        class="counter"
-      >
-        Gaaffii kuufame: 0
-      </div>
-
     </div>
 
 
-    <!-- CREATE WHOLE EXAM -->
-
     <div class="card">
 
-      <h2>🚀 Qormaata Guutuu Uumi</h2>
+      <h2>🚀 Qormaata Uumi</h2>
 
       <p class="small">
-        Gaaffiiwwan barbaadde hunda erga kuustee booda
-        as irratti cuqaasi.
+        Gaaffilee barbaadde hunda dura
+        <b>Kuusi</b> godhi. Sana booda
+        Qormaata Uumi jedhu cuqaasi.
       </p>
 
-      <button
-        id="btnCreateExam"
-        class="full"
-      >
+      <button id="btnCreateExam">
         🚀 Qormaata Uumi
       </button>
-
 
       <div
         id="createMessage"
         class="message"
       ></div>
 
-    </div>
-
-  </section>
-
-
-  <!-- TAKE EXAM -->
-  <section id="takePage" class="page">
-
-    <button class="back" id="backFromTake">
-      ← Gara Duubatti
-    </button>
-
-    <div class="card">
-
-      <h2>📖 Qormaata Fudhadhu</h2>
-
-      <label>Koodii Qormaataa</label>
-
-      <input
-        id="examCode"
-        type="text"
-        placeholder="Fakkeenya: OR123456"
-      >
-
-      <label>Maqaa Barataa</label>
-
-      <input
-        id="studentName"
-        type="text"
-        placeholder="Maqaa guutuu"
-      >
-
-      <button
-        id="btnLoadExam"
-        class="full"
-      >
-        🔎 Qormaata Fidi
-      </button>
-
       <div
-        id="loadExamMessage"
-        class="message"
-      ></div>
+        id="createdExamBox"
+        class="exam-link-box"
+        style="display:none"
+      >
 
-    </div>
+        <h3>✅ Qormaanni Uumameera</h3>
 
-
-    <div
-      id="examArea"
-      style="display:none;"
-    >
-
-      <div class="card">
+        <p>🔢 Koodii Qormaataa:</p>
 
         <div
-          id="examInfo"
-          class="exam-info"
+          id="createdExamCode"
+          class="code"
         ></div>
 
-        <div id="questionsArea"></div>
-
-        <button
-          id="btnSubmitExam"
-          class="full"
-        >
-          📤 Qormaata Ergi
-        </button>
+        <p>🔗 Linkii Qormaataa:</p>
 
         <div
-          id="submitMessage"
+          id="createdExamLink"
+          class="exam-link"
+        ></div>
+
+        <div class="button-row">
+
+          <button id="btnCopyExamLink">
+            📋 Linkii Koppii Godhi
+          </button>
+
+          <button
+            class="blue"
+            id="btnShareExam"
+          >
+            📤 Qoodi / Share
+          </button>
+
+          <button
+            class="secondary"
+            id="btnCopyExamCode"
+          >
+            📋 Koodii Koppii Godhi
+          </button>
+
+        </div>
+
+        <div
+          id="shareMessage"
           class="message"
         ></div>
 
@@ -601,14 +620,81 @@
   </section>
 
 
-  <!-- RESULTS -->
-  <section id="resultsPage" class="page">
+  <!-- TAKE EXAM -->
 
-    <button class="back" id="backFromResults">
-      ← Gara Duubatti
-    </button>
+  <section id="takePage" class="page">
 
     <div class="card">
+
+      <button class="secondary" id="btnBackTake">
+        ← Duubatti
+      </button>
+
+      <h2>📖 Qormaata Fudhadhu</h2>
+
+      <label>Maqaa Barataa</label>
+
+      <input
+        id="studentName"
+        type="text"
+        placeholder="Maqaa kee"
+      >
+
+      <label>Koodii Qormaataa</label>
+
+      <input
+        id="examCode"
+        type="text"
+        placeholder="Fakkeenya: OR123456"
+      >
+
+      <button id="btnLoadExam">
+        🔍 Qormaata Bani
+      </button>
+
+      <div
+        id="loadMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+
+    <div
+      id="examArea"
+      class="card"
+      style="display:none"
+    >
+
+      <div id="examInfo"></div>
+
+      <hr>
+
+      <div id="questionsArea"></div>
+
+      <button id="btnSubmitExam">
+        📤 Qormaata Ergi
+      </button>
+
+      <div
+        id="submitMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULTS -->
+
+  <section id="resultsPage" class="page">
+
+    <div class="card">
+
+      <button class="secondary" id="btnBackResults">
+        ← Duubatti
+      </button>
 
       <h2>📊 Qormaata Koo</h2>
 
@@ -620,11 +706,8 @@
         placeholder="Koodii qormaataa"
       >
 
-      <button
-        id="btnLoadResults"
-        class="full"
-      >
-        🔎 Bu'aa Fidi
+      <button id="btnLoadResults">
+        🔍 Bu'aa Ilaali
       </button>
 
       <div
@@ -638,25 +721,30 @@
     <div
       id="resultsArea"
       class="card"
-      style="display:none;"
+      style="display:none"
     >
 
-      <h3>👨‍🎓 Barattoota</h3>
+      <div id="resultsSummary"></div>
 
-      <div id="studentsList"></div>
+      <div id="studentsResults"></div>
 
     </div>
 
 
     <div
-      id="studentDetailsArea"
+      id="studentDetailArea"
       class="card"
-      style="display:none;"
+      style="display:none"
     >
 
-      <h3>📋 Deebii Barataa</h3>
+      <button
+        class="secondary"
+        id="btnBackStudentResults"
+      >
+        ← Gara Tarree Deebi'i
+      </button>
 
-      <div id="studentDetails"></div>
+      <div id="studentDetail"></div>
 
     </div>
 
@@ -664,29 +752,25 @@
 
 
   <!-- SYSTEM -->
-  <section id="systemPage" class="page">
 
-    <button class="back" id="backFromSystem">
-      ← Gara Duubatti
-    </button>
+  <section id="systemPage" class="page">
 
     <div class="card">
 
-      <h2>⚙️ Haala Sirnaa</h2>
+      <button class="secondary" id="btnBackSystem">
+        ← Duubatti
+      </button>
 
-      <button
-        id="btnCheckSystem"
-        class="full"
-      >
-        🔄 Sirna Qori
+      <h2>⚙️ Sirna Ilaali</h2>
+
+      <button id="btnSystemStatus">
+        🔄 Haala Sirnaa Ilaali
       </button>
 
       <div
         id="systemMessage"
         class="message"
       ></div>
-
-      <div id="systemInfo"></div>
 
     </div>
 
@@ -697,36 +781,36 @@
 
 <script>
 
-  /* =====================================================
-     GLOBAL VARIABLES
-  ===================================================== */
+  /* =========================
+     VARIABLES
+  ========================= */
 
   let savedQuestions = [];
-
   let currentExam = null;
-
   let currentExamCode = "";
-
   let currentStudentName = "";
+  let currentResults = null;
 
 
-  /* =====================================================
-     PAGE NAVIGATION
-  ===================================================== */
+  /* =========================
+     HELPERS
+  ========================= */
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
 
   function showPage(pageId) {
 
-    const pages = document.querySelectorAll(".page");
+    const pages =
+      document.querySelectorAll(".page");
 
     pages.forEach(function(page) {
       page.classList.remove("active");
     });
 
-    const page = document.getElementById(pageId);
-
-    if (page) {
-      page.classList.add("active");
-    }
+    $(pageId).classList.add("active");
 
     window.scrollTo({
       top: 0,
@@ -735,308 +819,463 @@
   }
 
 
-  /* =====================================================
-     MESSAGE FUNCTION
-  ===================================================== */
+  function showMessage(id, message, type) {
 
-  function showMessage(elementId, message, type) {
+    const box = $(id);
 
-    const element = document.getElementById(elementId);
+    box.textContent = message;
 
-    if (!element) {
-      return;
-    }
+    box.className =
+      "message " +
+      (type || "info");
 
-    element.textContent = message;
-
-    element.className = "message " + type;
   }
 
 
-  function clearMessage(elementId) {
+  function clearMessage(id) {
 
-    const element = document.getElementById(elementId);
+    const box = $(id);
 
-    if (!element) {
-      return;
-    }
+    box.textContent = "";
 
-    element.textContent = "";
+    box.className = "message";
 
-    element.className = "message";
   }
 
 
-  /* =====================================================
+  function normalizeOptions(options) {
+
+    if (Array.isArray(options)) {
+
+      return options.filter(function(value) {
+
+        return value !== undefined &&
+               value !== null &&
+               String(value).trim() !== "";
+
+      });
+
+    }
+
+
+    if (
+      options &&
+      typeof options === "object"
+    ) {
+
+      return [
+        options.A,
+        options.B,
+        options.C,
+        options.D
+      ].filter(function(value) {
+
+        return value !== undefined &&
+               value !== null &&
+               String(value).trim() !== "";
+
+      });
+
+    }
+
+
+    return [];
+
+  }
+
+
+  function optionLetter(index) {
+
+    const letters = [
+      "A",
+      "B",
+      "C",
+      "D"
+    ];
+
+    return (
+      letters[index] ||
+      String(index + 1)
+    );
+
+  }
+
+
+  /* =========================
+     NAVIGATION
+  ========================= */
+
+  $("btnCreate").addEventListener(
+    "click",
+    function() {
+
+      showPage("createPage");
+
+    }
+  );
+
+
+  $("btnTake").addEventListener(
+    "click",
+    function() {
+
+      showPage("takePage");
+
+    }
+  );
+
+
+  $("btnResults").addEventListener(
+    "click",
+    function() {
+
+      showPage("resultsPage");
+
+    }
+  );
+
+
+  $("btnSystem").addEventListener(
+    "click",
+    function() {
+
+      showPage("systemPage");
+
+    }
+  );
+
+
+  $("btnBackCreate").addEventListener(
+    "click",
+    function() {
+
+      showPage("homePage");
+
+    }
+  );
+
+
+  $("btnBackTake").addEventListener(
+    "click",
+    function() {
+
+      showPage("homePage");
+
+    }
+  );
+
+
+  $("btnBackResults").addEventListener(
+    "click",
+    function() {
+
+      showPage("homePage");
+
+    }
+  );
+
+
+  $("btnBackSystem").addEventListener(
+    "click",
+    function() {
+
+      showPage("homePage");
+
+    }
+  );
+
+
+  $("btnBackStudentResults").addEventListener(
+    "click",
+    function() {
+
+      $("studentDetailArea").style.display =
+        "none";
+
+      $("resultsArea").style.display =
+        "block";
+
+    }
+  );
+
+
+  /* =========================
      QUESTION TYPE
-  ===================================================== */
+  ========================= */
 
-  function updateQuestionType() {
+  $("questionType").addEventListener(
+    "change",
+    function() {
 
-    const type =
-      document.getElementById("questionType").value;
+      if (
+        this.value === "truefalse"
+      ) {
 
-    const multiple =
-      document.getElementById("multipleOptions");
+        $("multipleFields").style.display =
+          "none";
 
-    const trueFalse =
-      document.getElementById("trueFalseOptions");
+        $("trueFalseFields").style.display =
+          "block";
 
-    if (type === "multiple") {
+      } else {
 
-      multiple.style.display = "block";
+        $("multipleFields").style.display =
+          "block";
 
-      trueFalse.style.display = "none";
+        $("trueFalseFields").style.display =
+          "none";
 
-    } else {
-
-      multiple.style.display = "none";
-
-      trueFalse.style.display = "block";
+      }
 
     }
+  );
 
-  }
 
-
-  /* =====================================================
-     RESET QUESTION FORM
-  ===================================================== */
+  /* =========================
+     RESET QUESTION
+  ========================= */
 
   function resetQuestionForm() {
 
-    document.getElementById("questionText").value = "";
+    $("questionText").value = "";
 
-    document.getElementById("optionA").value = "";
+    $("optionA").value = "";
+    $("optionB").value = "";
+    $("optionC").value = "";
+    $("optionD").value = "";
 
-    document.getElementById("optionB").value = "";
+    $("correctAnswerMultiple").value = "";
+    $("correctAnswerTF").value = "";
 
-    document.getElementById("optionC").value = "";
+    $("points").value = "1";
 
-    document.getElementById("optionD").value = "";
-
-    document.getElementById("correctAnswerMultiple").value = "";
-
-    document.getElementById("correctAnswerTF").value = "";
-
-    document.getElementById("points").value = "1";
-
-    document.getElementById("questionType").value = "multiple";
-
-    updateQuestionType();
-
-    document
-      .getElementById("questionText")
-      .focus();
-
-  }
-
-
-  /* =====================================================
-     SAVE QUESTION
-  ===================================================== */
-
-  function saveQuestion() {
-
-    clearMessage("questionMessage");
-
-    const text =
-      document.getElementById("questionText")
-        .value
-        .trim();
-
-    const type =
-      document.getElementById("questionType")
-        .value;
-
-    const points =
-      Number(
-        document.getElementById("points").value
-      );
-
-
-    if (!text) {
-
-      showMessage(
-        "questionMessage",
-        "❌ Maaloo gaaffii barreessi.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (!points || points < 1) {
-
-      showMessage(
-        "questionMessage",
-        "❌ Qabxiin sirrii miti.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    let question = {
-      id: "q_" + Date.now() + "_" + savedQuestions.length,
-      question: text,
-      type: type,
-      points: points
-    };
-
-
-    if (type === "multiple") {
-
-      const A =
-        document.getElementById("optionA")
-          .value
-          .trim();
-
-      const B =
-        document.getElementById("optionB")
-          .value
-          .trim();
-
-      const C =
-        document.getElementById("optionC")
-          .value
-          .trim();
-
-      const D =
-        document.getElementById("optionD")
-          .value
-          .trim();
-
-      const correct =
-        document.getElementById(
-          "correctAnswerMultiple"
-        ).value;
-
-
-      if (!A || !B || !C || !D) {
-
-        showMessage(
-          "questionMessage",
-          "❌ Filannoo A, B, C fi D hunda guuti.",
-          "error"
-        );
-
-        return;
-      }
-
-
-      if (!correct) {
-
-        showMessage(
-          "questionMessage",
-          "❌ Deebii sirrii filadhu.",
-          "error"
-        );
-
-        return;
-      }
-
-
-      question.options = {
-        A: A,
-        B: B,
-        C: C,
-        D: D
-      };
-
-      question.correctAnswer = correct;
-
-    }
-
-
-    if (type === "truefalse") {
-
-      const correct =
-        document.getElementById(
-          "correctAnswerTF"
-        ).value;
-
-
-      if (!correct) {
-
-        showMessage(
-          "questionMessage",
-          "❌ Dhugaa ykn Soba filadhu.",
-          "error"
-        );
-
-        return;
-      }
-
-
-      question.options = {
-        A: "Dhugaa",
-        B: "Soba"
-      };
-
-      question.correctAnswer = correct;
-
-    }
-
-
-    savedQuestions.push(question);
-
-
-    document.getElementById(
-      "questionCounter"
-    ).textContent =
-      "Gaaffii kuufame: " +
-      savedQuestions.length;
-
-
-    showMessage(
-      "questionMessage",
-      "✅ Gaaffiin kun kuufameera. Amma gaaffii itti aanu galchi.",
-      "success"
+    clearMessage(
+      "questionMessage"
     );
 
-
-    resetQuestionForm();
-
   }
 
 
-  /* =====================================================
+  $("btnResetQuestion").addEventListener(
+    "click",
+    resetQuestionForm
+  );
+
+
+  /* =========================
+     SAVE QUESTION
+  ========================= */
+
+  $("btnSaveQuestion").addEventListener(
+    "click",
+    function() {
+
+      clearMessage(
+        "questionMessage"
+      );
+
+
+      const question =
+        $("questionText").value.trim();
+
+
+      const type =
+        $("questionType").value;
+
+
+      const points =
+        Number($("points").value);
+
+
+      if (!question) {
+
+        showMessage(
+          "questionMessage",
+          "❌ Gaaffii barreessi.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!points || points < 1) {
+
+        showMessage(
+          "questionMessage",
+          "❌ Qabxii sirrii galchi.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      let item = {
+        question: question,
+        type: type,
+        points: points
+      };
+
+
+      /* MULTIPLE */
+
+      if (type === "multiple") {
+
+        const A =
+          $("optionA").value.trim();
+
+        const B =
+          $("optionB").value.trim();
+
+        const C =
+          $("optionC").value.trim();
+
+        const D =
+          $("optionD").value.trim();
+
+        const correct =
+          $("correctAnswerMultiple").value;
+
+
+        if (!A || !B || !C || !D) {
+
+          showMessage(
+            "questionMessage",
+            "❌ Filannoo A, B, C fi D guuti.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (!correct) {
+
+          showMessage(
+            "questionMessage",
+            "❌ Deebii sirrii filadhu.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        item.options = {
+          A: A,
+          B: B,
+          C: C,
+          D: D
+        };
+
+
+        /*
+          IMPORTANT:
+          Backend akka beekutti
+          A/B/C/D ergaa.
+        */
+
+        item.correctAnswer =
+          correct;
+
+      }
+
+
+      /* TRUE / FALSE */
+
+      else {
+
+        const correct =
+          $("correctAnswerTF").value;
+
+
+        if (!correct) {
+
+          showMessage(
+            "questionMessage",
+            "❌ Dhugaa ykn Soba filadhu.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        item.options = {
+          A: "Dhugaa",
+          B: "Soba"
+        };
+
+
+        item.correctAnswer =
+          correct;
+
+      }
+
+
+      savedQuestions.push(item);
+
+
+      $("questionCounter").textContent =
+        "Gaaffii kuufame: " +
+        savedQuestions.length;
+
+
+      showMessage(
+        "questionMessage",
+        "✅ Gaaffiin " +
+        savedQuestions.length +
+        " kuufameera. Gaaffii itti aanu galchi.",
+        "success"
+      );
+
+
+      resetQuestionForm();
+
+    }
+  );
+
+
+  /* =========================
      CREATE EXAM
-  ===================================================== */
+  ========================= */
+
+  $("btnCreateExam").addEventListener(
+    "click",
+    createExam
+  );
+
 
   async function createExam() {
 
-    clearMessage("createMessage");
+    clearMessage(
+      "createMessage"
+    );
+
+    $("createdExamBox").style.display =
+      "none";
 
 
     const teacherName =
-      document.getElementById("teacherName")
-        .value
-        .trim();
+      $("teacherName").value.trim();
 
     const title =
-      document.getElementById("examTitle")
-        .value
-        .trim();
+      $("examTitle").value.trim();
 
     const subject =
-      document.getElementById("subject")
-        .value
-        .trim();
+      $("subject").value.trim();
 
     const grade =
-      document.getElementById("grade")
-        .value
-        .trim();
+      $("grade").value.trim();
 
     const duration =
-      Number(
-        document.getElementById("duration")
-          .value
-      );
+      Number($("duration").value);
 
 
     if (!teacherName) {
@@ -1048,6 +1287,7 @@
       );
 
       return;
+
     }
 
 
@@ -1060,18 +1300,33 @@
       );
 
       return;
+
     }
 
 
-    if (!savedQuestions.length) {
+    if (!subject) {
 
       showMessage(
         "createMessage",
-        "❌ Dura yoo xiqqaate gaaffii tokko kuusi.",
+        "❌ Barnoota galchi.",
         "error"
       );
 
       return;
+
+    }
+
+
+    if (!grade) {
+
+      showMessage(
+        "createMessage",
+        "❌ Kutaa galchi.",
+        "error"
+      );
+
+      return;
+
     }
 
 
@@ -1079,51 +1334,74 @@
 
       showMessage(
         "createMessage",
-        "❌ Yeroo qormaataa sirrii galchi.",
+        "❌ Yeroo sirrii galchi.",
         "error"
       );
 
       return;
+
+    }
+
+
+    if (savedQuestions.length === 0) {
+
+      showMessage(
+        "createMessage",
+        "❌ Yoo xiqqaate gaaffii tokko kuusi.",
+        "error"
+      );
+
+      return;
+
     }
 
 
     const button =
-      document.getElementById("btnCreateExam");
+      $("btnCreateExam");
 
     button.disabled = true;
 
     button.textContent =
-      "⏳ Qormaata uumamaa jira...";
+      "⏳ Qormaata uumaa jira...";
 
 
     try {
 
       const response =
-        await fetch("/api/exams", {
+        await fetch(
+          "/api/exams",
+          {
+            method: "POST",
 
-          method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
 
-          headers: {
-            "Content-Type": "application/json"
-          },
+            body: JSON.stringify({
 
-          body: JSON.stringify({
+              teacherName:
+                teacherName,
 
-            teacherName: teacherName,
+              title:
+                title,
 
-            title: title,
+              subject:
+                subject,
 
-            subject: subject,
+              grade:
+                grade,
 
-            grade: grade,
+              duration:
+                duration,
 
-            duration: duration,
+              questions:
+                savedQuestions
 
-            questions: savedQuestions
+            })
 
-          })
-
-        });
+          }
+        );
 
 
       const data =
@@ -1140,49 +1418,52 @@
       }
 
 
-      let message =
-        "✅ Qormaanni milkaa'inaan uumameera!\n\n";
+      const code =
+        data.code ||
+        (
+          data.exam &&
+          data.exam.code
+        ) ||
+        "";
 
-      message +=
-        "🔑 Koodii: " +
-        (data.code || "") +
-        "\n\n";
 
-      if (data.link) {
-
-        message +=
-          "🔗 Linkii:\n" +
-          data.link;
-
-      } else {
-
-        message +=
-          "🔗 Linkii:\n" +
+      const link =
+        data.link ||
+        (
           window.location.origin +
           "/?exam=" +
-          encodeURIComponent(data.code || "");
+          encodeURIComponent(code)
+        );
 
-      }
+
+      $("createdExamCode").textContent =
+        code;
+
+
+      $("createdExamLink").textContent =
+        link;
+
+
+      $("createdExamBox").style.display =
+        "block";
 
 
       showMessage(
         "createMessage",
-        message,
+        "✅ Qormaanni milkaa'inaan uumameera.",
         "success"
       );
 
 
       /*
-        Exam tokko erga uumamee booda
-        gaaffiiwwan haaraa jalqabuuf
+        Qormaata haaraa booda
+        gaaffilee kuufaman qulqulleessi.
       */
 
       savedQuestions = [];
 
 
-      document.getElementById(
-        "questionCounter"
-      ).textContent =
+      $("questionCounter").textContent =
         "Gaaffii kuufame: 0";
 
 
@@ -1190,8 +1471,7 @@
 
       showMessage(
         "createMessage",
-        "❌ Dogoggora:\n" +
-        error.message,
+        "❌ " + error.message,
         "error"
       );
 
@@ -1207,57 +1487,312 @@
   }
 
 
-  /* =====================================================
-     LOAD EXAM
-  ===================================================== */
+  /* =========================
+     COPY FUNCTION
+  ========================= */
 
-  async function loadExam() {
+  async function copyText(text) {
 
-    clearMessage("loadExamMessage");
+    if (!text) {
 
-    const code =
-      document.getElementById("examCode")
-        .value
-        .trim()
-        .toUpperCase();
-
-    const studentName =
-      document.getElementById("studentName")
-        .value
-        .trim();
-
-
-    if (!code) {
-
-      showMessage(
-        "loadExamMessage",
-        "❌ Koodii qormaataa galchi.",
-        "error"
+      throw new Error(
+        "Wanti koppii godhamu hin jiru."
       );
 
-      return;
     }
 
 
-    if (!studentName) {
+    if (
+      navigator.clipboard &&
+      window.isSecureContext
+    ) {
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
+      return true;
+
+    }
+
+
+    /*
+      Fallback mobile/browser
+    */
+
+    const textarea =
+      document.createElement("textarea");
+
+    textarea.value = text;
+
+    textarea.style.position =
+      "fixed";
+
+    textarea.style.left =
+      "-9999px";
+
+    document.body.appendChild(
+      textarea
+    );
+
+    textarea.focus();
+
+    textarea.select();
+
+    const success =
+      document.execCommand(
+        "copy"
+      );
+
+    textarea.remove();
+
+    if (!success) {
+
+      throw new Error(
+        "Koppii gochuu hin dandeenye."
+      );
+
+    }
+
+    return true;
+
+  }
+
+
+  /* =========================
+     COPY LINK
+  ========================= */
+
+  $("btnCopyExamLink").addEventListener(
+    "click",
+    async function() {
+
+      const link =
+        $("createdExamLink").textContent.trim();
+
+
+      try {
+
+        await copyText(link);
+
+
+        showMessage(
+          "shareMessage",
+          "✅ Linkiin qormaataa koppii godhameera.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        showMessage(
+          "shareMessage",
+          "❌ " + error.message,
+          "error"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     COPY CODE
+  ========================= */
+
+  $("btnCopyExamCode").addEventListener(
+    "click",
+    async function() {
+
+      const code =
+        $("createdExamCode").textContent.trim();
+
+
+      try {
+
+        await copyText(code);
+
+
+        showMessage(
+          "shareMessage",
+          "✅ Koodiin qormaataa koppii godhameera.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        showMessage(
+          "shareMessage",
+          "❌ " + error.message,
+          "error"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     SHARE
+  ========================= */
+
+  $("btnShareExam").addEventListener(
+    "click",
+    async function() {
+
+      const code =
+        $("createdExamCode").textContent.trim();
+
+      const link =
+        $("createdExamLink").textContent.trim();
+
+
+      const title =
+        $("examTitle").value.trim() ||
+        "Qormaata OR";
+
+
+      const shareText =
+        "📖 " +
+        title +
+        "\n\n" +
+        "🔢 Koodii: " +
+        code +
+        "\n" +
+        "🔗 Linkii: " +
+        link;
+
+
+      try {
+
+        if (
+          navigator.share
+        ) {
+
+          await navigator.share({
+
+            title:
+              title,
+
+            text:
+              shareText,
+
+            url:
+              link
+
+          });
+
+
+          showMessage(
+            "shareMessage",
+            "✅ Qooda/share gochuun milkaa'eera.",
+            "success"
+          );
+
+        } else {
+
+          await copyText(
+            shareText
+          );
+
+
+          showMessage(
+            "shareMessage",
+            "ℹ️ Share kallattiin browser kana irratti hin jirre. Odeeffannoon qormaataa koppii godhameera; WhatsApp ykn Telegram keessatti maxxansi.",
+            "info"
+          );
+
+        }
+
+      } catch (error) {
+
+        /*
+          User share window cufee yoo bahe
+          error guddaa hin agarsiifnu.
+        */
+
+        if (
+          error.name ===
+          "AbortError"
+        ) {
+
+          return;
+
+        }
+
+
+        showMessage(
+          "shareMessage",
+          "❌ Share gochuu hin dandeenye.",
+          "error"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     LOAD EXAM
+  ========================= */
+
+  $("btnLoadExam").addEventListener(
+    "click",
+    loadExam
+  );
+
+
+  async function loadExam() {
+
+    clearMessage(
+      "loadMessage"
+    );
+
+
+    const name =
+      $("studentName").value.trim();
+
+    const code =
+      $("examCode").value.trim();
+
+
+    if (!name) {
 
       showMessage(
-        "loadExamMessage",
+        "loadMessage",
         "❌ Maqaa barataa galchi.",
         "error"
       );
 
       return;
+
+    }
+
+
+    if (!code) {
+
+      showMessage(
+        "loadMessage",
+        "❌ Koodii qormaataa galchi.",
+        "error"
+      );
+
+      return;
+
     }
 
 
     const button =
-      document.getElementById("btnLoadExam");
+      $("btnLoadExam");
 
     button.disabled = true;
 
     button.textContent =
-      "⏳ Fidaa jira...";
+      "⏳ Banamaa jira...";
 
 
     try {
@@ -1283,32 +1818,48 @@
       }
 
 
-      currentExam = data;
+      currentExam =
+        data.exam || data;
 
-      currentExamCode = code;
+      currentExamCode =
+        code;
 
-      currentStudentName = studentName;
+      currentStudentName =
+        name;
 
 
-      displayExam(data);
+      displayExam(
+        currentExam
+      );
 
 
-      document.getElementById(
-        "examArea"
-      ).style.display = "block";
+      $("examArea").style.display =
+        "block";
 
 
       showMessage(
-        "loadExamMessage",
-        "✅ Qormaanni banameera. Deebii kee guuti.",
+        "loadMessage",
+        "✅ Qormaanni banameera.",
         "success"
       );
 
 
+      window.scrollTo({
+        top:
+          $("examArea").offsetTop,
+        behavior:
+          "smooth"
+      });
+
+
     } catch (error) {
 
+      $("examArea").style.display =
+        "none";
+
+
       showMessage(
-        "loadExamMessage",
+        "loadMessage",
         "❌ " + error.message,
         "error"
       );
@@ -1318,31 +1869,35 @@
       button.disabled = false;
 
       button.textContent =
-        "🔎 Qormaata Fidi";
+        "🔍 Qormaata Bani";
 
     }
 
   }
 
 
-  /* =====================================================
+  /* =========================
      DISPLAY EXAM
-  ===================================================== */
+  ========================= */
 
   function displayExam(exam) {
 
     const info =
-      document.getElementById("examInfo");
+      $("examInfo");
 
     info.innerHTML = "";
+
 
     const title =
       document.createElement("h2");
 
     title.textContent =
-      exam.title || "Qormaata";
+      exam.title ||
+      "Qormaata";
 
-    info.appendChild(title);
+    info.appendChild(
+      title
+    );
 
 
     const teacher =
@@ -1350,9 +1905,15 @@
 
     teacher.textContent =
       "👨‍🏫 Barsiisaa: " +
-      (exam.teacher_name || "");
+      (
+        exam.teacherName ||
+        exam.teacher_name ||
+        ""
+      );
 
-    info.appendChild(teacher);
+    info.appendChild(
+      teacher
+    );
 
 
     const subject =
@@ -1360,9 +1921,29 @@
 
     subject.textContent =
       "📚 Barnoota: " +
-      (exam.subject || "-");
+      (
+        exam.subject ||
+        "-"
+      );
 
-    info.appendChild(subject);
+    info.appendChild(
+      subject
+    );
+
+
+    const grade =
+      document.createElement("p");
+
+    grade.textContent =
+      "🎓 Kutaa: " +
+      (
+        exam.grade ||
+        "-"
+      );
+
+    info.appendChild(
+      grade
+    );
 
 
     const duration =
@@ -1370,38 +1951,57 @@
 
     duration.textContent =
       "⏱️ Yeroo: " +
-      (exam.duration || 30) +
+      (
+        exam.duration ||
+        30
+      ) +
       " daqiiqaa";
 
-    info.appendChild(duration);
+    info.appendChild(
+      duration
+    );
 
 
     const questionsArea =
-      document.getElementById(
-        "questionsArea"
-      );
+      $("questionsArea");
 
     questionsArea.innerHTML = "";
 
 
     const questions =
-      Array.isArray(exam.questions)
+      Array.isArray(
+        exam.questions
+      )
         ? exam.questions
         : [];
+
+
+    if (questions.length === 0) {
+
+      questionsArea.innerHTML =
+        "<p class='wrong'>❌ Gaaffiin hin jiru.</p>";
+
+      return;
+
+    }
 
 
     questions.forEach(
       function(q, index) {
 
         const box =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         box.className =
           "question-box";
 
 
         const number =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         number.className =
           "question-number";
@@ -1410,75 +2010,119 @@
           "Gaaffii " +
           (index + 1) +
           " — " +
-          (q.points || 1) +
+          (
+            q.points ||
+            1
+          ) +
           " qabxii";
 
-        box.appendChild(number);
+        box.appendChild(
+          number
+        );
 
 
         const question =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         question.style.fontWeight =
           "bold";
 
-        question.textContent =
-          q.question;
+        question.style.marginBottom =
+          "10px";
 
-        box.appendChild(question);
+        question.textContent =
+          q.question ||
+          "";
+
+        box.appendChild(
+          question
+        );
 
 
         const options =
-          q.options || {};
-
-
-        Object.keys(options)
-          .forEach(
-            function(key) {
-
-              const label =
-                document.createElement("label");
-
-              label.className =
-                "option";
-
-              const radio =
-                document.createElement("input");
-
-              radio.type =
-                "radio";
-
-              radio.name =
-                "q_" + q.id;
-
-              radio.value =
-                key;
-
-              radio.setAttribute(
-                "data-question-id",
-                q.id
-              );
-
-
-              label.appendChild(radio);
-
-              label.appendChild(
-                document.createTextNode(
-                  " " +
-                  key +
-                  ") " +
-                  options[key]
-                )
-              );
-
-
-              box.appendChild(label);
-
-            }
+          normalizeOptions(
+            q.options
           );
 
 
-        questionsArea.appendChild(box);
+        options.forEach(
+          function(
+            optionText,
+            optionIndex
+          ) {
+
+            const letter =
+              optionLetter(
+                optionIndex
+              );
+
+
+            const label =
+              document.createElement(
+                "label"
+              );
+
+            label.className =
+              "option";
+
+
+            const radio =
+              document.createElement(
+                "input"
+              );
+
+            radio.type =
+              "radio";
+
+            radio.name =
+              "q_" +
+              q.id;
+
+            /*
+              IMPORTANT:
+              A/B/C/D qofa value godha.
+            */
+
+            radio.value =
+              letter;
+
+
+            radio.setAttribute(
+              "data-question-id",
+              q.id
+            );
+
+
+            label.appendChild(
+              radio
+            );
+
+
+            label.appendChild(
+              document.createTextNode(
+                " " +
+                letter +
+                ") " +
+                String(
+                  optionText
+                )
+              )
+            );
+
+
+            box.appendChild(
+              label
+            );
+
+          }
+        );
+
+
+        questionsArea.appendChild(
+          box
+        );
 
       }
     );
@@ -1486,13 +2130,21 @@
   }
 
 
-  /* =====================================================
+  /* =========================
      SUBMIT EXAM
-  ===================================================== */
+  ========================= */
+
+  $("btnSubmitExam").addEventListener(
+    "click",
+    submitExam
+  );
+
 
   async function submitExam() {
 
-    clearMessage("submitMessage");
+    clearMessage(
+      "submitMessage"
+    );
 
 
     if (!currentExam) {
@@ -1504,17 +2156,19 @@
       );
 
       return;
+
     }
 
 
     const questions =
-      Array.isArray(currentExam.questions)
+      Array.isArray(
+        currentExam.questions
+      )
         ? currentExam.questions
         : [];
 
 
     const answers = {};
-
 
     let unanswered = 0;
 
@@ -1524,10 +2178,13 @@
 
         const radios =
           document.getElementsByName(
-            "q_" + q.id
+            "q_" +
+            q.id
           );
 
-        let selected = "";
+
+        let selectedLetter =
+          "";
 
 
         for (
@@ -1536,9 +2193,11 @@
           i++
         ) {
 
-          if (radios[i].checked) {
+          if (
+            radios[i].checked
+          ) {
 
-            selected =
+            selectedLetter =
               radios[i].value;
 
             break;
@@ -1548,21 +2207,73 @@
         }
 
 
-        if (!selected) {
+        if (!selectedLetter) {
 
           unanswered++;
+
+          answers[q.id] =
+            "";
+
+          return;
 
         }
 
 
-        answers[q.id] =
-          selected;
+        /*
+          Qabxii sirrii mirkaneessuuf
+          A/B/C/D gara TEXT filannoo
+          jijjiirra.
+
+          Backend database keessatti
+          correctAnswer akka TEXT tursiisa.
+        */
+
+        const options =
+          normalizeOptions(
+            q.options
+          );
+
+
+        const letters = [
+          "A",
+          "B",
+          "C",
+          "D"
+        ];
+
+
+        const index =
+          letters.indexOf(
+            selectedLetter.toUpperCase()
+          );
+
+
+        if (
+          index >= 0 &&
+          options[index] !== undefined
+        ) {
+
+          answers[q.id] =
+            String(
+              options[index]
+            ).trim();
+
+        } else {
+
+          answers[q.id] =
+            String(
+              selectedLetter
+            ).trim();
+
+        }
 
       }
     );
 
 
-    if (unanswered > 0) {
+    if (
+      unanswered > 0
+    ) {
 
       const ok =
         window.confirm(
@@ -1571,6 +2282,7 @@
           " hin deebifne.\n\n" +
           "Ammas ergachuu barbaaddaa?"
         );
+
 
       if (!ok) {
 
@@ -1582,11 +2294,11 @@
 
 
     const button =
-      document.getElementById(
-        "btnSubmitExam"
-      );
+      $("btnSubmitExam");
 
-    button.disabled = true;
+
+    button.disabled =
+      true;
 
     button.textContent =
       "⏳ Ergaa jira...";
@@ -1602,23 +2314,24 @@
           ) +
           "/submit",
           {
-
-            method: "POST",
+            method:
+              "POST",
 
             headers: {
               "Content-Type":
                 "application/json"
             },
 
-            body: JSON.stringify({
+            body:
+              JSON.stringify({
 
-              studentName:
-                currentStudentName,
+                studentName:
+                  currentStudentName,
 
-              answers:
-                answers
+                answers:
+                  answers
 
-            })
+              })
 
           }
         );
@@ -1638,29 +2351,64 @@
       }
 
 
+      /*
+        Backend kee:
+        data.result keessa deebisa.
+      */
+
+      const result =
+        data.result ||
+        data;
+
+
       let message =
         "✅ Qormaanni kee ergameera!\n\n";
+
 
       message +=
         "👤 Barataa: " +
         currentStudentName +
         "\n";
 
+
       message +=
         "🏆 Qabxii: " +
-        (data.score || 0) +
+        (
+          result.score ||
+          0
+        ) +
         " / " +
-        (data.totalPoints || 0) +
+        (
+          result.totalPoints ||
+          0
+        ) +
         "\n";
+
+
+      message +=
+        "📊 Dhibbeentaa: " +
+        (
+          result.percentage ||
+          0
+        ) +
+        "%\n";
+
 
       message +=
         "✅ Sirrii: " +
-        (data.correctAnswers || 0) +
+        (
+          result.correctAnswers ||
+          0
+        ) +
         "\n";
+
 
       message +=
         "❌ Dogoggora: " +
-        (data.wrongAnswers || 0);
+        (
+          result.wrongAnswers ||
+          0
+        );
 
 
       showMessage(
@@ -1670,18 +2418,25 @@
       );
 
 
-      button.disabled = true;
+      button.disabled =
+        true;
+
+      button.textContent =
+        "✅ Qormaanni Ergameera";
 
 
     } catch (error) {
 
       showMessage(
         "submitMessage",
-        "❌ " + error.message,
+        "❌ " +
+        error.message,
         "error"
       );
 
-      button.disabled = false;
+
+      button.disabled =
+        false;
 
       button.textContent =
         "📤 Qormaata Ergi";
@@ -1691,20 +2446,27 @@
   }
 
 
-  /* =====================================================
-     LOAD TEACHER RESULTS
-  ===================================================== */
+  /* =========================
+     LOAD RESULTS
+  ========================= */
+
+  $("btnLoadResults").addEventListener(
+    "click",
+    loadResults
+  );
+
 
   async function loadResults() {
 
-    clearMessage("resultsMessage");
+    clearMessage(
+      "resultsMessage"
+    );
 
 
     const code =
-      document.getElementById("resultsCode")
+      $("resultsCode")
         .value
-        .trim()
-        .toUpperCase();
+        .trim();
 
 
     if (!code) {
@@ -1716,18 +2478,19 @@
       );
 
       return;
+
     }
 
 
     const button =
-      document.getElementById(
-        "btnLoadResults"
-      );
+      $("btnLoadResults");
 
-    button.disabled = true;
+
+    button.disabled =
+      true;
 
     button.textContent =
-      "⏳ Bu'aa fidaa jira...";
+      "⏳ Fe'aa jira...";
 
 
     try {
@@ -1735,7 +2498,9 @@
       const response =
         await fetch(
           "/api/exams/" +
-          encodeURIComponent(code) +
+          encodeURIComponent(
+            code
+          ) +
           "/results"
         );
 
@@ -1754,65 +2519,111 @@
       }
 
 
-      displayResults(data);
+      currentResults =
+        data;
 
 
-      document.getElementById(
-        "resultsArea"
-      ).style.display = "block";
-
-
-      showMessage(
-        "resultsMessage",
-        "✅ Bu'aan argameera.",
-        "success"
+      displayResults(
+        data
       );
+
+
+      $("resultsArea").style.display =
+        "block";
 
 
     } catch (error) {
 
+      $("resultsArea").style.display =
+        "none";
+
+
       showMessage(
         "resultsMessage",
-        "❌ " + error.message,
+        "❌ " +
+        error.message,
         "error"
       );
 
     } finally {
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
       button.textContent =
-        "🔎 Bu'aa Fidi";
+        "🔍 Bu'aa Ilaali";
 
     }
 
   }
 
 
-  /* =====================================================
+  /* =========================
      DISPLAY RESULTS
-  ===================================================== */
+  ========================= */
 
   function displayResults(data) {
 
-    const list =
-      document.getElementById(
-        "studentsList"
-      );
-
-    list.innerHTML = "";
+    const exam =
+      data.exam ||
+      {};
 
 
     const results =
-      Array.isArray(data.results)
+      Array.isArray(
+        data.results
+      )
         ? data.results
         : [];
 
 
-    if (!results.length) {
+    $("resultsSummary").innerHTML = "";
 
-      list.innerHTML =
-        "<p>Barataan qormaata kana hin fudhanne.</p>";
+
+    const title =
+      document.createElement(
+        "h2"
+      );
+
+    title.textContent =
+      exam.title ||
+      "Bu'aa Qormaataa";
+
+
+    $("resultsSummary").appendChild(
+      title
+    );
+
+
+    const info =
+      document.createElement(
+        "p"
+      );
+
+    info.textContent =
+      "👥 Barattoota: " +
+      (
+        data.totalStudents ??
+        results.length
+      );
+
+
+    $("resultsSummary").appendChild(
+      info
+    );
+
+
+    const students =
+      $("studentsResults");
+
+
+    students.innerHTML = "";
+
+
+    if (results.length === 0) {
+
+      students.innerHTML =
+        "<p class='small'>Qormaata kana barataan tokko illee hin fudhanne.</p>";
 
       return;
 
@@ -1820,87 +2631,89 @@
 
 
     results.forEach(
-      function(result, index) {
+      function(result) {
 
-        const card =
-          document.createElement("div");
+        const item =
+          document.createElement(
+            "div"
+          );
 
-        card.className =
-          "result-card";
+
+        item.className =
+          "result-item";
 
 
-        const name =
-          document.createElement("h3");
-
-        name.textContent =
-          "👤 " +
-          (result.student_name ||
-           result.studentName ||
-           "Barataa " + (index + 1));
-
-        card.appendChild(name);
+        const studentName =
+          result.studentName ||
+          result.student_name ||
+          "Barataa";
 
 
         const score =
-          document.createElement("div");
+          result.score ||
+          0;
 
-        score.className =
-          "score";
 
-        score.textContent =
-          "🏆 " +
-          (result.score || 0) +
+        const total =
+          result.totalPoints ||
+          result.total_points ||
+          0;
+
+
+        const percentage =
+          result.percentage ||
+          0;
+
+
+        item.innerHTML =
+          "<b>👤 " +
+          escapeHTML(
+            studentName
+          ) +
+          "</b><br>" +
+
+          "🏆 Qabxii: " +
+          score +
           " / " +
-          (result.total_points || 0);
+          total +
+          "<br>" +
 
-        card.appendChild(score);
+          "📊 Dhibbeentaa: " +
+          percentage +
+          "%<br>" +
 
-
-        const correct =
-          document.createElement("p");
-
-        correct.textContent =
           "✅ Sirrii: " +
-          (result.correct_answers || 0);
+          (
+            result.correctAnswers ||
+            result.correct_answers ||
+            0
+          ) +
 
-        card.appendChild(correct);
+          " &nbsp; " +
 
-
-        const wrong =
-          document.createElement("p");
-
-        wrong.textContent =
           "❌ Dogoggora: " +
-          (result.wrong_answers || 0);
-
-        card.appendChild(wrong);
-
-
-        const view =
-          document.createElement("button");
-
-        view.textContent =
-          "📋 Deebii Guutuu Ilaali";
-
-        view.dataset.resultId =
-          result.id;
+          (
+            result.wrongAnswers ||
+            result.wrong_answers ||
+            0
+          );
 
 
-        view.addEventListener(
+        item.addEventListener(
           "click",
           function() {
 
-            loadStudentDetails(
-              result.id
+            showStudentDetail(
+              result
             );
 
           }
         );
 
 
-        card.appendChild(view);
-
-        list.appendChild(card);
+        students.appendChild(
+          item
+        );
 
       }
     );
@@ -1908,234 +2721,194 @@
   }
 
 
-  /* =====================================================
-     LOAD ONE STUDENT DETAILS
-  ===================================================== */
+  /* =========================
+     STUDENT DETAIL
+  ========================= */
 
-  async function loadStudentDetails(
-    resultId
-  ) {
+  function showStudentDetail(result) {
 
-    const area =
-      document.getElementById(
-        "studentDetailsArea"
-      );
-
-    const details =
-      document.getElementById(
-        "studentDetails"
-      );
+    $("resultsArea").style.display =
+      "none";
 
 
-    area.style.display = "block";
-
-    details.innerHTML =
-      '<div class="loading">⏳ Deebaa fidaa jira...</div>';
+    $("studentDetailArea").style.display =
+      "block";
 
 
-    try {
-
-      const response =
-        await fetch(
-          "/api/results/" +
-          encodeURIComponent(resultId)
-        );
+    const detail =
+      $("studentDetail");
 
 
-      const data =
-        await response.json();
+    detail.innerHTML = "";
 
 
-      if (!response.ok) {
-
-        throw new Error(
-          data.error ||
-          "Deebaa argachuu hin dandeenye."
-        );
-
-      }
-
-
-      displayStudentDetails(data);
-
-
-      area.scrollIntoView({
-        behavior: "smooth"
-      });
-
-
-    } catch (error) {
-
-      details.innerHTML =
-        '<div class="message error">' +
-        escapeHtml(error.message) +
-        "</div>";
-
-    }
-
-  }
-
-
-  /* =====================================================
-     DISPLAY STUDENT DETAILS
-  ===================================================== */
-
-  function displayStudentDetails(data) {
-
-    const area =
-      document.getElementById(
-        "studentDetails"
-      );
-
-    area.innerHTML = "";
-
-
-    const title =
-      document.createElement("h3");
-
-    title.textContent =
-      "👤 " +
-      (
-        data.student_name ||
-        data.studentName ||
-        "Barataa"
-      );
-
-    area.appendChild(title);
+    const name =
+      result.studentName ||
+      result.student_name ||
+      "Barataa";
 
 
     const score =
-      document.createElement("div");
+      result.score ||
+      0;
 
-    score.className =
-      "score";
 
-    score.textContent =
-      "🏆 Qabxii: " +
-      (data.score || 0) +
+    const total =
+      result.totalPoints ||
+      result.total_points ||
+      0;
+
+
+    const percentage =
+      result.percentage ||
+      0;
+
+
+    const header =
+      document.createElement(
+        "div"
+      );
+
+
+    header.innerHTML =
+      "<h2>👤 " +
+      escapeHTML(
+        name
+      ) +
+      "</h2>" +
+
+      "<p>🏆 Qabxii: " +
+      score +
       " / " +
-      (data.total_points || 0);
+      total +
+      "</p>" +
 
-    area.appendChild(score);
+      "<p>📊 Dhibbeentaa: " +
+      percentage +
+      "%</p>";
 
 
-    const detailList =
-      Array.isArray(data.details)
-        ? data.details
+    detail.appendChild(
+      header
+    );
+
+
+    const details =
+      Array.isArray(
+        result.details
+      )
+        ? result.details
         : [];
 
 
-    if (!detailList.length) {
+    if (
+      details.length === 0
+    ) {
 
-      const p =
-        document.createElement("p");
+      const noData =
+        document.createElement(
+          "p"
+        );
 
-      p.textContent =
-        "Deebiin gaaffiiwwanii hin argamne.";
+      noData.className =
+        "small";
 
-      area.appendChild(p);
+      noData.textContent =
+        "Ibsi gaaffilee hin argamne.";
+
+      detail.appendChild(
+        noData
+      );
 
       return;
 
     }
 
 
-    detailList.forEach(
-      function(item, index) {
+    details.forEach(
+      function(d, index) {
 
         const box =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         box.className =
-          "result-card " +
+          "answer-box " +
           (
-            item.correct
-              ? "correct"
-              : "wrong"
+            d.isCorrect
+              ? "answer-correct"
+              : "answer-wrong"
           );
 
 
-        const number =
-          document.createElement("div");
-
-        number.className =
-          "question-number";
-
-        number.textContent =
-          "Gaaffii " +
-          (
-            item.questionNumber ||
-            index + 1
-          );
-
-        box.appendChild(number);
+        const question =
+          d.question ||
+          d.questionText ||
+          "";
 
 
-        const q =
-          document.createElement("p");
-
-        q.innerHTML =
-          "<strong>Gaaffii:</strong> " +
-          escapeHtml(
-            item.question || ""
-          );
-
-        box.appendChild(q);
+        const studentAnswer =
+          d.studentAnswer ??
+          d.student_answer ??
+          "Deebii hin kennamne";
 
 
-        const student =
-          document.createElement("p");
-
-        student.innerHTML =
-          "<strong>Deebii Barataa:</strong> " +
-          escapeHtml(
-            item.studentAnswer ||
-            "Hin deebifne"
-          );
-
-        box.appendChild(student);
-
-
-        const correct =
-          document.createElement("p");
-
-        correct.innerHTML =
-          "<strong>Deebii Sirrii:</strong> " +
-          escapeHtml(
-            item.correctAnswer || ""
-          );
-
-        box.appendChild(correct);
-
-
-        const status =
-          document.createElement("p");
-
-        status.innerHTML =
-          item.correct
-            ? "✅ <strong>SIRRII</strong>"
-            : "❌ <strong>DOGOGGORA</strong>";
-
-        box.appendChild(status);
+        const correctAnswer =
+          d.correctAnswer ??
+          d.correct_answer ??
+          "";
 
 
         const points =
-          document.createElement("p");
+          d.points ??
+          0;
 
-        points.textContent =
-          "Qabxii: " +
-          (
-            item.earnedPoints || 0
+
+        box.innerHTML =
+
+          "<b>Gaaffii " +
+          (index + 1) +
+          "</b><br><br>" +
+
+          "<b>Gaaffii:</b> " +
+          escapeHTML(
+            question
           ) +
-          " / " +
+
+          "<br><br>" +
+
+          "<b>Deebii barataa:</b> " +
+          escapeHTML(
+            String(
+              studentAnswer
+            )
+          ) +
+
+          "<br>" +
+
+          "<b>Deebii sirrii:</b> " +
+          escapeHTML(
+            String(
+              correctAnswer
+            )
+          ) +
+
+          "<br><br>" +
+
           (
-            item.maxPoints || 0
+            d.isCorrect
+              ? "<span class='correct'>✅ Sirrii — " +
+                points +
+                " qabxii</span>"
+              : "<span class='wrong'>❌ Dogoggora — 0 qabxii</span>"
           );
 
-        box.appendChild(points);
 
-
-        area.appendChild(box);
+        detail.appendChild(
+          box
+        );
 
       }
     );
@@ -2143,113 +2916,171 @@
   }
 
 
-  /* =====================================================
-     HTML ESCAPE
-  ===================================================== */
+  /* =========================
+     ESCAPE HTML
+  ========================= */
 
-  function escapeHtml(value) {
+  function escapeHTML(value) {
 
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+    return String(
+      value ?? ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
 
-  /* =====================================================
+  /* =========================
      SYSTEM STATUS
-  ===================================================== */
+  ========================= */
 
-  async function checkSystem() {
+  $("btnSystemStatus").addEventListener(
+    "click",
+    async function() {
 
-    clearMessage("systemMessage");
-
-    const info =
-      document.getElementById(
-        "systemInfo"
+      clearMessage(
+        "systemMessage"
       );
 
-    info.innerHTML =
-      '<div class="loading">⏳ Sirna qoramaa jira...</div>';
+
+      const button =
+        $("btnSystemStatus");
 
 
-    try {
+      button.disabled =
+        true;
 
-      const response =
-        await fetch("/api/status");
-
-
-      const data =
-        await response.json();
+      button.textContent =
+        "⏳ Ilaalaa jira...";
 
 
-      if (!response.ok) {
+      try {
 
-        throw new Error(
-          data.error ||
-          "Status argachuu hin dandeenye."
+        const response =
+          await fetch(
+            "/api/status"
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            "Sirna ilaaluun hin danda'amne."
+          );
+
+        }
+
+
+        let message =
+          "✅ Sirni OR hojiirra jira.\n\n";
+
+
+        if (data.app) {
+
+          message +=
+            "📱 App: " +
+            data.app +
+            "\n";
+
+        }
+
+
+        if (data.status) {
+
+          message +=
+            "🟢 Status: " +
+            data.status +
+            "\n";
+
+        }
+
+
+        message +=
+          "🕐 Yeroo: " +
+          new Date()
+            .toLocaleString();
+
+
+        showMessage(
+          "systemMessage",
+          message,
+          "success"
         );
+
+
+      } catch (error) {
+
+        showMessage(
+          "systemMessage",
+          "❌ " +
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "🔄 Haala Sirnaa Ilaali";
 
       }
 
-
-      info.innerHTML = "";
-
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "result-card correct";
+    }
+  );
 
 
-      const title =
-        document.createElement("h3");
+  /* =========================
+     URL ?exam=CODE
+  ========================= */
 
-      title.textContent =
-        "🟢 Server hojjachaa jira";
+  function checkExamURL() {
 
-      card.appendChild(title);
-
-
-      const pre =
-        document.createElement("pre");
-
-      pre.textContent =
-        JSON.stringify(
-          data,
-          null,
-          2
-        );
-
-      pre.style.whiteSpace =
-        "pre-wrap";
-
-      card.appendChild(pre);
-
-
-      info.appendChild(card);
-
-
-      showMessage(
-        "systemMessage",
-        "✅ Server sirriitti hojjachaa jira.",
-        "success"
+    const params =
+      new URLSearchParams(
+        window.location.search
       );
 
 
-    } catch (error) {
+    const exam =
+      params.get(
+        "exam"
+      );
 
-      info.innerHTML = "";
 
-      showMessage(
-        "systemMessage",
-        "❌ Server waliin rakkoo jira:\n" +
-        error.message,
-        "error"
+    if (exam) {
+
+      $("examCode").value =
+        exam;
+
+
+      showPage(
+        "takePage"
       );
 
     }
@@ -2257,179 +3088,13 @@
   }
 
 
-  /* =====================================================
-     EVENT LISTENERS
-  ===================================================== */
+  /* =========================
+     START
+  ========================= */
 
-  document
-    .getElementById("btnCreatePage")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("createPage");
-      }
-    );
-
-
-  document
-    .getElementById("btnTakePage")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("takePage");
-      }
-    );
-
-
-  document
-    .getElementById("btnResultsPage")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("resultsPage");
-      }
-    );
-
-
-  document
-    .getElementById("btnSystemPage")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("systemPage");
-      }
-    );
-
-
-  document
-    .getElementById("backFromCreate")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("homePage");
-      }
-    );
-
-
-  document
-    .getElementById("backFromTake")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("homePage");
-      }
-    );
-
-
-  document
-    .getElementById("backFromResults")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("homePage");
-      }
-    );
-
-
-  document
-    .getElementById("backFromSystem")
-    .addEventListener(
-      "click",
-      function() {
-        showPage("homePage");
-      }
-    );
-
-
-  document
-    .getElementById("questionType")
-    .addEventListener(
-      "change",
-      updateQuestionType
-    );
-
-
-  document
-    .getElementById("btnSaveQuestion")
-    .addEventListener(
-      "click",
-      saveQuestion
-    );
-
-
-  document
-    .getElementById("btnCreateExam")
-    .addEventListener(
-      "click",
-      createExam
-    );
-
-
-  document
-    .getElementById("btnLoadExam")
-    .addEventListener(
-      "click",
-      loadExam
-    );
-
-
-  document
-    .getElementById("btnSubmitExam")
-    .addEventListener(
-      "click",
-      submitExam
-    );
-
-
-  document
-    .getElementById("btnLoadResults")
-    .addEventListener(
-      "click",
-      loadResults
-    );
-
-
-  document
-    .getElementById("btnCheckSystem")
-    .addEventListener(
-      "click",
-      checkSystem
-    );
-
-
-  /* =====================================================
-     STARTUP
-  ===================================================== */
-
-  updateQuestionType();
-
-
-  /*
-    Yoo URL keessatti ?exam=OR123456 jiraate,
-    koodii sana ofumaan galcha.
-  */
-
-  const urlParams =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const urlExam =
-    urlParams.get("exam");
-
-
-  if (urlExam) {
-
-    document.getElementById(
-      "examCode"
-    ).value =
-      urlExam.toUpperCase();
-
-    showPage("takePage");
-
-  }
+  checkExamURL();
 
 </script>
 
 </body>
-          </html>
+      </html>
