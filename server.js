@@ -91,9 +91,8 @@ async function initDatabase() {
 
 
   await pool.query(`
-    CREATE INDEX IF NOT EXISTS idx_results_exam_code
-    ON results(exam_code);
-  `);
+  CREATE INDEX IF NOT EXISTS idx_results_exam_id
+ON results(exam_id);
 
 
   console.log("Database migrations completed.");
