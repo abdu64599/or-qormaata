@@ -504,16 +504,16 @@ app.post(
           error: "Maqaa barataa galchi."
         });
       }
-
-      if (
-        !answers ||i
-        typeof answers !== "object"
-      ) {
-        return res.status(400).json({
-          success: false,
-          error: "Deebiin qormaataa hin argamne."
-        });
-      }
+if (
+  !answers ||
+  typeof answers !== "object" ||
+  Array.isArray(answers)
+) {
+  return res.status(400).json({
+    success: false,
+    error: "Deebiin qormaataa hin argamne."
+  });
+}
 
       const examResult = await pool.query(
         "SELECT * FROM exams WHERE code = $1",
