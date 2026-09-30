@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b45">
+  <meta name="description" content="OR - Sirna Qormaataa Barattootaa">
+  <title>OR - Qormaata</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f7f5;
+      color: #173126;
+    }
+
+    header {
+      background: #176b45;
+      color: white;
+      padding: 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px #0002;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      opacity: .9;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 12px #00000012;
+    }
+
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      margin: 7px 0;
+      border: 1px solid #ccd8d2;
+      border-radius: 10px;
+      font-size: 16px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: #176b45;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      margin: 4px;
+    }
+
+    button.secondary {
+      background: #e5eee9;
+      color: #176b45;
+    }
+
+    button.danger {
+      background: #b52d2d;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .home-buttons button {
+      width: 100%;
+      min-height: 58px;
+      font-size: 17px;
+      margin: 5px 0;
+    }
+
+    .question {
+      border: 1px solid #dbe5df;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 12px 0;
+      background: #fbfdfc;
+    }
+
+    .option {
+      display: block;
+      border: 1px solid #d8e2dd;
+      padding: 11px;
+      border-radius: 9px;
+      margin: 7px 0;
+      cursor: pointer;
+      background: white;
+    }
+
+    .option:hover {
+      background: #eef7f2;
+    }
+
+    .option input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .remove {
+      float: right;
+      background: #b52d2d;
+      padding: 7px 10px;
+    }
+
+    .success {
+      background: #e4f6eb;
+      color: #125c39;
+      padding: 13px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .error {
+      background: #fde8e8;
+      color: #8b1e1e;
+      padding: 13px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .info {
+      background: #edf5ff;
+      color: #164d82;
+      padding: 13px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .result-number {
+      font-size: 34px;
+      font-weight: bold;
+      color: #176b45;
+      text-align: center;
+    }
+
+    .timer {
+      position: sticky;
+      top: 78px;
+      background: #fff3cd;
+      color: #6b4e00;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #eef5f1;
+    }
+
+    .linkbox {
+      word-break: break-all;
+      background: #f1f5f3;
+      padding: 12px;
+      border-radius: 9px;
+      margin: 8px 0;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 10px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎯 OR</h1>
+  <p>Sirna Qormaataa Barattootaa</p>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+
+    <div class="card">
+      <h2>👋 Baga Nagaan Dhuftan</h2>
+
+      <p>
+        OR keessatti qormaata uumuu,
+        qormaata fudhachuu fi bu'aa
+        qormaataa ilaalu dandeessa.
+      </p>
+    </div>
+
+    <div class="card home-buttons">
+
+      <button onclick="showPage('create')">
+        ➕ Qormaata Uumi
+      </button>
+
+      <button onclick="showPage('join')">
+        📝 Qormaata Fudhadhu
+      </button>
+
+      <button onclick="showPage('myexam')">
+        📊 Qormaata Koo
+      </button>
+
+      <button onclick="showPage('status')">
+        ⚙️ Sirna Ilaali
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- CREATE EXAM -->
+  <section id="create" class="page">
+
+    <div class="card">
+
+      <button
+        class="secondary"
+        onclick="showPage('home')">
+        ← Deebi'i
+      </button>
+
+      <h2>➕ Qormaata Uumi</h2>
+
+      <input
+        id="teacherName"
+        placeholder="Maqaa barsiisaa">
+
+      <input
+        id="examTitle"
+        placeholder="Maqaa / Mata-duree qormaataa">
+
+      <input
+        id="subject"
+        placeholder="Barnoota">
+
+      <input
+        id="grade"
+        placeholder="Kutaa">
+
+      <input
+        id="duration"
+        type="number"
+        min="1"
+        value="30"
+        placeholder="Yeroo daqiiqaa">
+
+      <h3>Gaaffiiwwan</h3>
+
+      <div id="questions"></div>
+
+      <button onclick="addQuestion()">
+        ➕ Gaaffii Dabali
+      </button>
+
+      <button onclick="createExam()">
+        ✅ Qormaata Uumi
+      </button>
+
+      <div id="createMessage"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- JOIN EXAM -->
+  <section id="join" class="page">
+
+    <div class="card">
+
+      <button
+        class="secondary"
+        onclick="showPage('home')">
+        ← Deebi'i
+      </button>
+
+      <h2>📝 Qormaata Fudhadhu</h2>
+
+      <p>
+        Koodii qormaataa barsiisaan
+        siif kenne galchi.
+      </p>
+
+      <input
+        id="joinCode"
+        placeholder="Fakkeenya: ABC123">
+
+      <input
+        id="studentName"
+        placeholder="Maqaa kee">
+
+      <button onclick="startExam()">
+        ➡️ Qormaata Jalqabi
+      </button>
+
+      <div id="joinMessage"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- EXAM -->
+  <section id="exam" class="page">
+
+    <div class="card">
+
+      <button
+        class="secondary"
+        onclick="showPage('home')">
+        ← Ba'i
+      </button>
+
+      <h2 id="examTitleView">
+        Qormaata
+      </h2>
+
+      <p id="examInfo"></p>
+
+      <div id="timer" class="timer">
+        ⏱️ --:--
+      </div>
+
+      <div id="examQuestions"></div>
+
+      <button onclick="submitExam()">
+        📤 Qormaata Ergi
+      </button>
+
+      <div id="submitMessage"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULT -->
+  <section id="result" class="page">
+
+    <div class="card">
+
+      <h2>📊 Bu'aa Qormaataa</h2>
+
+      <div id="resultContent"></div>
+
+      <button onclick="showPage('home')">
+        🏠 Gara Fuula Jalqabaa
+      </button>
+
+      <button
+        class="secondary"
+        onclick="showPage('join')">
+        📝 Qormaata Biraa
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- MY EXAM -->
+  <section id="myexam" class="page">
+
+    <div class="card">
+
+      <button
+        class="secondary"
+        onclick="showPage('home')">
+        ← Deebi'i
+      </button>
+
+      <h2>📊 Qormaata Koo</h2>
+
+      <p>
+        Koodii qormaataa galchi.
+        Bu'aa barattootaa ilaali.
+      </p>
+
+      <input
+        id="resultCode"
+        placeholder="Koodii qormaataa">
+
+      <button onclick="loadResults()">
+        🔍 Bu'aa Ilaali
+      </button>
+
+      <div id="resultsContent"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- STATUS -->
+  <section id="status" class="page">
+
+    <div class="card">
+
+      <button
+        class="secondary"
+        onclick="showPage('home')">
+        ← Deebi'i
+      </button>
+
+      <h2>⚙️ Haala Sirnichaa</h2>
+
+      <button onclick="checkStatus()">
+        🔄 Sirna Ilaali
+      </button>
+
+      <div id="statusContent"></div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+let questions = [];
+
+let currentExam = null;
+
+let timerInterval = null;
+
+let remainingSeconds = 0;
+
+let submitting = false;
+
+
+/* =========================
+   PAGE
+========================= */
+
+function showPage(id) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  const page =
+    document.getElementById(id);
+
+  if (page) {
+    page.classList.add("active");
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function message(id, text, type = "info") {
+
+  const el =
+    document.getElementById(id);
+
+  if (!el) return;
+
+  el.innerHTML =
+    `<div class="${type}">
+      ${escapeHtml(text)}
+    </div>`;
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =========================
+   ADD QUESTION
+========================= */
+
+function addQuestion(data = {}) {
+
+  const q = {
+
+    question: data.question || "",
+
+    type: data.type || "multiple",
+
+    option_a: data.option_a || "",
+
+    option_b: data.option_b || "",
+
+    option_c: data.option_c || "",
+
+    option_d: data.option_d || "",
+
+    correct_answer:
+      data.correct_answer || "",
+
+    points:
+      data.points || 1
+
+  };
+
+  questions.push(q);
+
+  renderQuestionEditor();
+}
+
+
+/* =========================
+   QUESTION EDITOR
+========================= */
+
+function renderQuestionEditor() {
+
+  const container =
+    document.getElementById("questions");
+
+  container.innerHTML = "";
+
+  questions.forEach((q, index) => {
+
+    const n = index + 1;
+
+    const box =
+      document.createElement("div");
+
+    box.className = "question";
+
+    box.innerHTML = `
+
+      <button
+        class="remove"
+        onclick="removeQuestion(${index})">
+        Haqi
+      </button>
+
+      <h3>
+        Gaaffii ${n}
+      </h3>
+
+      <textarea
+        placeholder="Gaaffii barreessi..."
+        oninput="
+          questions[${index}].question=this.value
+        ">${escapeHtml(q.question)}</textarea>
+
+      <select
+        onchange="
+          questions[${index}].type=this.value;
+          renderQuestionEditor();
+        ">
+
+        <option
+          value="multiple"
+          ${q.type === "multiple" ? "selected" : ""}>
+          Multiple Choice
+        </option>
+
+        <option
+          value="truefalse"
+          ${q.type === "truefalse" ? "selected" : ""}>
+          Dhugaa / Soba
+        </option>
+
+      </select>
+
+      ${
+        q.type === "multiple"
+
+        ? `
+
+          <input
+            placeholder="A"
+            value="${escapeHtml(q.option_a)}"
+            oninput="
+              questions[${index}].option_a=this.value
+            ">
+
+          <input
+            placeholder="B"
+            value="${escapeHtml(q.option_b)}"
+            oninput="
+              questions[${index}].option_b=this.value
+            ">
+
+          <input
+            placeholder="C"
+            value="${escapeHtml(q.option_c)}"
+            oninput="
+              questions[${index}].option_c=this.value
+            ">
+
+          <input
+            placeholder="D"
+            value="${escapeHtml(q.option_d)}"
+            oninput="
+              questions[${index}].option_d=this.value
+            ">
+
+          <select
+            onchange="
+              questions[${index}].correct_answer=this.value
+            ">
+
+            <option value="">
+              Deebii sirrii filadhu
+            </option>
+
+            <option
+              value="A"
+              ${q.correct_answer === "A" ? "selected" : ""}>
+              A
+            </option>
+
+            <option
+              value="B"
+              ${q.correct_answer === "B" ? "selected" : ""}>
+              B
+            </option>
+
+            <option
+              value="C"
+              ${q.correct_answer === "C" ? "selected" : ""}>
+              C
+            </option>
+
+            <option
+              value="D"
+              ${q.correct_answer === "D" ? "selected" : ""}>
+              D
+            </option>
+
+          </select>
+        `
+
+        : `
+
+          <select
+            onchange="
+              questions[${index}].correct_answer=this.value
+            ">
+
+            <option value="">
+              Deebii sirrii filadhu
+            </option>
+
+            <option
+              value="DHUGAA"
+              ${q.correct_answer === "DHUGAA" ? "selected" : ""}>
+              Dhugaa
+            </option>
+
+            <option
+              value="SOBA"
+              ${q.correct_answer === "SOBA" ? "selected" : ""}>
+              Soba
+            </option>
+
+          </select>
+        `
+      }
+
+      <input
+        type="number"
+        min="1"
+        value="${q.points}"
+        placeholder="Qabxii"
+        oninput="
+          questions[${index}].points=
+          Number(this.value)||1
+        ">
+
+    `;
+
+    container.appendChild(box);
+
+  });
+}
+
+
+/* =========================
+   REMOVE QUESTION
+========================= */
+
+function removeQuestion(index) {
+
+  questions.splice(index, 1);
+
+  renderQuestionEditor();
+}
+
+
+/* =========================
+   CREATE EXAM
+========================= */
+
+async function createExam() {
+
+  const teacherName =
+    document
+      .getElementById("teacherName")
+      .value.trim();
+
+  const title =
+    document
+      .getElementById("examTitle")
+      .value.trim();
+
+  const subject =
+    document
+      .getElementById("subject")
+      .value.trim();
+
+  const grade =
+    document
+      .getElementById("grade")
+      .value.trim();
+
+  const duration =
+    Number(
+      document
+        .getElementById("duration")
+        .value
+    ) || 30;
+
+
+  if (!teacherName || !title) {
+
+    message(
+      "createMessage",
+      "Maqaa barsiisaa fi maqaa qormaataa guuti.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (questions.length === 0) {
+
+    message(
+      "createMessage",
+      "Yoo xiqqaate gaaffii tokko dabali.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  for (
+    let i = 0;
+    i < questions.length;
+    i++
+  ) {
+
+    const q = questions[i];
+
+    if (!q.question.trim()) {
+
+      message(
+        "createMessage",
+        `Gaaffii ${i + 1} keessatti gaaffii barreessi.`,
+        "error"
+      );
+
+      return;
+    }
+
+    if (!q.correct_answer) {
+
+      message(
+        "createMessage",
+        `Gaaffii ${i + 1}f deebii sirrii filadhu.`,
+        "error"
+      );
+
+      return;
+    }
+  }
+
+
+  const button =
+    document.querySelector(
+      '#create button[onclick="createExam()"]'
+    );
+
+  if (button) {
+    button.disabled = true;
+  }
+
+
+  message(
+    "createMessage",
+    "Qormaata uumaa jira...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch("/api/exams", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          teacherName,
+
+          title,
+
+          subject,
+
+          grade,
+
+          duration,
+
+          questions
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+        data.message ||
+        "Qormaata uumuu hin dandeenye."
+      );
+    }
+
+
+    const link =
+      `${location.origin}/exam.html?code=${data.exam.code}`;
+
+
+    document
+      .getElementById("createMessage")
+      .innerHTML = `
+
+        <div class="success">
+
+          <h3>
+            ✅ Qormaanni uumame!
+          </h3>
+
+          <p>
+            <b>Maqaa:</b>
+            ${escapeHtml(data.exam.title)}
+          </p>
+
+          <p>
+            <b>Koodii:</b>
+          </p>
+
+          <div class="linkbox">
+            ${escapeHtml(data.exam.code)}
+          </div>
+
+          <p>
+            <b>Linkii qormaataa:</b>
+          </p>
+
+          <div class="linkbox">
+            ${escapeHtml(link)}
+          </div>
+
+          <button
+            onclick="copyText('${link}')">
+            📋 Linkii Kooppii Godhi
+          </button>
+
+          <button
+            onclick="copyText('${data.exam.code}')">
+            🔢 Koodii Kooppii Godhi
+          </button>
+
+          <button
+            onclick="
+              document.getElementById('resultCode').value=
+              '${data.exam.code}';
+              showPage('myexam');
+            ">
+            📊 Bu'aa Ilaali
+          </button>
+
+        </div>
+
+      `;
+
+
+    questions = [];
+
+    document
+      .getElementById("questions")
+      .innerHTML = "";
+
+
+  } catch (error) {
+
+    message(
+      "createMessage",
+      error.message,
+      "error"
+    );
+
+  } finally {
+
+    if (button) {
+      button.disabled = false;
+    }
+
+  }
+
+}
+
+
+/* =========================
+   START EXAM
+========================= */
+
+async function startExam() {
+
+  const code =
+    document
+      .getElementById("joinCode")
+      .value
+      .trim()
+      .toUpperCase();
+
+  const name =
+    document
+      .getElementById("studentName")
+      .value
+      .trim();
+
+
+  if (!code || !name) {
+
+    message(
+      "joinMessage",
+      "Koodii fi maqaa kee guuti.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  message(
+    "joinMessage",
+    "Qormaata barbaadaa jira...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/exams/${encodeURIComponent(code)}`
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+        data.message ||
+        "Qormaata hin argamne."
+      );
+    }
+
+
+    currentExam = data;
+
+    currentExam.studentName = name;
+
+
+    renderExam();
+
+    showPage("exam");
+
+    startTimer(
+      Number(data.exam.duration) || 30
+    );
+
+
+  } catch (error) {
+
+    message(
+      "joinMessage",
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RENDER EXAM
+========================= */
+
+function renderExam() {
+
+  const exam =
+    currentExam.exam;
+
+  const examQuestions =
+    currentExam.questions;
+
+
+  document
+    .getElementById("examTitleView")
+    .textContent =
+    exam.title;
+
+
+  document
+    .getElementById("examInfo")
+    .textContent =
+      `${exam.subject || ""} ${
+        exam.grade
+          ? "• " + exam.grade
+          : ""
+      } • Barataa: ${
+        currentExam.studentName
+      }`;
+
+
+  const container =
+    document.getElementById(
+      "examQuestions"
+    );
+
+
+  container.innerHTML = "";
+
+
+  examQuestions.forEach(
+    (q, index) => {
+
+      const box =
+        document.createElement("div");
+
+      box.className = "question";
+
+
+      let options = "";
+
+
+      if (q.type === "truefalse") {
+
+        options = `
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="DHUGAA">
+
+            Dhugaa
+
+          </label>
+
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="SOBA">
+
+            Soba
+
+          </label>
+
+        `;
+
+      } else {
+
+        options = `
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="A">
+
+            A.
+            ${escapeHtml(q.option_a)}
+
+          </label>
+
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="B">
+
+            B.
+            ${escapeHtml(q.option_b)}
+
+          </label>
+
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="C">
+
+            C.
+            ${escapeHtml(q.option_c)}
+
+          </label>
+
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="q_${q.id}"
+              value="D">
+
+            D.
+            ${escapeHtml(q.option_d)}
+
+          </label>
+
+        `;
+      }
+
+
+      box.innerHTML = `
+
+        <h3>
+          Gaaffii ${index + 1}
+        </h3>
+
+        <p>
+          <b>
+            ${escapeHtml(q.question)}
+          </b>
+        </p>
+
+        ${options}
+
+      `;
+
+
+      container.appendChild(box);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function startTimer(minutes) {
+
+  clearInterval(timerInterval);
+
+
+  remainingSeconds =
+    Math.max(
+      1,
+      Math.floor(minutes * 60)
+    );
+
+
+  updateTimer();
+
+
+  timerInterval =
+    setInterval(() => {
+
+      remainingSeconds--;
+
+      updateTimer();
+
+
+      if (
+        remainingSeconds <= 0
+      ) {
+
+        clearInterval(
+          timerInterval
+        );
+
+        submitExam(true);
+
+      }
+
+    }, 1000);
+
+}
+
+
+function updateTimer() {
+
+  const min =
+    Math.floor(
+      remainingSeconds / 60
+    )
+    .toString()
+    .padStart(2, "0");
+
+
+  const sec =
+    (
+      remainingSeconds % 60
+    )
+    .toString()
+    .padStart(2, "0");
+
+
+  document
+    .getElementById("timer")
+    .textContent =
+    `⏱️ ${min}:${sec}`;
+
+
+  if (
+    remainingSeconds <= 60
+  ) {
+
+    document
+      .getElementById("timer")
+      .style.background =
+      "#ffd9d9";
+
+    document
+      .getElementById("timer")
+      .style.color =
+      "#8b1e1e";
+  }
+
+}
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+async function submitExam(auto = false) {
+
+  if (
+    submitting ||
+    !currentExam
+  ) {
+    return;
+  }
+
+
+  if (!auto) {
+
+    const ok =
+      confirm(
+        "Qormaata erguu barbaaddaa?"
+      );
+
+    if (!ok) {
+      return;
+    }
+  }
+
+
+  submitting = true;
+
+  clearInterval(
+    timerInterval
+  );
+
+
+  const answers = {};
+
+
+  currentExam.questions
+    .forEach(q => {
+
+      const selected =
+        document.querySelector(
+          `input[name="q_${q.id}"]:checked`
+        );
+
+
+      answers[q.id] =
+        selected
+          ? selected.value
+          : "";
+
+    });
+
+
+  message(
+    "submitMessage",
+    auto
+      ? "Yeroon xumurame. Deebiin kee ergamaa jira..."
+      : "Deebiin kee ergamaa jira...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/exams/${encodeURIComponent(
+          currentExam.exam.code
+        )}/submit`,
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+
+            studentName:
+              currentExam.studentName,
+
+            answers
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+        data.message ||
+        "Deebii erguu hin dandeenye."
+      );
+    }
+
+
+    renderResult(
+      data.result
+    );
+
+
+    showPage("result");
+
+
+  } catch (error) {
+
+    message(
+      "submitMessage",
+      error.message,
+      "error"
+    );
+
+    submitting = false;
+
+  }
+
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+function renderResult(result) {
+
+  document
+    .getElementById("resultContent")
+    .innerHTML = `
+
+      <div class="success">
+
+        <h3>
+          ${escapeHtml(
+            result.examTitle
+          )}
+        </h3>
+
+        <p>
+          <b>Barataa:</b>
+          ${escapeHtml(
+            result.studentName
+          )}
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="result-number">
+          ${result.percentage}%
+        </div>
+
+        <p style="text-align:center">
+
+          ${result.earnedPoints}
+          /
+          ${result.totalPoints}
+          qabxii
+
+        </p>
+
+      </div>
+
+
+      <table>
+
+        <tr>
+          <th>Wanti</th>
+          <th>Baay'ina</th>
+        </tr>
+
+        <tr>
+          <td>
+            Gaaffiiwwan waliigalaa
+          </td>
+          <td>
+            ${result.totalQuestions}
+          </td>
+        </tr>
+
+        <tr>
+          <td>✅ Sirrii</td>
+          <td>
+            ${result.correct}
+          </td>
+        </tr>
+
+        <tr>
+          <td>❌ Dogoggora</td>
+          <td>
+            ${result.wrong}
+          </td>
+        </tr>
+
+        <tr>
+          <td>⚪ Hin deebifamne</td>
+          <td>
+            ${result.unanswered}
+          </td>
+        </tr>
+
+      </table>
+
+    `;
+}
+
+
+/* =========================
+   LOAD RESULTS
+========================= */
+
+async function loadResults() {
+
+  const code =
+    document
+      .getElementById("resultCode")
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  if (!code) {
+
+    message(
+      "resultsContent",
+      "Koodii qormaataa galchi.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  message(
+    "resultsContent",
+    "Bu'aa barbaadaa jira...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/exams/${encodeURIComponent(
+          code
+        )}/results`
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+        data.message ||
+        "Bu'aa hin argamne."
+      );
+
+    }
+
+
+    if (
+      !data.results ||
+      data.results.length === 0
+    ) {
+
+      message(
+        "resultsContent",
+        "Hanga ammaatti barataan qormaata hin xumurre.",
+        "info"
+      );
+
+      return;
+    }
+
+
+    let rows = "";
+
+
+    data.results.forEach(
+      (r, i) => {
+
+        rows += `
+
+          <tr>
+
+            <td>
+              ${i + 1}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                r.student_name
+              )}
+            </td>
+
+            <td>
+              ${r.correct_count}
+            </td>
+
+            <td>
+              ${r.wrong_count}
+            </td>
+
+            <td>
+              ${r.unanswered_count}
+            </td>
+
+            <td>
+              ${r.percentage}%
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+    document
+      .getElementById(
+        "resultsContent"
+      )
+      .innerHTML = `
+
+        <div class="success">
+
+          <h3>
+            ${escapeHtml(
+              data.exam.title
+            )}
+          </h3>
+
+          <p>
+            Barsiisaa:
+            ${escapeHtml(
+              data.exam.teacher_name
+            )}
+          </p>
+
+          <p>
+            Koodii:
+            <b>
+              ${escapeHtml(
+                data.exam.code
+              )}
+            </b>
+          </p>
+
+        </div>
+
+
+        <div style="overflow-x:auto">
+
+          <table>
+
+            <tr>
+
+              <th>#</th>
+              <th>Barataa</th>
+              <th>Sirrii</th>
+              <th>Dogoggora</th>
+              <th>Hin deebifne</th>
+              <th>%</th>
+
+            </tr>
+
+            ${rows}
+
+          </table>
+
+        </div>
+
+      `;
+
+
+  } catch (error) {
+
+    message(
+      "resultsContent",
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+async function checkStatus() {
+
+  message(
+    "statusContent",
+    "Sirna qorachaa jira...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch("/api/status");
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+        "Server rakkoo qaba."
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "statusContent"
+      )
+      .innerHTML = `
+
+        <div class="success">
+
+          <h3>
+            ✅ Sirni OR hojjachaa jira.
+          </h3>
+
+          <p>
+            ${escapeHtml(
+              data.message
+            )}
+          </p>
+
+        </div>
+
+      `;
+
+
+  } catch (error) {
+
+    message(
+      "statusContent",
+      "Server waliin wal qunnamtiin hin jiru.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+async function copyText(text) {
+
+  try {
+
+    await navigator
+      .clipboard
+      .writeText(text);
+
+    alert(
+      "✅ Kooppii godhame."
+    );
+
+  } catch {
+
+    prompt(
+      "Koppii godhuuf kana fayyadami:",
+      text
+    );
+
+  }
+
+}
+
+
+/* =========================
+   URL CODE
+========================= */
+
+const params =
+  new URLSearchParams(
+    location.search
+  );
+
+const urlCode =
+  params.get("code");
+
+
+if (urlCode) {
+
+  document
+    .getElementById("joinCode")
+    .value =
+    urlCode.toUpperCase();
+
+  showPage("join");
+
+}
+
+
+/* =========================
+   FIRST QUESTION
+========================= */
+
+addQuestion();
+
+</script>
+
+</body>
+</html>
