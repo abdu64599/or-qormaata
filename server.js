@@ -315,7 +315,50 @@ async function initDatabase() {
       error.message
     );
   }
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS exam_code VARCHAR(30)
+  `);
 
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS score NUMERIC DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS total_points NUMERIC DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS percentage NUMERIC DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS correct_answers INTEGER DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS wrong_answers INTEGER DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS total_questions INTEGER DEFAULT 0
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS details JSONB NOT NULL DEFAULT '[]'::jsonb
+  `);
+
+  await pool.query(`
+    ALTER TABLE results
+    ADD COLUMN IF NOT EXISTS submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `);
   try {
     await pool.query(`
       ALTER TABLE results
