@@ -36,10 +36,6 @@ function makeExamCode() {
   return crypto.randomBytes(4).toString("hex").toUpperCase();
 }
 
-function makeUUID() {
-  return crypto.randomUUID();
-}
-
 // =====================================================
 // OPTIONS
 // =====================================================
@@ -123,6 +119,8 @@ function normalizeCorrectAnswer(answer, options, type) {
 // =====================================================
 
 function normalizeQuestion(question, index = 0) {
+  question = question || {};
+
   const rawType = cleanText(
     question.type ||
     question.questionType ||
@@ -161,7 +159,9 @@ function normalizeQuestion(question, index = 0) {
   return {
     id:
       question.id ||
-      `q_${Date.now()}_${index}_${crypto.randomBytes(2).toString("hex")}`,
+      `q_${Date.now()}_${index}_${crypto
+        .randomBytes(2)
+        .toString("hex")}`,
 
     text: cleanText(
       question.text ||
@@ -176,7 +176,10 @@ function normalizeQuestion(question, index = 0) {
 
     correctAnswer,
 
-    points: Number(question.points) || 1
+    points:
+      Number(question.points) > 0
+        ? Number(question.points)
+        : 1
   };
 }
 
@@ -204,12 +207,17 @@ function parseQuestions(value) {
   );
 }
 
+// =====================================================
+// PARSE DETAILS
+// =====================================================
+
 function parseDetails(value) {
   if (!value) return [];
 
   if (typeof value === "string") {
     try {
-      return JSON.parse(value);
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
@@ -221,8 +229,8 @@ function parseDetails(value) {
 // =====================================================
 // DATABASE INITIALIZATION
 // IMPORTANT:
-// Existing database uses UUID IDs.
-// Therefore DO NOT create BIGINT sequences.
+// OR DATABASE USES INTEGER IDs.
+// DO NOT CHANGE TO UUID.
 // =====================================================
 
 async function initDatabase() {
@@ -233,106 +241,28 @@ async function initDatabase() {
   }
 
   // ---------------------------------------------------
-  // EXAMS
+  // Make sure questions column exists
   // ---------------------------------------------------
 
   await pool.query(`
-    CREATE TABLE IF NOT EXISTS exams (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      code VARCHAR(30) UNIQUE NOT NULL,
-      teacher_name TEXT NOT NULL,
-      title TEXT NOT NULL,
-      subject TEXT NOT NULL,
-      grade TEXT NOT NULL,
-      duration INTEGER NOT NULL DEFAULT 30,
-      questions JSONB NOT NULL DEFAULT '[]'::jsonb,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
+    ALTER TABLE exams
+    ADD COLUMN IF NOT EXISTS questions
+    JSONB NOT NULL DEFAULT '[]'::jsonb
   `);
 
   // ---------------------------------------------------
-  // RESULTS
-  // ---------------------------------------------------
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS results (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      exam_id UUID NOT NULL
-        REFERENCES exams(id)
-        ON DELETE CASCADE,
-      exam_code VARCHAR(30),
-      student_name TEXT NOT NULL,
-      score NUMERIC DEFAULT 0,
-      total_points NUMERIC DEFAULT 0,
-      percentage NUMERIC DEFAULT 0,
-      correct_answers INTEGER DEFAULT 0,
-      wrong_answers INTEGER DEFAULT 0,
-      total_questions INTEGER DEFAULT 0,
-      details JSONB NOT NULL DEFAULT '[]'::jsonb,
-      submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-
-  // ---------------------------------------------------
-  // OLD DATABASE MIGRATION
+  // RESULTS EXTRA COLUMNS
+  // Existing OR table is preserved.
   // ---------------------------------------------------
 
   await pool.query(`
     ALTER TABLE results
     ADD COLUMN IF NOT EXISTS exam_code VARCHAR(30)
-  `);
-
-  // ---------------------------------------------------
-  // Make sure UUID generator exists
-  // ---------------------------------------------------
-
-  try {
-    await pool.query(`
-      CREATE EXTENSION IF NOT EXISTS pgcrypto
-    `);
-  } catch (error) {
-    console.log(
-      "pgcrypto extension warning:",
-      error.message
-    );
-  }
-
-  // ---------------------------------------------------
-  // Existing UUID columns:
-  // DO NOT change them to SERIAL.
-  // Only add UUID default if missing.
-  // ---------------------------------------------------
-
-  try {
-    await pool.query(`
-      ALTER TABLE exams
-      ALTER COLUMN id
-      SET DEFAULT gen_random_uuid()
-    `);
-  } catch (error) {
-    console.log(
-      "exams UUID default warning:",
-      error.message
-    );
-  }
-  await pool.query(`
-    ALTER TABLE results
-    ADD COLUMN IF NOT EXISTS exam_code VARCHAR(30)
-  `);
-
-  await pool.query(`
-    ALTER TABLE results
-    ADD COLUMN IF NOT EXISTS score NUMERIC DEFAULT 0
   `);
 
   await pool.query(`
     ALTER TABLE results
     ADD COLUMN IF NOT EXISTS total_points NUMERIC DEFAULT 0
-  `);
-
-  await pool.query(`
-    ALTER TABLE results
-    ADD COLUMN IF NOT EXISTS percentage NUMERIC DEFAULT 0
   `);
 
   await pool.query(`
@@ -352,28 +282,18 @@ async function initDatabase() {
 
   await pool.query(`
     ALTER TABLE results
-    ADD COLUMN IF NOT EXISTS details JSONB NOT NULL DEFAULT '[]'::jsonb
+    ADD COLUMN IF NOT EXISTS details
+    JSONB DEFAULT '[]'::jsonb
   `);
 
   await pool.query(`
     ALTER TABLE results
-    ADD COLUMN IF NOT EXISTS submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ADD COLUMN IF NOT EXISTS submitted_at
+    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   `);
-  try {
-    await pool.query(`
-      ALTER TABLE results
-      ALTER COLUMN id
-      SET DEFAULT gen_random_uuid()
-    `);
-  } catch (error) {
-    console.log(
-      "results UUID default warning:",
-      error.message
-    );
-  }
 
   // ---------------------------------------------------
-  // Existing results -> exam code
+  // Fill exam_code for old results
   // ---------------------------------------------------
 
   try {
@@ -413,13 +333,33 @@ async function initDatabase() {
     ON results(exam_code)
   `);
 
-  await pool.query(`
-    CREATE INDEX IF NOT EXISTS idx_results_submitted_at
-    ON results(submitted_at)
-  `);
-
-  console.log("Database migrations completed.");
+  console.log(
+    "✅ Database migrations completed."
+  );
 }
+
+// =====================================================
+// HEALTH
+// =====================================================
+
+app.get("/health", async (req, res) => {
+  try {
+    await pool.query("SELECT 1");
+
+    res.json({
+      success: true,
+      app: "OR - Sirna Qormaataa Barattootaa",
+      database: "connected",
+      status: "online"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      database: "error",
+      error: error.message
+    });
+  }
+});
 
 // =====================================================
 // STATUS
@@ -511,7 +451,8 @@ app.post("/api/exams", async (req, res) => {
     if (finalQuestions.length === 0) {
       return res.status(400).json({
         success: false,
-        error: "Gaaffiin tokko illee hin kuufamne."
+        error:
+          "Gaaffiin tokko illee hin kuufamne."
       });
     }
 
@@ -519,7 +460,8 @@ app.post("/api/exams", async (req, res) => {
       if (!q.text) {
         return res.status(400).json({
           success: false,
-          error: "Gaaffii tokko text hin qabu."
+          error:
+            "Gaaffii tokko text hin qabu."
         });
       }
 
@@ -555,18 +497,18 @@ app.post("/api/exams", async (req, res) => {
     if (!code) {
       return res.status(500).json({
         success: false,
-        error: "Exam code uumuu hin dandeenye."
+        error:
+          "Exam code uumuu hin dandeenye."
       });
     }
 
-    // UUID explicitly generated here.
-    const examId = makeUUID();
-
+    // IMPORTANT:
+    // Do NOT provide UUID.
+    // PostgreSQL INTEGER id generates automatically.
     const insertResult = await pool.query(
       `
       INSERT INTO exams
       (
-        id,
         code,
         teacher_name,
         title,
@@ -577,14 +519,13 @@ app.post("/api/exams", async (req, res) => {
       )
       VALUES
       (
-        $1::uuid,
+        $1,
         $2,
         $3,
         $4,
         $5,
         $6,
-        $7,
-        $8::jsonb
+        $7::jsonb
       )
       RETURNING
         id,
@@ -598,7 +539,6 @@ app.post("/api/exams", async (req, res) => {
         created_at
       `,
       [
-        examId,
         code,
         finalTeacherName,
         finalTitle,
@@ -609,8 +549,7 @@ app.post("/api/exams", async (req, res) => {
       ]
     );
 
-    const exam =
-      insertResult.rows[0];
+    const exam = insertResult.rows[0];
 
     const baseUrl =
       `${req.protocol}://${req.get("host")}`;
@@ -620,16 +559,11 @@ app.post("/api/exams", async (req, res) => {
 
     res.status(201).json({
       success: true,
-
       message:
         "Qormaanni milkaa'inaan uumame.",
-
       exam,
-
       code,
-
       link,
-
       shareText:
         `Qormaata "${finalTitle}" fudhachuuf linkii kana bani: ${link}`
     });
@@ -680,12 +614,12 @@ app.get("/api/exams/:code", async (req, res) => {
     if (result.rowCount === 0) {
       return res.status(404).json({
         success: false,
-        error: "Qormaanni kun hin argamne."
+        error:
+          "Qormaanni kun hin argamne."
       });
     }
 
-    const exam =
-      result.rows[0];
+    const exam = result.rows[0];
 
     exam.questions =
       parseQuestions(exam.questions);
@@ -725,13 +659,13 @@ app.post(
           req.body.student_name
         );
 
-      const answers =
-        req.body.answers;
+      const answers = req.body.answers;
 
       if (!studentName) {
         return res.status(400).json({
           success: false,
-          error: "Maqaan barataa barbaachisaadha."
+          error:
+            "Maqaan barataa barbaachisaadha."
         });
       }
 
@@ -742,14 +676,22 @@ app.post(
       ) {
         return res.status(400).json({
           success: false,
-          error: "Deebiin qormaataa hin argamne."
+          error:
+            "Deebiin qormaataa hin argamne."
         });
       }
 
       const examResult =
         await pool.query(
           `
-          SELECT *
+          SELECT
+            id,
+            code,
+            title,
+            subject,
+            grade,
+            duration,
+            questions
           FROM exams
           WHERE UPPER(code) = $1
           LIMIT 1
@@ -760,7 +702,8 @@ app.post(
       if (examResult.rowCount === 0) {
         return res.status(404).json({
           success: false,
-          error: "Qormaanni kun hin argamne."
+          error:
+            "Qormaanni kun hin argamne."
         });
       }
 
@@ -770,6 +713,14 @@ app.post(
       const questions =
         parseQuestions(exam.questions);
 
+      if (questions.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error:
+            "Qormaata kana keessatti gaaffiin hin jiru."
+        });
+      }
+
       let score = 0;
       let totalPoints = 0;
       let correctAnswers = 0;
@@ -777,7 +728,11 @@ app.post(
 
       const details = [];
 
-      for (let i = 0; i < questions.length; i++) {
+      for (
+        let i = 0;
+        i < questions.length;
+        i++
+      ) {
         const q = questions[i];
 
         const points =
@@ -799,7 +754,7 @@ app.post(
         studentAnswer =
           cleanText(studentAnswer);
 
-        // Multiple choice A/B/C/D
+        // Multiple choice
         if (
           q.type === "multiple" &&
           ["A", "B", "C", "D"].includes(
@@ -853,18 +808,13 @@ app.post(
           questionNumber: i + 1,
           question: q.text,
           type: q.type,
-
           studentAnswer:
-            studentAnswer || "Hin deebifne",
-
+            studentAnswer ||
+            "Hin deebifne",
           correctAnswer,
-
           isCorrect,
-
-          points: isCorrect
-            ? points
-            : 0,
-
+          points:
+            isCorrect ? points : 0,
           maxPoints: points
         });
       }
@@ -879,54 +829,63 @@ app.post(
             )
           : 0;
 
-      // UUID for result
-      const resultId = makeUUID();
+      // INTEGER result ID:
+      // Do NOT provide UUID.
+      const insertResult =
+        await pool.query(
+          `
+          INSERT INTO results
+          (
+            exam_id,
+            exam_code,
+            student_name,
+            score,
+            total,
+            percentage,
+            answers,
+            total_points,
+            correct_answers,
+            wrong_answers,
+            total_questions,
+            details,
+            submitted_at
+          )
+          VALUES
+          (
+            $1,
+            $2,
+            $3,
+            $4,
+            $5,
+            $6,
+            $7::jsonb,
+            $8,
+            $9,
+            $10,
+            $11,
+            $12::jsonb,
+            CURRENT_TIMESTAMP
+          )
+          RETURNING id
+          `,
+          [
+            exam.id,
+            exam.code,
+            studentName,
+            score,
+            totalPoints,
+            percentage,
+            JSON.stringify(answers),
+            totalPoints,
+            correctAnswers,
+            wrongAnswers,
+            questions.length,
+            JSON.stringify(details)
+          ]
+        );
 
-      await pool.query(
-        `
-        INSERT INTO results
-        (
-          id,
-          exam_id,
-          exam_code,
-          student_name,
-          score,
-          total_points,
-          percentage,
-          correct_answers,
-          wrong_answers,
-          total_questions,
-          details
-        )
-        VALUES
-        (
-          $1::uuid,
-          $2::uuid,
-          $3,
-          $4,
-          $5,
-          $6,
-          $7,
-          $8,
-          $9,
-          $10,
-          $11::jsonb
-        )
-        `,
-        [
-          resultId,
-          exam.id,
-          exam.code,
-          studentName,
-          score,
-          totalPoints,
-          percentage,
-          correctAnswers,
-          wrongAnswers,
-          questions.length,
-          JSON.stringify(details)
-        ]
-      );
+      const resultId =
+        insertResult.rows[0].id;
 
       res.json({
         success: true,
@@ -982,7 +941,10 @@ app.get(
           SELECT
             id,
             code,
-            title
+            title,
+            teacher_name,
+            subject,
+            grade
           FROM exams
           WHERE UPPER(code) = $1
           LIMIT 1
@@ -1008,18 +970,30 @@ app.get(
             id,
             student_name AS "studentName",
             score,
+            total,
             total_points AS "totalPoints",
             percentage,
             correct_answers AS "correctAnswers",
             wrong_answers AS "wrongAnswers",
             total_questions AS "totalQuestions",
-            submitted_at AS "submittedAt"
+            details,
+            submitted_at AS "submittedAt",
+            created_at AS "createdAt"
           FROM results
-          WHERE exam_id = $1::uuid
-          ORDER BY submitted_at DESC
+          WHERE exam_id = $1
+          ORDER BY submitted_at DESC NULLS LAST,
+                   created_at DESC NULLS LAST,
+                   id DESC
           `,
           [exam.id]
         );
+
+      const formattedResults =
+        results.rows.map((row) => ({
+          ...row,
+          details:
+            parseDetails(row.details)
+        }));
 
       res.json({
         success: true,
@@ -1027,11 +1001,15 @@ app.get(
         exam: {
           id: exam.id,
           code: exam.code,
-          title: exam.title
+          title: exam.title,
+          teacherName:
+            exam.teacher_name,
+          subject: exam.subject,
+          grade: exam.grade
         },
 
         results:
-          results.rows
+          formattedResults
       });
 
     } catch (error) {
@@ -1057,7 +1035,15 @@ app.get(
   async (req, res) => {
     try {
       const id =
-        cleanText(req.params.id);
+        Number(req.params.id);
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({
+          success: false,
+          error:
+            "Result ID sirrii miti."
+        });
+      }
 
       const result =
         await pool.query(
@@ -1068,25 +1054,29 @@ app.get(
             r.exam_code AS "examCode",
             r.student_name AS "studentName",
             r.score,
+            r.total,
             r.total_points AS "totalPoints",
             r.percentage,
             r.correct_answers AS "correctAnswers",
             r.wrong_answers AS "wrongAnswers",
             r.total_questions AS "totalQuestions",
+            r.answers,
             r.details,
             r.submitted_at AS "submittedAt",
+            r.created_at AS "createdAt",
 
             e.title AS "examTitle",
             e.subject,
             e.grade,
-            e.teacher_name AS "teacherName"
+            e.teacher_name AS "teacherName",
+            e.code AS "examCodeFromExam"
 
           FROM results r
 
           JOIN exams e
             ON e.id = r.exam_id
 
-          WHERE r.id = $1::uuid
+          WHERE r.id = $1
 
           LIMIT 1
           `,
@@ -1142,7 +1132,7 @@ app.delete(
           `
           DELETE FROM exams
           WHERE UPPER(code) = $1
-          RETURNING id, code
+          RETURNING id, code, title
           `,
           [code]
         );
